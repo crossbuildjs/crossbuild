@@ -1,7 +1,7 @@
 import { resolve } from "path"
 import { Client as DiscordClient, Collection, Locale, Snowflake } from "discord.js"
 import { uploadHaste } from "@crossbuild/functions"
-import { DiscordListener, Config, LogLevel, ComponentType, Component, ComponentHandler } from "../index.js"
+import { DiscordListener, Config, LogLevel, ComponentType, Component, ComponentHandler, GuildedListener } from "../index.js"
 import { Client as GuildedClient } from "guilded.js"
 
 export default class Crossbuild {
@@ -18,6 +18,7 @@ export default class Crossbuild {
     public config: Config
     public readonly __dirname: string
     public readonly discordListener: DiscordListener
+    public readonly guildedListener: GuildedListener
 
     /**
 	 * Create our client.
@@ -47,6 +48,7 @@ export default class Crossbuild {
         this.componentHandler = new ComponentHandler(this)
 
         this.discordListener = new DiscordListener(this)
+        this.guildedListener = new GuildedListener(this)
 
         this.start()
     }
@@ -65,7 +67,7 @@ export default class Crossbuild {
         if (this.guildedClient) {
             this.guildedClient.on("ready", () => {
                 this.log("Guilded client is ready!", LogLevel.DEBUG)
-                // this.guildedListener.startListening()
+                this.guildedListener.startListening()
             })
             this.guildedClient.login()
         }

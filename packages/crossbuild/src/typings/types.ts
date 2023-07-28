@@ -13,6 +13,9 @@ export interface Config {
 	name: string
 	/** Paths that the bot should search for components under */
 	componentPaths: string[]
+	/** The prefix that the bot should use. If none is specified, it will default to mentioning the bot */
+	prefix?: string
+
 	supportServer?: string
 
 	discordOptions?: DiscordClientOptions

@@ -1,5 +1,5 @@
-import { Crossbuild, ReceivedInteraction } from "../index.js"
-import { CacheType, Interaction } from "discord.js"
+import { Crossbuild, LogLevel, ReceivedInteraction } from "../index.js"
+import { CacheType, Interaction, Message } from "discord.js"
 
 export default class DiscordListeners {
     client: Crossbuild
@@ -11,11 +11,17 @@ export default class DiscordListeners {
         this.client.discordClient?.on("interactionCreate", (interaction) => {
             this.interaction(interaction)
         })
+        this.client.discordClient?.on("messageCreate", (message) => {
+            this.message(message)
+        })
     }
 
     public async stopListening() {
         this.client.discordClient?.off("interactionCreate", (interaction) => {
             this.interaction(interaction)
+        })
+        this.client.discordClient?.off("messageCreate", (message) => {
+            this.message(message)
         })
     }
 
@@ -23,9 +29,9 @@ export default class DiscordListeners {
         if (discordInteraction.isChatInputCommand()) {
             const interaction = new ReceivedInteraction(this.client, {
                 key: discordInteraction.commandName,
-                source: "discord",
+                source: "discordInteraction",
                 type: "command",
-                originalDiscord: discordInteraction
+                originalDiscordInteraction: discordInteraction
             })
             this.client.componentHandler.handleComponent(interaction)
         }
@@ -44,5 +50,24 @@ export default class DiscordListeners {
         //     })
         //     this.client.componentHandler.handleComponent(interaction)
         // }
+    }
+
+    private async message(discordMessage: Message) {
+        console.log(discordMessage)
+        if (!this.client.config.prefix) return this.client.log("No prefix provided, not listening for commands.", LogLevel.DEBUG)
+
+        if (!discordMessage.content.startsWith(this.client.config.prefix)) return
+
+        const args = discordMessage.content.slice(this.client.config.prefix.length).trim().split(/ +/g)
+        const command = args.shift()?.toLowerCase()
+        if (!command) return
+
+        const interaction = new ReceivedInteraction(this.client, {
+            key: command,
+            source: "discordMessage",
+            type: "command",
+            originalDiscordMessage: discordMessage
+        })
+        this.client.componentHandler.handleComponent(interaction)
     }
 }

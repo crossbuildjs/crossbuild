@@ -4,13 +4,14 @@ const cb = new Crossbuild({
     name: "Test Bot",
     componentPaths: ["/src/components"],
     discordOptions: {
-        intents: []
+        intents: ["Guilds", "GuildMessages", "MessageContent"]
     },
     guildedOptions: {
-        token: ""
+        token: process.env.GUILDED_TOKEN!
     },
     supportServer: "",
-    discordToken: process.env.DISCORD_TOKEN
+    discordToken: process.env.DISCORD_TOKEN,
+    prefix: "-"
 })
 
 cb.log(`${cb}`, LogLevel.NULL)
