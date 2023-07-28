@@ -15,3 +15,6 @@ export type GeneratedMessage =
 			/** The basic text of the message */
 			content?: string
 	  }
+
+export type * from "./GuildedPermission.js"
+export * from "./GuildedPermission.js"

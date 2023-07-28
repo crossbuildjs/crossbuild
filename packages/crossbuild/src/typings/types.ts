@@ -1,10 +1,11 @@
 import { AccessSettings } from "@crossbuild/functions"
+import { GuildedPermissionString } from "@crossbuild/types"
 import {
     ApplicationCommandOptionData,
     ApplicationCommandType,
     ClientEvents,
     ClientOptions as DiscordClientOptions,
-    PermissionsBitField
+    PermissionsString as DiscordPermissionsString
 } from "discord.js"
 import { ClientOptions as GuildedClientOptions } from "guilded.js"
 
@@ -43,8 +44,7 @@ export interface ComponentOptions {
 	description: string
 	options?: ApplicationCommandOptionData[]
 	type?: ApplicationCommandType
-	permissions?: PermissionsBitField
-	clientPermissions?: PermissionsBitField
+	permissions?: { guilded: GuildedPermissionString[]; discord: DiscordPermissionsString[] }
 	restriction?: string
 	serverOnly?: boolean
 	ownerOnly?: boolean

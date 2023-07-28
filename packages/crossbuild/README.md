@@ -6,7 +6,7 @@ More detailed guides will be posted on our website soon. [See the documentation 
 
 ### Features to add back:
 
--   [ ] Sudo
+-   [ ] Masquerade (pretend to be a different user)
 -   [ ] Client perms check
 -   [ ] User perms check
 

@@ -97,6 +97,9 @@ importers:
       discord.js:
         specifier: ^14.11.0
         version: 14.11.0
+      guilded.js:
+        specifier: ^0.23.4
+        version: 0.23.4
 
   packages/types:
     dependencies:

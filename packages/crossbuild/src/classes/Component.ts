@@ -1,5 +1,7 @@
-import { SimpleEmbed } from "@crossbuild/types"
+import { GuildedPermissionString, SimpleEmbed } from "@crossbuild/types"
 import { Crossbuild, ComponentOptions, LogLevel, ReceivedInteraction, ComponentType } from "../index.js"
+import { PermissionsString as DiscordPermissionString } from "discord.js"
+import { getGuildedPermissions } from "@crossbuild/functions"
 
 /**
  * The base component class that other components extend from.
@@ -40,10 +42,16 @@ export default class Component {
 	 */
     public readonly authorOnly: boolean
     /**
-     * The description of this component.
-     * This is used in Discord for the command description.
-     */
+	 * The description of this component.
+	 * This is used in Discord for the command description.
+	 */
     public readonly description?: string
+    /**
+	 * The permissions required to run this component.
+	 * This is an object with two keys: `guilded` and `discord`.
+	 * `guilded` is an array of Guilded permissions, and `discord` is an array of Discord permissions.
+	 */
+    public readonly permissions?: ComponentOptions["permissions"]
 
     constructor(key: string, type: ComponentType, client: Crossbuild, options: ComponentOptions) {
         this.key = key
@@ -55,6 +63,7 @@ export default class Component {
         this.cooldown = options.cooldown || 0
         this.authorOnly = options.authorOnly || false
         this.description = options.description
+        this.permissions = options.permissions
     }
 
     public async validate(interaction: ReceivedInteraction): Promise<SimpleEmbed | null> {
@@ -65,11 +74,48 @@ export default class Component {
             }
         }
 
-        if (interaction.server) {
+        if (interaction.server && interaction.user) {
             if (this.ownerOnly && interaction.server?.ownerId !== interaction.user?.id) {
                 return {
                     title: "Missing Permissions",
                     description: "This action can only be ran by the owner of this server!"
+                }
+            }
+
+            if (this.permissions) {
+                if (this.permissions.discord && interaction.source.startsWith("discord")) {
+                    const userPermissions = interaction.user?.permissions as DiscordPermissionString[]
+                    const missingPermissions = this.permissions.discord.filter(
+                        (permission: DiscordPermissionString) => !userPermissions.includes(permission)
+                    )
+
+                    if (missingPermissions.length > 0) {
+                        return {
+                            title: "Missing Permissions",
+                            description: `This action requires the following permissions: ${missingPermissions
+                                .map((permission) => {
+                                    return permission.replace(/([A-Z])/g, " $1")
+                                })
+                                .join(", ")}`
+                        }
+                    }
+                } else if (this.permissions.guilded && interaction.source === "guilded") {
+                    interaction.user.permissions = await getGuildedPermissions(interaction.originalGuilded!, this.client.guildedClient!)
+                    const userPermissions = interaction.user?.permissions as GuildedPermissionString[]
+                    const missingPermissions = this.permissions.guilded.filter(
+                        (permission: GuildedPermissionString) => !userPermissions.includes(permission)
+                    )
+
+                    if (missingPermissions.length > 0) {
+                        return {
+                            title: "Missing Permissions",
+                            description: `This action requires the following permissions: ${missingPermissions
+                                .map((permission) => {
+                                    return permission.replace(/([A-Z])/g, " $1")
+                                })
+                                .join(", ")}`
+                        }
+                    }
                 }
             }
         }

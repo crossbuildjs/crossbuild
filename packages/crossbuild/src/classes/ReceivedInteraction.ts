@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, PermissionsString, Message as DiscordMessage } from "discord.js"
 import { Crossbuild, LogLevel } from "../index.js"
-import { GeneratedMessage } from "@crossbuild/types"
+import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
 import { Message as GuildedMessage } from "guilded.js"
 
 interface ReceivedInteractionData {
@@ -23,13 +23,13 @@ export default class ReceivedInteraction {
     public readonly originalDiscordMessage?: ReceivedInteractionData["originalDiscordMessage"]
     public readonly originalGuilded?: GuildedMessage
     public readonly options?: ReceivedInteractionData["options"]
-    public readonly server?: { id: string; ownerId: string }
-    public readonly user?: {
+    public readonly server?: { id: string; ownerId?: string }
+    public user?: {
 		id: string
 		displayName?: string
 		username?: string
 		avatarURL?: string | null
-		permissions?: PermissionsString[] | string[]
+		permissions?: PermissionsString[] | GuildedPermissionString[]
 	}
 
     constructor(client: Crossbuild, data: ReceivedInteractionData) {
@@ -67,12 +67,14 @@ export default class ReceivedInteraction {
                 displayName: data.originalDiscordMessage.author.username,
                 username: data.originalDiscordMessage.author.username,
                 avatarURL: data.originalDiscordMessage.author.avatarURL(),
-                permissions: []
+                permissions: data.originalDiscordMessage.member?.permissions.toArray() || []
             }
         } else if (data.originalGuilded) {
             this.originalGuilded = data.originalGuilded
             if (this.originalGuilded.server) {
                 this.server = { id: this.originalGuilded.server.id, ownerId: this.originalGuilded.server.ownerId }
+            } else if (this.originalGuilded.serverId) {
+                this.server = { id: this.originalGuilded.serverId }
             }
             if (this.originalGuilded.author) {
                 this.user = {
