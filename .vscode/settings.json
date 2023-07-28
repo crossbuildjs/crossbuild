@@ -1,0 +1,8 @@
+{
+	"dotenv.enableAutocloaking": false,
+	"findUnusedExports.detectCircularImports": true,
+	"cSpell.words": [
+		"crossbuild",
+		"buape"
+	]
+}

@@ -1,0 +1,17 @@
+import { APIEmbed } from "discord-api-types/v10"
+
+export type SimpleEmbed = {
+	title?: string
+	description?: string
+}
+
+export type GeneratedMessage =
+	| string
+	| {
+			/** Any embeds that you want to send */
+			embeds?: APIEmbed[]
+			/** If the message is a response to a slash command from Discord, you can send an ephemeral response. This will be ignored for Guilded. */
+			ephemeral?: boolean
+			/** The basic text of the message */
+			content?: string
+	  }

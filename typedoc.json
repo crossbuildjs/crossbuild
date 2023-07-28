@@ -1,0 +1,7 @@
+{
+	"entryPoints": ["."],
+	"name": "Crossbuild",
+	"entryPointStrategy": "packages",
+	"includeVersion": true
+}
+

@@ -1,0 +1,14 @@
+{
+	"name": "test-bot",
+	"private": true,
+	"main": "dist/src/index.js",
+	"type": "module",
+	"scripts": {
+		"clean": "rimraf dist",
+		"dev": "pnpm run clean && tsc-watch --onSuccess \"node .\""
+	},
+	"dependencies": {
+		"@crossbuild/functions": "workspace:^",
+		"crossbuild": "workspace:^"
+	}
+}
