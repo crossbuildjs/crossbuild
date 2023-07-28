@@ -1,4 +1,4 @@
-import { Crossbuild } from "crossbuild"
+import { Crossbuild, LogLevel } from "crossbuild"
 
 const cb = new Crossbuild({
     name: "Test Bot",
@@ -10,9 +10,11 @@ const cb = new Crossbuild({
         token: ""
     },
     supportServer: "",
-    discordToken: "MTA4NjEwNTYxMDUxMDE1NTg1Nw.GNt-U8.OSHy-g-5FlfESnu3Z9MEEMJLHiRthXajiXNwiE"
+    discordToken: process.env.DISCORD_TOKEN
 })
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+cb.log(`${cb}`, LogLevel.NULL)
 
-sleep(3000).then(() => console.log(cb))
+// const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// sleep(3000).then(() => console.log(cb))

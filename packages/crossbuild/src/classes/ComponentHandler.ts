@@ -22,6 +22,7 @@ export default class ComponentHandler {
                         const fileUrl = `file://${filePath.replace(/\\/g, "/")}`
                         const file = await import(fileUrl)
                         const component = new file.default(this.client) as Component
+                        console.log(`${component.type}-${component.key}`)
                         this.client.components.set(`${component.type}-${component.key}`, component)
                     }
                 } catch (error) {
@@ -32,11 +33,22 @@ export default class ComponentHandler {
                     )
                 }
             })
-        )
-        this.postLoad()
+        ).then(() => {
+            this.postLoad()
+        })
     }
 
-    public postLoad() {}
+    public postLoad() {
+        if (this.client.discordClient) {
+            if (this.client.discordClient.application) {
+                this.syncDiscordCommands()
+            } else {
+                this.client.discordClient.once("ready", () => {
+                    this.syncDiscordCommands()
+                })
+            }
+        }
+    }
 
     public reloadFiles() {
         this.client.components.clear()
@@ -44,20 +56,21 @@ export default class ComponentHandler {
     }
 
     public syncDiscordCommands() {
+        if (!this.client.discordClient) return this.client.log("Discord client is not defined, cannot sync commands.", LogLevel.WARN)
+
         try {
-            if (this.client.discordClient) {
-                this.client.discordClient.application?.commands.set(
-                    this.client.components
-                        .filter((x) => x.type === "command")
-                        .map((command) => {
-                            const data: ApplicationCommandData = {
-                                name: command.key,
-                                description: command.description || ""
-                            }
-                            return data
-                        })
-                )
-            }
+            this.client.discordClient?.application?.commands.set(
+                this.client.components
+                    .filter((x) => x.type === "command")
+                    .map((command) => {
+                        const data: ApplicationCommandData = {
+                            name: command.key,
+                            description: command.description || ""
+                        }
+                        console.log(data)
+                        return data
+                    })
+            )
         } catch (error) {
             this.client.log(`Failed to sync Discord commands: ${error}`, LogLevel.WARN)
         }

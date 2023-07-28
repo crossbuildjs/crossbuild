@@ -10,5 +10,8 @@
 	"dependencies": {
 		"@crossbuild/functions": "workspace:^",
 		"crossbuild": "workspace:^"
+	},
+	"devDependencies": {
+		"@types/node": "^20.4.5"
 	}
 }
