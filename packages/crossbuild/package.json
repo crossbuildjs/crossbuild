@@ -1,6 +1,6 @@
 {
 	"name": "crossbuild",
-	"description": "A simple framework to create cross-platform Discord and Guilded bots",
+	"description": "A powerful framework to create cross-platform Discord and Guilded bots",
 	"type": "module",
 	"version": "0.0.1",
 	"contributors": [
