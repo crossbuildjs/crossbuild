@@ -23,7 +23,7 @@ export default class Cmd extends Component {
                             type: ComponentType.Button,
                             style: ButtonStyle.Link,
                             label: "Crossbuild",
-                            url: "https://crossbuild.google.com"
+                            url: "https://crossbuild.buape.com"
                         }
                     ]
                 }
