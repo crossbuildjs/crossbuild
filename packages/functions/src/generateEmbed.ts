@@ -1,5 +1,5 @@
 import { GeneratedMessage, SimpleEmbed } from "@crossbuild/types"
-import { ActionRowBuilder, ButtonBuilder, ColorResolvable, EmbedBuilder } from "discord.js"
+import { APIActionRowComponent, APIMessageActionRowComponent, ButtonStyle, ColorResolvable, ComponentType, EmbedBuilder } from "discord.js"
 
 /**
  * Generate a message with the specified type (error, success, or warning).
@@ -13,7 +13,7 @@ import { ActionRowBuilder, ButtonBuilder, ColorResolvable, EmbedBuilder } from "
 export const generateEmbed = (
     type: "error" | "success" | "warning",
     embedInfo: SimpleEmbed,
-    components: ActionRowBuilder<ButtonBuilder>[] = [],
+    components?: APIActionRowComponent<APIMessageActionRowComponent>[],
     ephemeral = false,
     supportServer: string | undefined = undefined
 ): GeneratedMessage => {
@@ -37,25 +37,23 @@ export const generateEmbed = (
 
     const message: GeneratedMessage = {
         embeds,
-        ephemeral
+        ephemeral,
+        components
     }
 
     if (type === "error" && supportServer) {
-        doNull(components) // temporary until components are back
-        // const supportServerButton = new ButtonBuilder({
-        //     label: "Support Server",
-        //     url: supportServer,
-        //     style: ButtonStyle.Link
-        // })
-
-        // const supportServerComponent = new ActionRowBuilder<ButtonBuilder>().addComponents(supportServerButton)
-
-        // message.components?.push(supportServerComponent)
+        message.components?.push({
+            type: ComponentType.ActionRow,
+            components: [
+                {
+                    type: ComponentType.Button,
+                    label: "Support Server",
+                    url: supportServer,
+                    style: ButtonStyle.Link
+                }
+            ]
+        })
     }
 
     return message
-}
-
-const doNull = (x: unknown) => {
-    return x
 }
