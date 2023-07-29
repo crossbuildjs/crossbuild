@@ -22,11 +22,9 @@ export default class ComponentHandler {
                         const fileUrl = `file://${filePath.replace(/\\/g, "/")}`
                         const file = await import(fileUrl)
                         const component = new file.default(this.client) as Component
-                        console.log(`${component.type}-${component.key}`)
                         this.client.components.set(`${component.type}-${component.key}`, component)
                     }
                 } catch (error) {
-                    console.log(error)
                     this.client.log(
                         `Failed to load files under ${dirPath}. Make sure you are only giving a subdirectory from ${this.client.__dirname}`,
                         LogLevel.WARN
@@ -67,7 +65,6 @@ export default class ComponentHandler {
                             name: command.key,
                             description: command.description || ""
                         }
-                        console.log(data)
                         return data
                     })
             )

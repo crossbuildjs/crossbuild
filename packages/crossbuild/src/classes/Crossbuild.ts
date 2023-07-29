@@ -69,7 +69,6 @@ export default class Crossbuild {
                 this.log("Guilded client is ready!", LogLevel.DEBUG)
                 this.guildedListener.startListening()
             })
-            this.guildedClient.on("debug", (x => console.log(x)))
             this.guildedClient.login()
         }
 

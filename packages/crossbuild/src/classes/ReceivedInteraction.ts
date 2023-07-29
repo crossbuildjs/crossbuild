@@ -88,8 +88,6 @@ export default class ReceivedInteraction {
                 this.user = { id: this.originalGuilded.authorId }
             }
         }
-
-        console.log(this)
     }
 
     public isDiscordComponent() {
@@ -97,7 +95,6 @@ export default class ReceivedInteraction {
     }
 
     public async reply(message: GeneratedMessage) {
-        console.log(message)
         switch (this.source) {
             case "discordInteraction":
                 if (!this.originalDiscordInteraction) throw new Error("Cannot reply to a Discord interaction without the original interaction.")
@@ -110,7 +107,7 @@ export default class ReceivedInteraction {
             case "guilded":
                 if (!this.originalGuilded) throw new Error("Cannot reply to a Guilded message without the original message.")
                 await this.originalGuilded.reply(message).catch((err) => {
-                    console.error(err)
+                    this.client.log(err, LogLevel.ERROR)
                 })
                 break
             case "http":

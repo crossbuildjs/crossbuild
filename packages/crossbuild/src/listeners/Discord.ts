@@ -53,7 +53,6 @@ export default class DiscordListeners {
     }
 
     private async message(discordMessage: Message) {
-        console.log(discordMessage)
         if (!this.client.config.prefix) return this.client.log("No prefix provided, not listening for commands.", LogLevel.DEBUG)
 
         if (!discordMessage.content.startsWith(this.client.config.prefix)) return
