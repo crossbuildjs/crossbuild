@@ -2,7 +2,7 @@
 	"name": "@crossbuild/functions",
 	"description": "Useful utility functions, mainly for use in Discord bots",
 	"type": "module",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"authors": [
 		"Shadow <shadow@buape.com>",
 		"Codeize <codeize@buape.com>"
