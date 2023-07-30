@@ -1,4 +1,3 @@
-import { AccessSettings } from "@crossbuild/functions"
 import { GuildedPermissionString } from "@crossbuild/types"
 import {
     ApplicationCommandOptionData,
@@ -22,8 +21,6 @@ export interface Config {
 	discordToken?: string
 
 	guildedOptions?: GuildedClientOptions
-
-	accessSettings?: AccessSettings
 }
 
 export enum LogLevel {

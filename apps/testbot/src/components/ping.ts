@@ -13,6 +13,7 @@ export default class Cmd extends Component {
     }
 
     public override async run(interaction: ReceivedInteraction) {
+        interaction.channel?.send("Test channel send")
         await interaction.reply({
             content: `Pong`,
             components: [

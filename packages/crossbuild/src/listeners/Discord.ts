@@ -61,11 +61,20 @@ export default class DiscordListeners {
         const command = args.shift()?.toLowerCase()
         if (!command) return
 
+        const flags: { [key: string]: string } = {}
+        const regex = /--([^\s]+) ([^\s]+)/g
+
+        let match
+        while ((match = regex.exec(discordMessage.content))) {
+            flags[match[1]] = match[2]
+        }
+
         const interaction = new ReceivedInteraction(this.client, {
             key: command,
             source: "discordMessage",
             type: "command",
-            originalDiscordMessage: discordMessage
+            originalDiscordMessage: discordMessage,
+            options: flags
         })
         this.client.componentHandler.handleComponent(interaction)
     }

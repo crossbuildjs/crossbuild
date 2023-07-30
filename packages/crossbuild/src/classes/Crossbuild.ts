@@ -1,5 +1,5 @@
 import { resolve } from "path"
-import { Client as DiscordClient, Collection, Locale, Snowflake } from "discord.js"
+import { Client as DiscordClient, Collection, Snowflake } from "discord.js"
 import { uploadHaste } from "@crossbuild/functions"
 import { DiscordListener, Config, LogLevel, ComponentType, Component, ComponentHandler, GuildedListener } from "../index.js"
 import { Client as GuildedClient } from "guilded.js"
@@ -12,9 +12,6 @@ export default class Crossbuild {
     public components: Collection<`${ComponentType}-${string}`, Component>
     public hasteStore: Collection<string, string[]>
     public usersUsingBot = new Set<Snowflake>()
-    public sudo: Collection<Snowflake, Snowflake> = new Collection()
-    public localeCache: Collection<Snowflake, Locale> = new Collection()
-    public userChannelCache: Collection<`${Snowflake}-${Snowflake}`, Snowflake>
     public config: Config
     public readonly __dirname: string
     public readonly discordListener: DiscordListener
@@ -42,8 +39,6 @@ export default class Crossbuild {
         this.components = new Collection()
 
         this.hasteStore = new Collection()
-        this.localeCache = new Collection()
-        this.userChannelCache = new Collection()
 
         this.componentHandler = new ComponentHandler(this)
 
