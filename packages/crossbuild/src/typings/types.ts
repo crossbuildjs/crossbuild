@@ -2,7 +2,6 @@ import { AccessSettings } from "@crossbuild/functions"
 import { GuildedPermissionString } from "@crossbuild/types"
 import {
     ApplicationCommandOptionData,
-    ApplicationCommandType,
     ClientEvents,
     ClientOptions as DiscordClientOptions,
     PermissionsString as DiscordPermissionsString
@@ -14,7 +13,7 @@ export interface Config {
 	name: string
 	/** Paths that the bot should search for components under */
 	componentPaths: string[]
-	/** The prefix that the bot should use. If none is specified, it will default to mentioning the bot */
+	/** The prefix that the bot listens for. If none is specified, the prefix will default to mentioning the bot */
 	prefix?: string
 
 	supportServer?: string
@@ -43,13 +42,9 @@ export interface EventOptions {
 export interface ComponentOptions {
 	description: string
 	options?: ApplicationCommandOptionData[]
-	type?: ApplicationCommandType
 	permissions?: { guilded: GuildedPermissionString[]; discord: DiscordPermissionsString[] }
-	restriction?: string
 	serverOnly?: boolean
 	ownerOnly?: boolean
-	authorOnly?: boolean
-	cooldown?: number
 }
 
 export type ComponentType = "command"

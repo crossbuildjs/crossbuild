@@ -21,10 +21,6 @@ export default class Component {
 	 */
     public readonly type: ComponentType
     /**
-	 * The access role required to run this component.
-	 */
-    private readonly restriction?: string
-    /**
 	 * Whether this component can only be used in servers.
 	 */
     private readonly serverOnly: boolean
@@ -33,19 +29,15 @@ export default class Component {
 	 */
     private readonly ownerOnly: boolean
     /**
-	 * The cooldown of this component.
-	 * This is in milliseconds.
-	 */
-    public readonly cooldown: number
-    /**
-	 * Whether this component can only be used by the author of the interaction.
-	 */
-    public readonly authorOnly: boolean
-    /**
 	 * The description of this component.
 	 * This is used in Discord for the command description.
 	 */
     public readonly description?: string
+    /**
+	 * The options of this component.
+	 * This is used in Discord for the command options within the slash commands, as well as what is parsed from the message in text commands.
+	 */
+    public readonly options?: ComponentOptions["options"]
     /**
 	 * The permissions required to run this component.
 	 * This is an object with two keys: `guilded` and `discord`.
@@ -57,11 +49,8 @@ export default class Component {
         this.key = key
         this.type = type
         this.client = client
-        if (options.restriction) this.restriction = options.restriction
         this.serverOnly = options.serverOnly || false
         this.ownerOnly = options.ownerOnly || false
-        this.cooldown = options.cooldown || 0
-        this.authorOnly = options.authorOnly || false
         this.description = options.description
         this.permissions = options.permissions
     }
@@ -117,13 +106,6 @@ export default class Component {
                         }
                     }
                 }
-            }
-        }
-
-        if (this.client.config.accessSettings && this.restriction) {
-            return {
-                title: "Missing Permissions",
-                description: `This action can only be used by ${this.client.config.name || "the bot"} ${this.restriction}s!`
             }
         }
 
