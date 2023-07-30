@@ -63,8 +63,10 @@ export default class ComponentHandler {
                     .map((command) => {
                         const data: ApplicationCommandData = {
                             name: command.key,
-                            description: command.description || ""
+                            description: command.description || "",
+                            options: command.options || []
                         }
+                        console.log(data)
                         return data
                     })
             )

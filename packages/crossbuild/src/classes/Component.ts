@@ -53,6 +53,7 @@ export default class Component {
         this.ownerOnly = options.ownerOnly || false
         this.description = options.description
         this.permissions = options.permissions
+        this.options = options.options
     }
 
     public async validate(interaction: ReceivedInteraction): Promise<SimpleEmbed | null> {
