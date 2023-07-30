@@ -62,7 +62,7 @@ export default class DiscordListeners {
         if (!command) return
 
         const flags: { [key: string]: string } = {}
-        const regex = /--([^\s]+) ([^\s]+)/g
+        const regex = /--(\S+)\s+([\s\S]+?)(?=\s+--|$)/g
 
         let match
         while ((match = regex.exec(discordMessage.content))) {
