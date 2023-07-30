@@ -1,8 +1,8 @@
-import { Component, Crossbuild, ReceivedInteraction } from "crossbuild"
+import { Component, CrossBuild, ReceivedInteraction } from "crossbuild"
 import { ApplicationCommandOptionType } from "discord.js"
 
 export default class Cmd extends Component {
-    constructor(client: Crossbuild) {
+    constructor(client: CrossBuild) {
         super("argstest", "command", client, {
             description: "Test argument parsing",
             options: [

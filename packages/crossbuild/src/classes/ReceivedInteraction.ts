@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, PermissionsString, Message as DiscordMessage } from "discord.js"
-import { Crossbuild, LogLevel } from "../index.js"
+import { CrossBuild, LogLevel } from "../index.js"
 import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
 import { Message as GuildedMessage } from "guilded.js"
 
@@ -15,7 +15,7 @@ interface ReceivedInteractionData {
 }
 
 export default class ReceivedInteraction {
-    private readonly client: Crossbuild
+    private readonly client: CrossBuild
     /** The key of this interaction */
     public readonly key: string
     /** The source of this interaction */
@@ -54,7 +54,7 @@ export default class ReceivedInteraction {
 		permissions?: PermissionsString[] | GuildedPermissionString[]
 	}
 
-    constructor(client: Crossbuild, data: ReceivedInteractionData) {
+    constructor(client: CrossBuild, data: ReceivedInteractionData) {
         this.client = client
 
         this.client.log(`${client}`, LogLevel.NULL)

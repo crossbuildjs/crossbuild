@@ -1,8 +1,8 @@
-import { Component, Crossbuild, ReceivedInteraction } from "crossbuild"
+import { Component, CrossBuild, ReceivedInteraction } from "crossbuild"
 import { ButtonStyle, ComponentType } from "discord.js"
 
 export default class Cmd extends Component {
-    constructor(client: Crossbuild) {
+    constructor(client: CrossBuild) {
         super("ping", "command", client, {
             description: "Ping!",
             permissions: {
@@ -23,7 +23,7 @@ export default class Cmd extends Component {
                         {
                             type: ComponentType.Button,
                             style: ButtonStyle.Link,
-                            label: "Crossbuild",
+                            label: "CrossBuild",
                             url: "https://crossbuild.buape.com"
                         }
                     ]

@@ -1,9 +1,9 @@
-import { Crossbuild, LogLevel, ReceivedInteraction } from "../index.js"
+import { CrossBuild, LogLevel, ReceivedInteraction } from "../index.js"
 import { Message } from "guilded.js"
 
 export default class GuildedListener {
-    client: Crossbuild
-    constructor(client: Crossbuild) {
+    client: CrossBuild
+    constructor(client: CrossBuild) {
         this.client = client
     }
 

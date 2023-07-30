@@ -1,6 +1,6 @@
-# Crossbuild Contributing Guide
+# CrossBuild Contributing Guide
 
-If you wish to contribute to Crossbuild, feel free to fork the repository and submit a pull request! We welcome all types of contributions, from bug fixes to documentation improvements! If you have any questions, feel free to join our [Discord server](https://go.buape.com/discord) and ask in the `#crossbuild` channel.
+If you wish to contribute to CrossBuild, feel free to fork the repository and submit a pull request! We welcome all types of contributions, from bug fixes to documentation improvements! If you have any questions, feel free to join our [Discord server](https://go.buape.com/discord) and ask in the `#crossbuild` channel.
 
 ## Setup
 To get ready to work on the codebase, please do the following:

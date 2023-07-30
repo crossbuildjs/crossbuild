@@ -1,7 +1,7 @@
 <div align="center">
-<img width="150" height="150" src="https://cdn.buape.com/crossbuild.png" alt="Crossbuild Logo" />
+<img width="150" height="150" src="https://cdn.buape.com/crossbuild.png" alt="CrossBuild Logo" />
 
-<h1 align="center"><b>Crossbuild</b></h1>
+<h1 align="center"><b>CrossBuild</b></h1>
 
 </div>
 
@@ -29,13 +29,13 @@ npm install guilded.js
 
 ## Usage
 
-Crossbuild is a library that allows you to build bots for Discord and Guilded, at the same time. It is designed to be as simple as possible, while still being powerful. Here is a simple example of a Crossbuild bot in Typescript:
+CrossBuild is a library that allows you to build bots for Discord and Guilded, at the same time. It is designed to be as simple as possible, while still being powerful. Here is a simple example of a CrossBuild bot in Typescript:
 
 ```ts
 // src/index.ts
-import { Crossbuild, LogLevel } from "crossbuild"
+import { CrossBuild, LogLevel } from "crossbuild"
 
-new Crossbuild({
+new CrossBuild({
 	name: "Test Bot",
 	componentPaths: ["/src/components"],
 	discordOptions: {
@@ -49,10 +49,10 @@ new Crossbuild({
 })
 
 // src/components/ping.ts
-import { Component, Crossbuild, ReceivedInteraction } from "crossbuild"
+import { Component, CrossBuild, ReceivedInteraction } from "crossbuild"
 
 export default class Cmd extends Component {
-	constructor(client: Crossbuild) {
+	constructor(client: CrossBuild) {
 		super("ping", "command", client, {
 			description: "Ping!"
 		})
@@ -68,8 +68,8 @@ export default class Cmd extends Component {
 
 ## Contributing
 
-If you want to contribute to Crossbuild, please read the [contributing guidelines](/CONTRIBUTING.md) first. We welcome all types of contributions, from bug fixes to documentation improvements! If you have any questions, feel free to join our [Discord server](https://go.buape.com/discord) and ask in the `#crossbuild` channel.
+If you want to contribute to CrossBuild, please read the [contributing guidelines](/CONTRIBUTING.md) first. We welcome all types of contributions, from bug fixes to documentation improvements! If you have any questions, feel free to join our [Discord server](https://go.buape.com/discord) and ask in the `#crossbuild` channel.
 
 ## License
 
-Crossbuild is licensed under the [MIT License](/LICENSE).
+CrossBuild is licensed under the [MIT License](/LICENSE).

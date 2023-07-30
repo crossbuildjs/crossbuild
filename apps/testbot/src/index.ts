@@ -1,6 +1,6 @@
-import { Crossbuild, LogLevel } from "crossbuild"
+import { CrossBuild, LogLevel } from "crossbuild"
 
-const cb = new Crossbuild({
+const cb = new CrossBuild({
     name: "Test Bot",
     componentPaths: ["/src/components"],
     discordOptions: {

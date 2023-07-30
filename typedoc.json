@@ -1,6 +1,6 @@
 {
 	"entryPoints": ["packages/*"],
-	"name": "Crossbuild",
+	"name": "CrossBuild",
 	"entryPointStrategy": "packages",
 	"includeVersion": true
 }

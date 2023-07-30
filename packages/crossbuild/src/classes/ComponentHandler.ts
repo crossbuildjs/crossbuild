@@ -1,12 +1,12 @@
-import { Crossbuild, LogLevel, ReceivedInteraction, Component, ComponentType } from "../index.js"
+import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType } from "../index.js"
 import { generateEmbed, getFiles } from "@crossbuild/functions"
 import { ApplicationCommandData } from "discord.js"
 import path from "path"
 
 export default class ComponentHandler {
-    public client: Crossbuild
+    public client: CrossBuild
 
-    constructor(client: Crossbuild) {
+    constructor(client: CrossBuild) {
         this.client = client
     }
 

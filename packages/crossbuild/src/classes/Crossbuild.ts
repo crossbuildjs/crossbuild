@@ -4,7 +4,7 @@ import { uploadHaste } from "@crossbuild/functions"
 import { DiscordListener, Config, LogLevel, ComponentType, Component, ComponentHandler, GuildedListener } from "../index.js"
 import { Client as GuildedClient } from "guilded.js"
 
-export default class Crossbuild {
+export default class CrossBuild {
     public readonly discordClient?: DiscordClient
     public readonly guildedClient?: GuildedClient
 
@@ -69,7 +69,7 @@ export default class Crossbuild {
 
         await this.componentHandler.loadFiles()
 
-        this.log("Crossbuild is ready!", LogLevel.DEBUG)
+        this.log("CrossBuild is ready!", LogLevel.DEBUG)
     }
 
     /**

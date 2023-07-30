@@ -1,5 +1,5 @@
 import { GuildedPermissionString, SimpleEmbed } from "@crossbuild/types"
-import { Crossbuild, ComponentOptions, LogLevel, ReceivedInteraction, ComponentType } from "../index.js"
+import { CrossBuild, ComponentOptions, LogLevel, ReceivedInteraction, ComponentType } from "../index.js"
 import { PermissionsString as DiscordPermissionString } from "discord.js"
 import { getGuildedPermissions } from "@crossbuild/functions"
 
@@ -10,7 +10,7 @@ export default class Component {
     /**
 	 * The client that instantiated this component.
 	 */
-    public readonly client: Crossbuild
+    public readonly client: CrossBuild
     /**
 	 * The key of this component.
 	 * This is used to identify the component, and is usually used as the custom ID or the command name.
@@ -45,7 +45,7 @@ export default class Component {
 	 */
     public readonly permissions?: ComponentOptions["permissions"]
 
-    constructor(key: string, type: ComponentType, client: Crossbuild, options: ComponentOptions) {
+    constructor(key: string, type: ComponentType, client: CrossBuild, options: ComponentOptions) {
         this.key = key
         this.type = type
         this.client = client

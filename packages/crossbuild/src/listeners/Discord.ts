@@ -1,9 +1,9 @@
-import { Crossbuild, LogLevel, ReceivedInteraction } from "../index.js"
+import { CrossBuild, LogLevel, ReceivedInteraction } from "../index.js"
 import { CacheType, Interaction, Message } from "discord.js"
 
 export default class DiscordListeners {
-    client: Crossbuild
-    constructor(client: Crossbuild) {
+    client: CrossBuild
+    constructor(client: CrossBuild) {
         this.client = client
     }
 

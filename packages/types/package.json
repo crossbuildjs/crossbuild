@@ -1,6 +1,6 @@
 {
 	"name": "@crossbuild/types",
-	"description": "Typings for Crossbuild",
+	"description": "Typings for CrossBuild",
 	"type": "module",
 	"version": "0.0.1",
 	"authors": [
