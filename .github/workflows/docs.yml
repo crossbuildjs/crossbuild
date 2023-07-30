@@ -1,0 +1,35 @@
+name: Generate Docs
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        name: Generate Documentation
+        timeout-minutes: 15
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+
+            - name: Setup
+              uses: ./.github/actions/setup
+
+            - name: Build packages for monorepo use
+              run: pnpm run build
+
+            - name: Generate Docs
+              run: pnpm run docs
+
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  publish_branch: docs
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./docs
+                  cname: crossbuild.buape.com

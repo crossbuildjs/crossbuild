@@ -1,0 +1,47 @@
+{
+	"name": "crossbuild",
+	"description": "A powerful framework to create cross-platform Discord and Guilded bots",
+	"type": "module",
+	"version": "0.0.1",
+	"contributors": [
+		"Shadow <shadow@buape.com>",
+		"Codeize <mrcodeize@gmail.com>"
+	],
+	"scripts": {
+		"lint": "eslint . --fix",
+		"build": "unbuild",
+		"clean": "rimraf dist"
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/buape/crossbuild.git",
+		"directory": "packages/crossbuild"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/buape/crossbuild/issues"
+	},
+	"files": [
+		"dist",
+		"LICENSE"
+	],
+	"engines": {
+		"node": ">=16.17.1"
+	},
+	"dependencies": {
+		"@crossbuild/functions": "workspace:^",
+		"@crossbuild/types": "workspace:^",
+		"discord.js": "^14.11.0",
+		"guilded.js": "^0.23.4"
+	}
+}

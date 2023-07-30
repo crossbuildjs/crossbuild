@@ -1,0 +1,45 @@
+{
+	"name": "@crossbuild/repo",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"packageManager": "pnpm@8.6.7",
+	"scripts": {
+		"build": "turbo run build",
+		"clean": "turbo run clean",
+		"docs": "typedoc",
+		"dev": "dotenv -- turbo run dev",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"lint": "turbo run lint",
+		"preinstall": "only-allow pnpm",
+		"pretty": "pnpm run format && pnpm run lint",
+		"changeset": "changeset add",
+		"publish": "changeset version && pnpm run build && changeset publish"
+	},
+	"engines": {
+		"node": ">=18.17.0"
+	},
+	"dependencies": {
+		"@changesets/cli": "^2.26.2",
+		"@typescript-eslint/eslint-plugin": "^6.2.0",
+		"@typescript-eslint/parser": "^6.2.0",
+		"dotenv-cli": "^7.2.1",
+		"eslint": "^8.45.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-config-turbo": "^1.10.11",
+		"prettier": "^3.0.0",
+		"tsc-watch": "^6.0.4",
+		"turbo": "^1.10.11",
+		"unbuild": "^1.2.1"
+	},
+	"devDependencies": {
+		"eslint-import-resolver-typescript": "^3.5.5",
+		"eslint-plugin-import": "^2.27.5",
+		"only-allow": "^1.1.1",
+		"rimraf": "^5.0.1",
+		"typedoc": "^0.24.8",
+		"typescript": "^5.1.6"
+	}
+}
