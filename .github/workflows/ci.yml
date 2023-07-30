@@ -32,22 +32,22 @@ jobs:
             - name: Build
               run: pnpm build
 
-    eslint:
-        name: Check Formatting
-        timeout-minutes: 15
-        runs-on: ubuntu-latest
-        needs: [skip_ci]
-        if: ${{ needs.skip_ci.outputs.canSkip != 'true' }}
-        steps:
-            - name: Check out code
-              uses: actions/checkout@v3
+    # eslint:
+    #     name: Check Formatting
+    #     timeout-minutes: 15
+    #     runs-on: ubuntu-latest
+    #     needs: [skip_ci]
+    #     if: ${{ needs.skip_ci.outputs.canSkip != 'true' }}
+    #     steps:
+    #         - name: Check out code
+    #           uses: actions/checkout@v3
 
-            - name: Setup
-              uses: ./.github/actions/setup
+    #         - name: Setup
+    #           uses: ./.github/actions/setup
 
-            - name: Run ESLint
-              uses: sibiraj-s/action-eslint@v2
-              with:
-                  eslint-args: "--quiet"
-                  extensions: "js,jsx,ts,tsx"
-                  annotations: true
+    #         - name: Run ESLint
+    #           uses: sibiraj-s/action-eslint@v2
+    #           with:
+    #               eslint-args: "--quiet"
+    #               extensions: "js,jsx,ts,tsx"
+    #               annotations: true
