@@ -10,7 +10,7 @@
 	"dependencies": {
 		"@crossbuild/functions": "workspace:^",
 		"crossbuild": "workspace:^",
-		"discord.js": "^14.11.0"
+		"discord.js": "^14.12.1"
 	},
 	"devDependencies": {
 		"@types/node": "^20.4.5"
