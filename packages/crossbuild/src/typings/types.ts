@@ -36,7 +36,7 @@ export interface EventOptions {
 	once?: boolean
 }
 
-export interface ComponentOptions {
+export interface ComponentData {
 	description: string
 	options?: ApplicationCommandOptionData[]
 	permissions?: { guilded: GuildedPermissionString[]; discord: DiscordPermissionsString[] }

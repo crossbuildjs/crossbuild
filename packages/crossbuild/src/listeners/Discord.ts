@@ -1,3 +1,4 @@
+import { GeneratedMessage } from "@crossbuild/types"
 import { CrossBuild, LogLevel, ReceivedInteraction } from "../index.js"
 import { CacheType, Interaction, Message } from "discord.js"
 
@@ -31,7 +32,35 @@ export default class DiscordListeners {
                 key: discordInteraction.commandName,
                 source: "discordInteraction",
                 type: "command",
-                originalDiscordInteraction: discordInteraction
+                originalDiscordInteraction: discordInteraction,
+                server: discordInteraction.guildId ? {
+                    id: discordInteraction.guildId,
+                    name: discordInteraction.guild?.name,
+                    ownerId: discordInteraction.guild?.ownerId || undefined,
+                    iconURL: discordInteraction.guild?.iconURL() || undefined,
+                    description: discordInteraction.guild?.description || undefined
+                } : null,
+                user: {
+                    id: discordInteraction.user.id,
+                    displayName: discordInteraction.user.displayName,
+                    username: discordInteraction.user.username,
+                    avatarURL: discordInteraction.user.avatarURL() || undefined,
+                    permissions: discordInteraction.memberPermissions?.toArray() || [],
+                },
+                channel: discordInteraction.channel ? discordInteraction.channel.isDMBased() ? {
+                    id: discordInteraction.channelId,
+                    send: async (message: GeneratedMessage) => {
+                        await discordInteraction.channel?.send(message)
+                    }
+                } : {
+                    id: discordInteraction.channelId,
+                    name: discordInteraction.channel.name,
+                    parentId: discordInteraction.channel.parentId || undefined,
+                    send: async (message: GeneratedMessage) => {
+                        await discordInteraction?.channel?.send(message)
+                    }
+                } : null
+
             })
             this.client.componentHandler.handleComponent(interaction)
         }
@@ -74,7 +103,34 @@ export default class DiscordListeners {
             source: "discordMessage",
             type: "command",
             originalDiscordMessage: discordMessage,
-            options: flags
+            options: flags,
+            server: discordMessage.guildId ? {
+                id: discordMessage.guildId,
+                name: discordMessage.guild?.name,
+                ownerId: discordMessage.guild?.ownerId || undefined,
+                iconURL: discordMessage.guild?.iconURL() || undefined,
+                description: discordMessage.guild?.description || undefined
+            } : null,
+            user: {
+                id: discordMessage.author.id,
+                displayName: discordMessage.author.displayName,
+                username: discordMessage.author.username,
+                avatarURL: discordMessage.author.avatarURL() || undefined,
+                permissions: discordMessage.member?.permissions?.toArray() || [],
+            },
+            channel: discordMessage.channel ? discordMessage.channel.isDMBased() ? {
+                id: discordMessage.channelId,
+                send: async (message: GeneratedMessage) => {
+                    await discordMessage.channel?.send(message)
+                }
+            } : {
+                id: discordMessage.channelId,
+                name: discordMessage.channel.name,
+                parentId: discordMessage.channel.parentId || undefined,
+                send: async (message: GeneratedMessage) => {
+                    await discordMessage?.channel?.send(message)
+                }
+            } : null
         })
         this.client.componentHandler.handleComponent(interaction)
     }
