@@ -103,7 +103,7 @@ export default class DiscordListeners {
             source: "discordMessage",
             type: "command",
             originalDiscordMessage: discordMessage,
-            options: flags,
+            rawOptions: flags,
             server: discordMessage.guildId ? {
                 id: discordMessage.guildId,
                 name: discordMessage.guild?.name,
