@@ -1,12 +1,12 @@
 import { GuildedPermissionString, SimpleEmbed } from "@crossbuild/types"
-import { CrossBuild, ComponentData, LogLevel, ReceivedInteraction, ComponentType } from "../index.js"
+import { CrossBuild, ComponentData, LogLevel, ReceivedInteraction, ComponentType, OptionsHandler } from "../index.js"
 import { PermissionsString as DiscordPermissionString } from "discord.js"
 import { getGuildedPermissions } from "@crossbuild/functions"
 
 /**
  * The base component class that other components extend from.
  */
-export default class Component {
+export default abstract class Component {
     /**
      * The client that instantiated this component.
      */
@@ -56,7 +56,14 @@ export default class Component {
         this.options = options.options
     }
 
-    public async validate(interaction: ReceivedInteraction): Promise<SimpleEmbed | null> {
+    public async validate(interaction: ReceivedInteraction, options: OptionsHandler): Promise<SimpleEmbed | null> {
+        if (options.errors.length > 0) {
+            return {
+                title: "Invalid Options",
+                description: `The following options are invalid:\n${options.errors.join("\n")}`
+            }
+
+        }
         if (this.serverOnly && !interaction.server) {
             return {
                 title: "Missing Permissions",
@@ -119,7 +126,7 @@ export default class Component {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public async run(interaction: ReceivedInteraction): Promise<any> {
+    public async run(interaction: ReceivedInteraction, _options: OptionsHandler): Promise<any> {
         this.client.log(`${interaction}`, LogLevel.NULL) // This line is here to prevent unused variable errors.
         throw new Error("Not implemented")
     }

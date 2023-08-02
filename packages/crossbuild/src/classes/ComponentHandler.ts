@@ -1,6 +1,6 @@
-import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType } from "../index.js"
+import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType, OptionsHandler } from "../index.js"
 import { generateEmbed, getFiles } from "@crossbuild/functions"
-import { ApplicationCommandData } from "discord.js"
+import { ApplicationCommandData, ApplicationCommandOptionData, ApplicationCommandOptionType } from "discord.js"
 import path from "path"
 
 export default class ComponentHandler {
@@ -64,9 +64,23 @@ export default class ComponentHandler {
                         const data: ApplicationCommandData = {
                             name: command.key,
                             description: command.description || "",
-                            options: command.options || []
+                            options: command.options?.map((option) => {
+                                return {
+                                    type: option.type === "string" ? ApplicationCommandOptionType.String :
+                                        option.type === "integer" ? ApplicationCommandOptionType.Integer :
+                                            option.type === "boolean" ? ApplicationCommandOptionType.Boolean :
+                                                ApplicationCommandOptionType.String,
+                                    name: option.name,
+                                    description: option.description || "",
+                                    required: option.required || false,
+                                    choices: option.choices,
+                                    min_value: option.minValue,
+                                    max_value: option.maxValue,
+                                    min_length: option.minLength,
+                                    max_length: option.maxLength,
+                                } as ApplicationCommandOptionData
+                            })
                         }
-                        console.log(data)
                         return data
                     })
             )
@@ -92,18 +106,20 @@ export default class ComponentHandler {
         const component = this.fetchComponent(key, type)
         if (!component) return this.client.log(`Unable to find ${type} with key ${key}, but it was triggered by a user.`, LogLevel.WARN)
 
+        const options = new OptionsHandler(interaction.rawOptions || {}, component.options || [])
+
         this.specificChecks(interaction, component)
 
-        const missingPermissions = await component.validate(interaction)
+        const missingPermissions = await component.validate(interaction, options)
         if (missingPermissions) return interaction.reply(generateEmbed("error", missingPermissions))
 
-        return this.runComponent(component, interaction)
+        return this.runComponent(component, interaction, options)
     }
 
-    private async runComponent(component: Component, interaction: ReceivedInteraction) {
+    private async runComponent(component: Component, interaction: ReceivedInteraction, options: OptionsHandler) {
         this.client.usersUsingBot.add(interaction.user!.id)
 
-        await component.run(interaction).catch(async (error: unknown): Promise<unknown> => {
+        await component.run(interaction, options).catch(async (error: unknown): Promise<unknown> => {
             this.client.log(`${error}`, LogLevel.ERROR)
             const toSend = generateEmbed(
                 "error",

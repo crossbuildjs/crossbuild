@@ -1,6 +1,5 @@
 import { GuildedPermissionString } from "@crossbuild/types"
 import {
-    ApplicationCommandOptionData,
     ClientEvents,
     ClientOptions as DiscordClientOptions,
     PermissionsString as DiscordPermissionsString
@@ -37,11 +36,35 @@ export interface EventOptions {
 }
 
 export interface ComponentData {
+	/** The description of the component */
 	description: string
-	options?: ApplicationCommandOptionData[]
-	permissions?: { guilded: GuildedPermissionString[]; discord: DiscordPermissionsString[] }
+	options?: Array<ComponentOption>
+	permissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
 	serverOnly?: boolean
 	ownerOnly?: boolean
 }
+
+export interface ComponentOption {
+	/** The name of the option */
+	name: string
+	/** The description of the option */
+	description: string
+	/** Whether the option is required */
+	required?: boolean
+	/** The type of the option */
+	type: "string" | "integer" | "number" | "boolean" // | "channel" | "role" | "attachment" | "user"
+	/** If you want to restrict the user to a set of choices, you can specify them here. */
+	choices?: { name: string; value: string | number | boolean }[]
+	/** If the type is a number, you can specify a minimum value */
+	minValue?: number
+	/** If the type is a number, you can specify a maximum value */
+	maxValue?: number
+	/** If the type is a string, you can specify a minimum length */
+	minLength?: number
+	/** If the type is a string, you can specify a maximum length */
+	maxLength?: number
+}
+
+export type InteractionRawOptions = { [key: string]: string | number | boolean }
 
 export type ComponentType = "command"

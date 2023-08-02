@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction, PermissionsString, Message as DiscordMessage } from "discord.js"
-import { CrossBuild, LogLevel } from "../index.js"
+import { CrossBuild, InteractionRawOptions, LogLevel } from "../index.js"
 import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
 import { Message as GuildedMessage } from "guilded.js"
 
-interface ReceivedInteractionData {
+export interface ReceivedInteractionData {
     key: string
     source: "discordInteraction" | "discordMessage" | "guilded" | "http"
     type: "command"
@@ -29,8 +29,7 @@ interface ReceivedInteractionData {
         avatarURL?: string
         permissions?: PermissionsString[] | GuildedPermissionString[]
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    options?: { [key: string]: any }
+    rawOptions?: InteractionRawOptions
 }
 
 export default class ReceivedInteraction {
@@ -47,14 +46,15 @@ export default class ReceivedInteraction {
     public readonly originalDiscordMessage?: ReceivedInteractionData["originalDiscordMessage"]
     /** The original data of the Message from Guilded, if this was triggered from there */
     public readonly originalGuildedMessage?: ReceivedInteractionData["originalGuildedMessage"]
-    /** The options of this interaction */
-    public readonly options?: ReceivedInteractionData["options"]
+    /** The raw unprocessed options of this interaction */
+    public readonly rawOptions: ReceivedInteractionData["rawOptions"]
     /** The server this interaction was triggered in */
     public readonly server?: ReceivedInteractionData["server"]
     /** The channel this interaction was triggered in */
     public channel?: ReceivedInteractionData["channel"]
     /** The user that triggered this interaction */
     public user?: ReceivedInteractionData["user"]
+
 
     constructor(client: CrossBuild, data: ReceivedInteractionData) {
         this.client = client
@@ -64,17 +64,27 @@ export default class ReceivedInteraction {
         this.source = data.source
         this.type = data.type
 
-        for (const key in data.options) {
-            if (data.options[key] === "true") data.options[key] = true
-            if (data.options[key] === "false") data.options[key] = false
-            if (parseInt(data.options[key])) data.options[key] = parseInt(data.options[key])
+        this.rawOptions = {}
+        for (const key in data.rawOptions) {
+            let value = data.rawOptions[key]
+            if (typeof value === "string") {
+                if (parseInt(value)) value = parseInt(value)
+                if (value === "true") value = true
+                if (value === "false") value = false
+
+            }
+            this.rawOptions[key] = value
         }
 
-        this.options = data.options
+
 
         this.server = data.server
         this.channel = data.channel
         this.user = data.user
+
+        this.originalDiscordInteraction = data.originalDiscordInteraction || undefined
+        this.originalDiscordMessage = data.originalDiscordMessage || undefined
+        this.originalGuildedMessage = data.originalGuildedMessage || undefined
     }
 
     public isDiscordComponent() {

@@ -42,7 +42,7 @@ export default class GuildedListener {
             source: "guilded",
             type: "command",
             originalGuildedMessage: guildedMessage,
-            options: flags,
+            rawOptions: flags,
             server: guildedMessage.server ? {
                 id: guildedMessage.server.id,
                 ownerId: guildedMessage.server.ownerId,
