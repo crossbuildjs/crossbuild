@@ -1,13 +1,13 @@
-import { ChatInputCommandInteraction, PermissionsString, Message as DiscordMessage } from "discord.js"
-import { CrossBuild, InteractionRawOptions, LogLevel } from "../index.js"
+import { PermissionsString, Message as DiscordMessage, BaseInteraction } from "discord.js"
+import { ComponentType, CrossBuild, InteractionRawOptions, LogLevel } from "../index.js"
 import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
 import { Message as GuildedMessage } from "guilded.js"
 
 export interface ReceivedInteractionData {
     key: string
     source: "discordInteraction" | "discordMessage" | "guilded" | "http"
-    type: "command"
-    originalDiscordInteraction?: ChatInputCommandInteraction
+    type: ComponentType
+    originalDiscordInteraction?: BaseInteraction
     originalDiscordMessage?: DiscordMessage
     originalGuildedMessage?: GuildedMessage
     server: {
@@ -95,7 +95,12 @@ export default class ReceivedInteraction {
         switch (this.source) {
             case "discordInteraction":
                 if (!this.originalDiscordInteraction) throw new Error("Cannot reply to a Discord interaction without the original interaction.")
-                await this.originalDiscordInteraction.reply(message)
+                // this line is needed to narrow the type of BaseInteraction to provide the reply() function
+                if (this.originalDiscordInteraction.isChatInputCommand() || this.originalDiscordInteraction.isButton()) {
+                    await this.originalDiscordInteraction.reply(message)
+                } else {
+                    throw new Error("A interaction that could not be replied to was found.")
+                }
                 break
             case "discordMessage":
                 if (!this.originalDiscordMessage) throw new Error("Cannot reply to a Discord message without the original message.")

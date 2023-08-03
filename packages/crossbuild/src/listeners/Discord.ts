@@ -27,51 +27,67 @@ export default class DiscordListeners {
     }
 
     private async interaction(discordInteraction: Interaction<CacheType>) {
+        const server = discordInteraction.guildId ? {
+            id: discordInteraction.guildId,
+            name: discordInteraction.guild?.name,
+            ownerId: discordInteraction.guild?.ownerId || undefined,
+            iconURL: discordInteraction.guild?.iconURL() || undefined,
+            description: discordInteraction.guild?.description || undefined
+        } : null
+        const user = {
+            id: discordInteraction.user.id,
+            displayName: discordInteraction.user.displayName,
+            username: discordInteraction.user.username,
+            avatarURL: discordInteraction.user.avatarURL() || undefined,
+            permissions: discordInteraction.memberPermissions?.toArray() || [],
+        }
+
         if (discordInteraction.isChatInputCommand()) {
+            const channel = discordInteraction.channel ? discordInteraction.channel.isDMBased() ? {
+                id: discordInteraction.channelId,
+                send: async (message: GeneratedMessage) => {
+                    await discordInteraction.channel?.send(message)
+                }
+            } : {
+                id: discordInteraction.channelId,
+                name: discordInteraction.channel.name,
+                parentId: discordInteraction.channel.parentId || undefined,
+                send: async (message: GeneratedMessage) => {
+                    await discordInteraction?.channel?.send(message)
+                }
+            } : null
             const interaction = new ReceivedInteraction(this.client, {
                 key: discordInteraction.commandName,
                 source: "discordInteraction",
                 type: "command",
                 originalDiscordInteraction: discordInteraction,
-                server: discordInteraction.guildId ? {
-                    id: discordInteraction.guildId,
-                    name: discordInteraction.guild?.name,
-                    ownerId: discordInteraction.guild?.ownerId || undefined,
-                    iconURL: discordInteraction.guild?.iconURL() || undefined,
-                    description: discordInteraction.guild?.description || undefined
-                } : null,
-                user: {
-                    id: discordInteraction.user.id,
-                    displayName: discordInteraction.user.displayName,
-                    username: discordInteraction.user.username,
-                    avatarURL: discordInteraction.user.avatarURL() || undefined,
-                    permissions: discordInteraction.memberPermissions?.toArray() || [],
-                },
-                channel: discordInteraction.channel ? discordInteraction.channel.isDMBased() ? {
-                    id: discordInteraction.channelId,
-                    send: async (message: GeneratedMessage) => {
-                        await discordInteraction.channel?.send(message)
-                    }
-                } : {
-                    id: discordInteraction.channelId,
-                    name: discordInteraction.channel.name,
-                    parentId: discordInteraction.channel.parentId || undefined,
-                    send: async (message: GeneratedMessage) => {
-                        await discordInteraction?.channel?.send(message)
-                    }
-                } : null
-
+                server, user, channel
             })
             this.client.componentHandler.handleComponent(interaction)
         }
-        // else if (discordInteraction.isButton()) {
-        //     const interaction = new ReceivedInteraction(this.client, {
-        //         key: discordInteraction.customId,
-        //         source: "discord",
-        //         type: "button"
-        //     })
-        //     this.client.componentHandler.handleComponent(interaction)
-        // } else if (discordInteraction.isAnySelectMenu()) {
+        else if (discordInteraction.isButton()) {
+            const channel = discordInteraction.channel ? discordInteraction.channel.isDMBased() ? {
+                id: discordInteraction.channelId,
+                send: async (message: GeneratedMessage) => {
+                    await discordInteraction.channel?.send(message)
+                }
+            } : {
+                id: discordInteraction.channelId,
+                name: discordInteraction.channel.name,
+                parentId: discordInteraction.channel.parentId || undefined,
+                send: async (message: GeneratedMessage) => {
+                    await discordInteraction?.channel?.send(message)
+                }
+            } : null
+            const interaction = new ReceivedInteraction(this.client, {
+                key: discordInteraction.customId,
+                source: "discordInteraction",
+                type: "button",
+                originalDiscordInteraction: discordInteraction,
+                server, user, channel
+            })
+            this.client.componentHandler.handleComponent(interaction)
+        } // else if (discordInteraction.isAnySelectMenu()) {
         //     const interaction = new ReceivedInteraction(this.client, {
         //         key: discordInteraction.customId,
         //         source: "discord",
