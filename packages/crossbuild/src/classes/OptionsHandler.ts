@@ -6,7 +6,6 @@ export default class InteractionOptions {
 
 
     constructor(interactionOptions: InteractionRawOptions, componentOptions: Array<ComponentOption>) {
-        console.log(interactionOptions, componentOptions)
         componentOptions.forEach(option => {
             const optionData = interactionOptions[option.name]
             this.data[option.name] = this.parseOption(optionData, option)
@@ -38,7 +37,6 @@ export default class InteractionOptions {
     }
 
     private parseOption(option: unknown, shouldBe: ComponentOption) {
-        console.log(option, shouldBe)
         if (!option) {
             if (shouldBe.required) this.errorData.push(`Option ${shouldBe.name} is required!`)
             return option

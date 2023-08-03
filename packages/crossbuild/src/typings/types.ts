@@ -67,4 +67,4 @@ export interface ComponentOption {
 
 export type InteractionRawOptions = { [key: string]: string | number | boolean }
 
-export type ComponentType = "command" | "button" 
+export type ComponentType = "command" | "button" | "selectMenu"

@@ -87,14 +87,30 @@ export default class DiscordListeners {
                 server, user, channel
             })
             this.client.componentHandler.handleComponent(interaction)
-        } // else if (discordInteraction.isAnySelectMenu()) {
-        //     const interaction = new ReceivedInteraction(this.client, {
-        //         key: discordInteraction.customId,
-        //         source: "discord",
-        //         type: "dropdown"
-        //     })
-        //     this.client.componentHandler.handleComponent(interaction)
-        // }
+        } else if (discordInteraction.isAnySelectMenu()) {
+            const channel = discordInteraction.channel ? discordInteraction.channel.isDMBased() ? {
+                id: discordInteraction.channelId,
+                send: async (message: GeneratedMessage) => {
+                    await discordInteraction.channel?.send(message)
+                }
+            } : {
+                id: discordInteraction.channelId,
+                name: discordInteraction.channel.name,
+                parentId: discordInteraction.channel.parentId || undefined,
+                send: async (message: GeneratedMessage) => {
+                    await discordInteraction?.channel?.send(message)
+                }
+            } : null
+            const interaction = new ReceivedInteraction(this.client, {
+                key: discordInteraction.customId,
+                source: "discordInteraction",
+                type: "selectMenu",
+                originalDiscordInteraction: discordInteraction,
+                server, user, channel,
+                selectMenuValues: discordInteraction.values
+            })
+            this.client.componentHandler.handleComponent(interaction)
+        }
     }
 
     private async message(discordMessage: Message) {

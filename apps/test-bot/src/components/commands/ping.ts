@@ -24,13 +24,36 @@ export default class Cmd extends Component {
                             type: ComponentType.Button,
                             style: ButtonStyle.Secondary,
                             label: "Ping",
-                            custom_id: "ping"
+                            custom_id: "buttonping"
                         },
                         {
                             type: ComponentType.Button,
                             style: ButtonStyle.Link,
                             label: "CrossBuild",
                             url: "https://crossbuild.buape.com"
+                        }
+                    ]
+                },
+                {
+                    type: ComponentType.ActionRow,
+                    components: [
+                        {
+                            type: ComponentType.StringSelect,
+                            custom_id: "selectping",
+                            options: [
+                                {
+                                    label: "One",
+                                    value: "1"
+                                },
+                                {
+                                    label: "Two",
+                                    value: "2"
+                                },
+                                {
+                                    label: "Three",
+                                    value: "3"
+                                }
+                            ]
                         }
                     ]
                 }

@@ -29,7 +29,8 @@ export interface ReceivedInteractionData {
         avatarURL?: string
         permissions?: PermissionsString[] | GuildedPermissionString[]
     }
-    rawOptions?: InteractionRawOptions
+    rawOptions?: InteractionRawOptions,
+    selectMenuValues?: Array<string>
 }
 
 export default class ReceivedInteraction {
@@ -54,6 +55,8 @@ export default class ReceivedInteraction {
     public channel?: ReceivedInteractionData["channel"]
     /** The user that triggered this interaction */
     public user?: ReceivedInteractionData["user"]
+    /** The values of the select menu that triggered this interaction */
+    public selectMenuValues?: ReceivedInteractionData["selectMenuValues"]
 
 
     constructor(client: CrossBuild, data: ReceivedInteractionData) {
@@ -76,7 +79,7 @@ export default class ReceivedInteraction {
             this.rawOptions[key] = value
         }
 
-
+        this.selectMenuValues = data.selectMenuValues
 
         this.server = data.server
         this.channel = data.channel
@@ -96,7 +99,7 @@ export default class ReceivedInteraction {
             case "discordInteraction":
                 if (!this.originalDiscordInteraction) throw new Error("Cannot reply to a Discord interaction without the original interaction.")
                 // this line is needed to narrow the type of BaseInteraction to provide the reply() function
-                if (this.originalDiscordInteraction.isChatInputCommand() || this.originalDiscordInteraction.isButton()) {
+                if (this.originalDiscordInteraction.isChatInputCommand() || this.originalDiscordInteraction.isButton() || this.originalDiscordInteraction.isAnySelectMenu()) {
                     await this.originalDiscordInteraction.reply(message)
                 } else {
                     throw new Error("A interaction that could not be replied to was found.")
