@@ -4,6 +4,7 @@ import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
 import { Message as GuildedMessage } from "guilded.js"
 
 export interface ReceivedInteractionData {
+    id: string
     key: string
     source: "discordInteraction" | "discordMessage" | "guilded" | "http"
     type: ComponentType
@@ -34,7 +35,9 @@ export interface ReceivedInteractionData {
 }
 
 export default class ReceivedInteraction {
-    private readonly client: CrossBuild
+    private readonly crossbuild: CrossBuild
+    /** The ID of this interaction */
+    readonly id: string
     /** The key of this interaction */
     public readonly key: string
     /** The source of this interaction */
@@ -59,10 +62,11 @@ export default class ReceivedInteraction {
     public selectMenuValues?: ReceivedInteractionData["selectMenuValues"]
 
 
-    constructor(client: CrossBuild, data: ReceivedInteractionData) {
-        this.client = client
+    constructor(crossbuild: CrossBuild, data: ReceivedInteractionData) {
+        this.crossbuild = crossbuild
 
-        this.client.log(`${client}`, LogLevel.NULL)
+        this.crossbuild.log(`${crossbuild}`, LogLevel.NULL)
+        this.id = data.id
         this.key = data.key
         this.source = data.source
         this.type = data.type
@@ -94,31 +98,30 @@ export default class ReceivedInteraction {
         return this.source === "discordInteraction" && this.type !== "command"
     }
 
-    public async reply(message: GeneratedMessage) {
+    /**
+     * Reply to an interaction with a message
+     * @param message The message you want to send
+     * @returns The ID of the resulting message
+     */
+    public async reply(message: GeneratedMessage): Promise<string> {
         switch (this.source) {
             case "discordInteraction":
                 if (!this.originalDiscordInteraction) throw new Error("Cannot reply to a Discord interaction without the original interaction.")
                 // this line is needed to narrow the type of BaseInteraction to provide the reply() function
                 if (this.originalDiscordInteraction.isChatInputCommand() || this.originalDiscordInteraction.isButton() || this.originalDiscordInteraction.isAnySelectMenu()) {
-                    await this.originalDiscordInteraction.reply(message)
+                    return (await this.originalDiscordInteraction.reply(message)).id
                 } else {
                     throw new Error("A interaction that could not be replied to was found.")
                 }
-                break
             case "discordMessage":
                 if (!this.originalDiscordMessage) throw new Error("Cannot reply to a Discord message without the original message.")
-                await this.originalDiscordMessage.reply(message)
-                break
+                return (await this.originalDiscordMessage.reply(message)).id
             case "guilded":
                 if (!this.originalGuildedMessage) throw new Error("Cannot reply to a Guilded message without the original message.")
-                await this.originalGuildedMessage.reply(message).catch((err) => {
-                    this.client.log(err, LogLevel.ERROR)
-                })
-                break
+                return (await this.originalGuildedMessage.reply(message)).id
             case "http":
             default:
                 throw new Error("Cannot reply to a non-Discord interaction.")
         }
-        return
     }
 }

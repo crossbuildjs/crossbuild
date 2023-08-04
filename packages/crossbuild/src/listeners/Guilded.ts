@@ -1,9 +1,12 @@
 import { GeneratedMessage } from "@crossbuild/types"
-import { CrossBuild, LogLevel, ReceivedInteraction } from "../index.js"
+import { CrossBuild, LogLevel, Paginator, ReceivedInteraction } from "../index.js"
+import { Collection } from "discord.js"
 import { Message } from "guilded.js"
 
 export default class GuildedListener {
     client: CrossBuild
+    paginators: Collection<string, Paginator> = new Collection()
+
     constructor(client: CrossBuild) {
         this.client = client
     }
@@ -12,12 +15,25 @@ export default class GuildedListener {
         this.client.guildedClient?.on("messageCreated", (message) => {
             this.message(message)
         })
+        this.client.guildedClient?.on("messageReactionCreated", (reaction) => {
+            console.log(reaction)
+            const paginator = this.paginators.get(reaction.messageId)
+            if (paginator) return paginator.handleGuildedReaction(reaction)
+        })
     }
 
     public async stopListening() {
         this.client.guildedClient?.off("messageCreated", (message) => {
             this.message(message)
         })
+    }
+
+    public watchPaginator(paginator: Paginator, messageId: string) {
+        this.paginators.set(messageId, paginator)
+    }
+
+    public unwatchPaginator(paginator: Paginator) {
+        this.paginators.delete(paginator.id)
     }
 
     private async message(guildedMessage: Message) {
@@ -38,6 +54,7 @@ export default class GuildedListener {
         }
 
         const interaction = new ReceivedInteraction(this.client, {
+            id: guildedMessage.id,
             key: command,
             source: "guilded",
             type: "command",

@@ -1,17 +1,24 @@
 import { GeneratedMessage } from "@crossbuild/types"
-import { CrossBuild, LogLevel, ReceivedInteraction } from "../index.js"
-import { CacheType, Interaction, Message } from "discord.js"
+import { CrossBuild, LogLevel, Paginator, ReceivedInteraction } from "../index.js"
+import { CacheType, Collection, Interaction, Message } from "discord.js"
 
 export default class DiscordListeners {
     client: CrossBuild
+    paginators: Collection<string, Paginator> = new Collection()
+
     constructor(client: CrossBuild) {
         this.client = client
     }
 
     public async startListening() {
         this.client.discordClient?.on("interactionCreate", (interaction) => {
+            if (interaction.isButton() && interaction.customId.startsWith("cb")) {
+                const paginator = this.paginators.get(interaction.customId.split(":")[1].split(",")[0])
+                if (paginator) return paginator.handleDiscordInteraction(interaction)
+            }
             this.interaction(interaction)
         })
+
         this.client.discordClient?.on("messageCreate", (message) => {
             this.message(message)
         })
@@ -24,6 +31,14 @@ export default class DiscordListeners {
         this.client.discordClient?.off("messageCreate", (message) => {
             this.message(message)
         })
+    }
+
+    public watchPaginator(paginator: Paginator) {
+        this.paginators.set(paginator.id, paginator)
+    }
+
+    public unwatchPaginator(paginator: Paginator) {
+        this.paginators.delete(paginator.id)
     }
 
     private async interaction(discordInteraction: Interaction<CacheType>) {
@@ -57,6 +72,7 @@ export default class DiscordListeners {
                 }
             } : null
             const interaction = new ReceivedInteraction(this.client, {
+                id: discordInteraction.id,
                 key: discordInteraction.commandName,
                 source: "discordInteraction",
                 type: "command",
@@ -80,6 +96,7 @@ export default class DiscordListeners {
                 }
             } : null
             const interaction = new ReceivedInteraction(this.client, {
+                id: discordInteraction.id,
                 key: discordInteraction.customId,
                 source: "discordInteraction",
                 type: "button",
@@ -102,6 +119,7 @@ export default class DiscordListeners {
                 }
             } : null
             const interaction = new ReceivedInteraction(this.client, {
+                id: discordInteraction.id,
                 key: discordInteraction.customId,
                 source: "discordInteraction",
                 type: "selectMenu",
@@ -131,6 +149,7 @@ export default class DiscordListeners {
         }
 
         const interaction = new ReceivedInteraction(this.client, {
+            id: discordMessage.id,
             key: command,
             source: "discordMessage",
             type: "command",
