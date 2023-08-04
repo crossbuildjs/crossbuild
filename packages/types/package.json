@@ -2,7 +2,7 @@
 	"name": "@crossbuild/types",
 	"description": "Typings for CrossBuild",
 	"type": "module",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"authors": [
 		"Shadow <shadow@buape.com>",
 		"Codeize <codeize@buape.com>"

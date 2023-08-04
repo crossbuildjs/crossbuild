@@ -1,5 +1,21 @@
 # crossbuild
 
+## 0.3.0
+
+### Minor Changes
+
+-   0bf242e: Add buttons and select menus as component types
+-   6a0f5da: Add cooldowns to components
+-   35dfe13: Add a paginator utility
+
+### Patch Changes
+
+-   fe65ae6: Add client permissions checks for Components
+-   Updated dependencies [35dfe13]
+-   Updated dependencies [fe65ae6]
+    -   @crossbuild/types@0.1.1
+    -   @crossbuild/functions@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

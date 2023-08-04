@@ -1,5 +1,13 @@
 # @crossbuild/functions
 
+## 0.2.1
+
+### Patch Changes
+
+-   fe65ae6: Add client permissions checks for Components
+-   Updated dependencies [35dfe13]
+    -   @crossbuild/types@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes
