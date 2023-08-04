@@ -12,15 +12,16 @@ export default class CrossBuild {
     public components: Collection<`${ComponentType}-${string}`, Component>
     public hasteStore: Collection<string, string[]>
     public usersUsingBot = new Set<Snowflake>()
+    public cooldowns = new Collection<`${ComponentType}-${string}`, Collection<Snowflake, number>>()
     public config: Config
     public readonly __dirname: string
     public readonly discordListener: DiscordListener
     public readonly guildedListener: GuildedListener
 
     /**
-	 * Create our client.
-	 * @param options - The options for our client.
-	 */
+     * Create our client.
+     * @param options - The options for our client.
+     */
     constructor(config: Config) {
         if (config.discordOptions && config.discordToken && config.discordToken.length > 0) {
             this.discordClient = new DiscordClient(config.discordOptions)
@@ -73,10 +74,10 @@ export default class CrossBuild {
     }
 
     /**
-	 * Log to the console. This function can be overridden to provide a custom logger.
-	 * @param message - The message to log.
-	 * @param level - The level of the log.
-	 */
+     * Log to the console. This function can be overridden to provide a custom logger.
+     * @param message - The message to log.
+     * @param level - The level of the log.
+     */
     public log = (message: string, level: LogLevel = LogLevel.INFO) => {
         switch (level) {
             case LogLevel.INFO:
@@ -100,12 +101,12 @@ export default class CrossBuild {
     }
 
     /**
-	 * This function is used when you want to slowly generate a hastebin.
-	 * It provides a collection that can be accessed from the client, and will automatically append each string to a new line.
-	 * You can use the {@link hasteFlush} function to upload the hastebin.
-	 * @param id The ID of the store you are using.
-	 * @param text The text to add to the store.
-	 */
+     * This function is used when you want to slowly generate a hastebin.
+     * It provides a collection that can be accessed from the client, and will automatically append each string to a new line.
+     * You can use the {@link hasteFlush} function to upload the hastebin.
+     * @param id The ID of the store you are using.
+     * @param text The text to add to the store.
+     */
     public hasteLog(id: string, text: string) {
         const data = this.hasteStore.get(id) || []
         data.push(`${text}\n`)
@@ -113,11 +114,11 @@ export default class CrossBuild {
     }
 
     /**
-	 * This function is used to upload a hastebin stored using the {@link hasteLog} function.
-	 * @param id - The ID of the store you are using.
-	 * @param url - The URL to upload the hastebin to. If not provided, it will use the default hastebin.
-	 * @returns The resulting URL
-	 */
+     * This function is used to upload a hastebin stored using the {@link hasteLog} function.
+     * @param id - The ID of the store you are using.
+     * @param url - The URL to upload the hastebin to. If not provided, it will use the default hastebin.
+     * @returns The resulting URL
+     */
     public async hasteFlush(id: string, url?: string) {
         const raw = this.hasteStore.get(id) || []
         const final = raw.join("\n")

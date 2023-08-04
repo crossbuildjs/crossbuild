@@ -1,6 +1,6 @@
 import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType, OptionsHandler } from "../index.js"
 import { generateEmbed, getFiles } from "@crossbuild/functions"
-import { ApplicationCommandData, ApplicationCommandOptionData, ApplicationCommandOptionType } from "discord.js"
+import { ApplicationCommandData, ApplicationCommandOptionData, ApplicationCommandOptionType, Collection } from "discord.js"
 import path from "path"
 
 export default class ComponentHandler {
@@ -98,6 +98,26 @@ export default class ComponentHandler {
         return this.client.log(`${interaction}${component}`, LogLevel.NULL) // This line is here to prevent unused variable errors
     }
 
+    public checkCooldown(interaction: ReceivedInteraction, component: Component) {
+        if (!component.cooldown) return false
+        const componentCooldowns = this.client.cooldowns.get(`${component.type}-${component.key}`) || new Collection()
+        const cooldown = componentCooldowns.get(interaction.user!.id)
+        if (cooldown) {
+            const timeLeft = cooldown - Date.now()
+            if (timeLeft > 0) {
+                const seconds = Math.ceil(timeLeft / 1000)
+                return interaction.reply(generateEmbed("error", { title: "You are on a cooldown!", description: `You are on cooldown for ${seconds} more second${seconds === 1 ? "" : "s"}.` }))
+            }
+        }
+    }
+
+    public setCooldown(interaction: ReceivedInteraction, component: Component) {
+        if (!component.cooldown) return
+        const componentCooldowns = this.client.cooldowns.get(`${component.type}-${component.key}`) || new Collection()
+        componentCooldowns.set(interaction.user!.id, Date.now() + component.cooldown)
+        this.client.cooldowns.set(`${component.type}-${component.key}`, componentCooldowns)
+    }
+
     public async handleComponent(interaction: ReceivedInteraction) {
         const key = interaction.key
         const type = interaction.type
@@ -105,6 +125,8 @@ export default class ComponentHandler {
             return this.client.log(`Ignoring ${type} with key ${key}, it should be handled with a collector on a message.`, LogLevel.DEBUG)
         const component = this.fetchComponent(key, type)
         if (!component) return this.client.log(`Unable to find ${type} with key ${key}, but it was triggered by a user.`, LogLevel.WARN)
+
+        this.checkCooldown(interaction, component)
 
         const options = new OptionsHandler(interaction.rawOptions || {}, component.options || [])
 
@@ -135,5 +157,7 @@ export default class ComponentHandler {
             // if (interaction.deferred) return interaction.editReply(toSend)
             return interaction.reply(toSend)
         })
+
+        this.setCooldown(interaction, component)
     }
 }
