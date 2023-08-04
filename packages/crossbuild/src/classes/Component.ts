@@ -1,3 +1,4 @@
+
 import { GuildedPermissionString, SimpleEmbed } from "@crossbuild/types"
 import { CrossBuild, ComponentData, LogLevel, ReceivedInteraction, ComponentType, OptionsHandler } from "../index.js"
 import { PermissionsString as DiscordPermissionString } from "discord.js"
@@ -80,7 +81,7 @@ export default abstract class Component {
             if (this.ownerOnly && interaction.server?.ownerId !== interaction.user?.id) {
                 return {
                     title: "Missing Permissions",
-                    description: `This ${this.type} can only be ran by the owner of this server!`
+                    description: `This ${this.type} can only be run by the owner of this server!`
                 }
             }
 
