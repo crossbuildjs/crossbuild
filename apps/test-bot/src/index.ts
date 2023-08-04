@@ -2,7 +2,7 @@ import { CrossBuild, LogLevel } from "crossbuild"
 
 const cb = new CrossBuild({
     name: "Test Bot",
-    componentPaths: ["/src/components"],
+    componentPaths: ["/src/components/buttons", "/src/components/commands", "/src/components/selectMenus"],
     discordOptions: {
         intents: ["Guilds", "GuildMessages", "MessageContent"]
     },

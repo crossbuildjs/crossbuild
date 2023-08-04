@@ -1,13 +1,13 @@
-import { ChatInputCommandInteraction, PermissionsString, Message as DiscordMessage } from "discord.js"
-import { CrossBuild, InteractionRawOptions, LogLevel } from "../index.js"
+import { PermissionsString, Message as DiscordMessage, BaseInteraction } from "discord.js"
+import { ComponentType, CrossBuild, InteractionRawOptions, LogLevel } from "../index.js"
 import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
 import { Message as GuildedMessage } from "guilded.js"
 
 export interface ReceivedInteractionData {
     key: string
     source: "discordInteraction" | "discordMessage" | "guilded" | "http"
-    type: "command"
-    originalDiscordInteraction?: ChatInputCommandInteraction
+    type: ComponentType
+    originalDiscordInteraction?: BaseInteraction
     originalDiscordMessage?: DiscordMessage
     originalGuildedMessage?: GuildedMessage
     server: {
@@ -29,7 +29,8 @@ export interface ReceivedInteractionData {
         avatarURL?: string
         permissions?: PermissionsString[] | GuildedPermissionString[]
     }
-    rawOptions?: InteractionRawOptions
+    rawOptions?: InteractionRawOptions,
+    selectMenuValues?: Array<string>
 }
 
 export default class ReceivedInteraction {
@@ -54,6 +55,8 @@ export default class ReceivedInteraction {
     public channel?: ReceivedInteractionData["channel"]
     /** The user that triggered this interaction */
     public user?: ReceivedInteractionData["user"]
+    /** The values of the select menu that triggered this interaction */
+    public selectMenuValues?: ReceivedInteractionData["selectMenuValues"]
 
 
     constructor(client: CrossBuild, data: ReceivedInteractionData) {
@@ -76,7 +79,7 @@ export default class ReceivedInteraction {
             this.rawOptions[key] = value
         }
 
-
+        this.selectMenuValues = data.selectMenuValues
 
         this.server = data.server
         this.channel = data.channel
@@ -95,7 +98,12 @@ export default class ReceivedInteraction {
         switch (this.source) {
             case "discordInteraction":
                 if (!this.originalDiscordInteraction) throw new Error("Cannot reply to a Discord interaction without the original interaction.")
-                await this.originalDiscordInteraction.reply(message)
+                // this line is needed to narrow the type of BaseInteraction to provide the reply() function
+                if (this.originalDiscordInteraction.isChatInputCommand() || this.originalDiscordInteraction.isButton() || this.originalDiscordInteraction.isAnySelectMenu()) {
+                    await this.originalDiscordInteraction.reply(message)
+                } else {
+                    throw new Error("A interaction that could not be replied to was found.")
+                }
                 break
             case "discordMessage":
                 if (!this.originalDiscordMessage) throw new Error("Cannot reply to a Discord message without the original message.")

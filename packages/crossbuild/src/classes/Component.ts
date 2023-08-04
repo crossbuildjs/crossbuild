@@ -72,7 +72,7 @@ export default abstract class Component {
         if (this.serverOnly && !interaction.server) {
             return {
                 title: "Missing Permissions",
-                description: "This action can only be used in servers!"
+                description: `This ${this.type} can only be used in servers!`
             }
         }
 
@@ -80,7 +80,7 @@ export default abstract class Component {
             if (this.ownerOnly && interaction.server?.ownerId !== interaction.user?.id) {
                 return {
                     title: "Missing Permissions",
-                    description: "This action can only be ran by the owner of this server!"
+                    description: `This ${this.type} can only be ran by the owner of this server!`
                 }
             }
 
@@ -94,7 +94,7 @@ export default abstract class Component {
                     if (missingPermissions.length > 0) {
                         return {
                             title: "Missing Permissions",
-                            description: `This action requires the following permissions: ${missingPermissions
+                            description: `This ${this.type} requires the following permissions: ${missingPermissions
                                 .map((permission) => {
                                     return permission.replace(/([A-Z])/g, " $1")
                                 })
@@ -112,7 +112,7 @@ export default abstract class Component {
                     if (missingPermissions.length > 0) {
                         return {
                             title: "Missing Permissions",
-                            description: `This action requires the following permissions: ${missingPermissions
+                            description: `This ${this.type} requires the following permissions: ${missingPermissions
                                 .map((permission) => {
                                     return permission.replace(/([A-Z])/g, " $1")
                                 })
