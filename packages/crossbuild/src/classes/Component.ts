@@ -22,6 +22,10 @@ export default abstract class Component {
      */
     public readonly type: ComponentType
     /**
+     * The cooldown for this component, given in milliseconds.
+     */
+    public readonly cooldown?: number
+    /**
      * Whether this component can only be used in servers.
      */
     private readonly serverOnly: boolean
@@ -55,6 +59,7 @@ export default abstract class Component {
         this.key = key
         this.type = type
         this.client = client
+        this.cooldown = options.cooldown || 0
         this.serverOnly = options.serverOnly || false
         this.ownerOnly = options.ownerOnly || false
         this.description = options.description

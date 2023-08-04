@@ -43,6 +43,7 @@ export interface ComponentData {
 	clientPermissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
 	serverOnly?: boolean
 	ownerOnly?: boolean
+	cooldown?: number
 }
 
 export interface ComponentOption {
