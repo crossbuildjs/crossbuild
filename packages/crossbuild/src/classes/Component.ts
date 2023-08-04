@@ -44,6 +44,11 @@ export default abstract class Component {
      * `guilded` is an array of Guilded permissions, and `discord` is an array of Discord permissions.
      */
     public readonly permissions?: ComponentData["permissions"]
+    /**
+     * The permissions required to run this component.
+     * This is the same as the {@link Component#permissions} property
+     */
+    public readonly clientPermissions?: ComponentData["clientPermissions"]
 
     constructor(key: string, type: ComponentType, client: CrossBuild, options: ComponentData) {
         this.key = key
@@ -97,7 +102,8 @@ export default abstract class Component {
                         }
                     }
                 } else if (this.permissions.guilded && interaction.source === "guilded") {
-                    interaction.user.permissions = await getGuildedPermissions(interaction.originalGuildedMessage!, this.client.guildedClient!)
+                    const member = await this.client.guildedClient!.members.fetch(interaction.server.id, interaction.user.id)
+                    interaction.user.permissions = await getGuildedPermissions(member, interaction.server.id, this.client.guildedClient!)
                     const userPermissions = interaction.user?.permissions as GuildedPermissionString[]
                     const missingPermissions = this.permissions.guilded.filter(
                         (permission: GuildedPermissionString) => !userPermissions.includes(permission)
@@ -107,6 +113,45 @@ export default abstract class Component {
                         return {
                             title: "Missing Permissions",
                             description: `This action requires the following permissions: ${missingPermissions
+                                .map((permission) => {
+                                    return permission.replace(/([A-Z])/g, " $1")
+                                })
+                                .join(", ")}`
+                        }
+                    }
+                }
+            }
+            if (this.clientPermissions) {
+                if (this.clientPermissions.discord && interaction.source.startsWith("discord")) {
+                    const me = await (await this.client.discordClient?.guilds.fetch(interaction.server.id))?.members.fetchMe()
+                    if (!me) throw new Error("Unable to find fetchMe() in guild")
+                    const permissions = me.permissions.toArray()
+                    const missingPermissions = this.clientPermissions.discord.filter(
+                        (permission: DiscordPermissionString) => !permissions.includes(permission)
+                    )
+
+                    if (missingPermissions.length > 0) {
+                        return {
+                            title: "Missing Permissions",
+                            description: `This action requires me to have the following permissions: ${missingPermissions
+                                .map((permission) => {
+                                    return permission.replace(/([A-Z])/g, " $1")
+                                })
+                                .join(", ")}`
+                        }
+                    }
+                } else if (this.clientPermissions.guilded && interaction.source === "guilded") {
+                    const member = await this.client.guildedClient!.members.fetch(interaction.server.id, this.client.guildedClient!.user!.id!)
+                    interaction.user.permissions = await getGuildedPermissions(member, interaction.server.id, this.client.guildedClient!)
+                    const userPermissions = interaction.user?.permissions as GuildedPermissionString[]
+                    const missingPermissions = this.clientPermissions.guilded.filter(
+                        (permission: GuildedPermissionString) => !userPermissions.includes(permission)
+                    )
+
+                    if (missingPermissions.length > 0) {
+                        return {
+                            title: "Missing Permissions",
+                            description: `This action requires me to have the following permissions: ${missingPermissions
                                 .map((permission) => {
                                     return permission.replace(/([A-Z])/g, " $1")
                                 })

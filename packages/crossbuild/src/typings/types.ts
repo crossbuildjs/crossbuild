@@ -40,6 +40,7 @@ export interface ComponentData {
 	description: string
 	options?: Array<ComponentOption>
 	permissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
+	clientPermissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
 	serverOnly?: boolean
 	ownerOnly?: boolean
 }
