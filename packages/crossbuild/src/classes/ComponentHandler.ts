@@ -63,7 +63,7 @@ export default class ComponentHandler {
                     .map((command) => {
                         const data: ApplicationCommandData = {
                             name: command.key,
-                            description: command.description || "",
+                            description: command.description || "No description provided",
                             options: command.options?.map((option) => {
                                 return {
                                     type: option.type === "string" ? ApplicationCommandOptionType.String :
@@ -71,7 +71,7 @@ export default class ComponentHandler {
                                             option.type === "boolean" ? ApplicationCommandOptionType.Boolean :
                                                 ApplicationCommandOptionType.String,
                                     name: option.name,
-                                    description: option.description || "",
+                                    description: option.description || "No description provided",
                                     required: option.required || false,
                                     choices: option.choices,
                                     min_value: option.minValue,

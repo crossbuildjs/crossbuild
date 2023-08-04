@@ -37,9 +37,10 @@ export interface EventOptions {
 
 export interface ComponentData {
 	/** The description of the component */
-	description: string
+	description?: string
 	options?: Array<ComponentOption>
 	permissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
+	clientPermissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
 	serverOnly?: boolean
 	ownerOnly?: boolean
 	cooldown?: number
@@ -49,7 +50,7 @@ export interface ComponentOption {
 	/** The name of the option */
 	name: string
 	/** The description of the option */
-	description: string
+	description?: string
 	/** Whether the option is required */
 	required?: boolean
 	/** The type of the option */
@@ -68,4 +69,4 @@ export interface ComponentOption {
 
 export type InteractionRawOptions = { [key: string]: string | number | boolean }
 
-export type ComponentType = "command"
+export type ComponentType = "command" | "button" | "selectMenu"
