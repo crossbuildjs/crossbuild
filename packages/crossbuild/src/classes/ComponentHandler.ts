@@ -66,10 +66,14 @@ export default class ComponentHandler {
                             description: command.description || "No description provided",
                             options: command.options?.map((option) => {
                                 return {
-                                    type: option.type === "string" ? ApplicationCommandOptionType.String :
-                                        option.type === "integer" ? ApplicationCommandOptionType.Integer :
-                                            option.type === "boolean" ? ApplicationCommandOptionType.Boolean :
-                                                ApplicationCommandOptionType.String,
+                                    type:
+										option.type === "string"
+										    ? ApplicationCommandOptionType.String
+										    : option.type === "integer"
+										        ? ApplicationCommandOptionType.Integer
+										        : option.type === "boolean"
+										            ? ApplicationCommandOptionType.Boolean
+										            : ApplicationCommandOptionType.String,
                                     name: option.name,
                                     description: option.description || "No description provided",
                                     required: option.required || false,
@@ -77,7 +81,7 @@ export default class ComponentHandler {
                                     min_value: option.minValue,
                                     max_value: option.maxValue,
                                     min_length: option.minLength,
-                                    max_length: option.maxLength,
+                                    max_length: option.maxLength
                                 } as ApplicationCommandOptionData
                             })
                         }
@@ -93,11 +97,6 @@ export default class ComponentHandler {
         return this.client.components.get(`${type}-${key}`) || undefined
     }
 
-    // Override in specific handlers
-    public async specificChecks(interaction: ReceivedInteraction, component: Component): Promise<unknown> {
-        return this.client.log(`${interaction}${component}`, LogLevel.NULL) // This line is here to prevent unused variable errors
-    }
-
     public checkCooldown(interaction: ReceivedInteraction, component: Component) {
         if (!component.cooldown) return false
         const componentCooldowns = this.client.cooldowns.get(`${component.type}-${component.key}`) || new Collection()
@@ -106,7 +105,12 @@ export default class ComponentHandler {
             const timeLeft = cooldown - Date.now()
             if (timeLeft > 0) {
                 const seconds = Math.ceil(timeLeft / 1000)
-                return interaction.reply(generateEmbed("error", { title: "You are on a cooldown!", description: `You are on cooldown for ${seconds} more second${seconds === 1 ? "" : "s"}.` }))
+                return interaction.reply(
+                    generateEmbed("error", {
+                        title: "You are on a cooldown!",
+                        description: `You are on cooldown for ${seconds} more second${seconds === 1 ? "" : "s"}.`
+                    })
+                )
             }
         }
     }
@@ -130,10 +134,15 @@ export default class ComponentHandler {
 
         const options = new OptionsHandler(interaction.rawOptions || {}, component.options || [])
 
-        this.specificChecks(interaction, component)
-
         const missingPermissions = await component.validate(interaction, options)
         if (missingPermissions) return interaction.reply(generateEmbed("error", missingPermissions))
+
+        if (component.customChecks) {
+            for await (const check of component.customChecks) {
+                const checkResult = await check(interaction, component)
+                if (checkResult) return interaction.reply(checkResult)
+            }
+        }
 
         return this.runComponent(component, interaction, options)
     }

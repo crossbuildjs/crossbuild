@@ -1,6 +1,5 @@
-
 import { GuildedPermissionString, SimpleEmbed } from "@crossbuild/types"
-import { CrossBuild, ComponentData, LogLevel, ReceivedInteraction, ComponentType, OptionsHandler } from "../index.js"
+import { CrossBuild, ComponentData, LogLevel, ReceivedInteraction, ComponentType, OptionsHandler, CustomCheckFunction } from "../index.js"
 import { PermissionsString as DiscordPermissionString } from "discord.js"
 import { getGuildedPermissions } from "@crossbuild/functions"
 
@@ -9,51 +8,55 @@ import { getGuildedPermissions } from "@crossbuild/functions"
  */
 export default abstract class Component {
     /**
-     * The client that instantiated this component.
-     */
+	 * The client that instantiated this component.
+	 */
     public readonly client: CrossBuild
     /**
-     * The key of this component.
-     * This is used to identify the component, and is usually used as the custom ID or the command name.
-     */
+	 * The key of this component.
+	 * This is used to identify the component, and is usually used as the custom ID or the command name.
+	 */
     public readonly key: string
     /**
-     * The type of the component.
-     */
+	 * The type of the component.
+	 */
     public readonly type: ComponentType
     /**
-     * The cooldown for this component, given in milliseconds.
-     */
+	 * The cooldown for this component, given in milliseconds.
+	 */
     public readonly cooldown?: number
     /**
-     * Whether this component can only be used in servers.
-     */
+	 * Whether this component can only be used in servers.
+	 */
     private readonly serverOnly: boolean
     /**
-     * Whether this component can only be used by the owner of the server.
-     */
+	 * Whether this component can only be used by the owner of the server.
+	 */
     private readonly ownerOnly: boolean
     /**
-     * The description of this component.
-     * This is used in Discord for the command description.
-     */
+	 * The description of this component.
+	 * This is used in Discord for the command description.
+	 */
     public readonly description?: string
     /**
-     * The options of this component.
-     * This is used in Discord for the command options within the slash commands, as well as what is parsed from the message in text commands.
-     */
+	 * The options of this component.
+	 * This is used in Discord for the command options within the slash commands, as well as what is parsed from the message in text commands.
+	 */
     public readonly options?: ComponentData["options"]
     /**
-     * The permissions required to run this component.
-     * This is an object with two keys: `guilded` and `discord`.
-     * `guilded` is an array of Guilded permissions, and `discord` is an array of Discord permissions.
-     */
+	 * The permissions required to run this component.
+	 * This is an object with two keys: `guilded` and `discord`.
+	 * `guilded` is an array of Guilded permissions, and `discord` is an array of Discord permissions.
+	 */
     public readonly permissions?: ComponentData["permissions"]
     /**
-     * The permissions required to run this component.
-     * This is the same as the {@link Component#permissions} property
-     */
+	 * The permissions required to run this component.
+	 * This is the same as the {@link Component#permissions} property
+	 */
     public readonly clientPermissions?: ComponentData["clientPermissions"]
+    /**
+	 * Any custom checks that should be run before the component is executed.
+	 */
+    public readonly customChecks?: Array<CustomCheckFunction>
 
     constructor(key: string, type: ComponentType, client: CrossBuild, options: ComponentData) {
         this.key = key
@@ -64,6 +67,8 @@ export default abstract class Component {
         this.ownerOnly = options.ownerOnly || false
         this.description = options.description
         this.permissions = options.permissions
+        this.clientPermissions = options.clientPermissions
+        this.customChecks = options.customChecks || []
         this.options = options.options
     }
 
@@ -73,7 +78,6 @@ export default abstract class Component {
                 title: "Invalid Options",
                 description: `The following options are invalid:\n${options.errors.join("\n")}`
             }
-
         }
         if (this.serverOnly && !interaction.server) {
             return {
@@ -168,11 +172,6 @@ export default abstract class Component {
             }
         }
 
-        const specifics = await this.specificValidate(interaction)
-        return specifics ?? null
-    }
-
-    public async specificValidate(_interaction: ReceivedInteraction): Promise<SimpleEmbed | null> {
         return null
     }
 
