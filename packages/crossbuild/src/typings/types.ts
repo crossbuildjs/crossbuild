@@ -1,10 +1,7 @@
-import { GuildedPermissionString } from "@crossbuild/types"
-import {
-    ClientEvents,
-    ClientOptions as DiscordClientOptions,
-    PermissionsString as DiscordPermissionsString
-} from "discord.js"
+import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
+import { ClientEvents, ClientOptions as DiscordClientOptions, PermissionsString as DiscordPermissionsString } from "discord.js"
 import { ClientOptions as GuildedClientOptions } from "guilded.js"
+import { ReceivedInteraction, Component } from ".."
 
 export interface Config {
 	/** The name of the bot (to refer to itself as) */
@@ -44,6 +41,7 @@ export interface ComponentData {
 	serverOnly?: boolean
 	ownerOnly?: boolean
 	cooldown?: number
+	customChecks?: Array<CustomCheckFunction>
 }
 
 export interface ComponentOption {
@@ -70,3 +68,10 @@ export interface ComponentOption {
 export type InteractionRawOptions = { [key: string]: string | number | boolean }
 
 export type ComponentType = "command" | "button" | "selectMenu"
+
+/**
+ * This is a function that is called to check if a Component should be run or not.
+ * If the function returns a {@link GeneratedMessage}, the message will be sent to the channel that the interaction was received in.
+ * Otherwise, the function returns null and the component will be run.
+ */
+export type CustomCheckFunction = (interaction: ReceivedInteraction, component: Component) => Promise<GeneratedMessage | null>
