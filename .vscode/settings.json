@@ -6,6 +6,7 @@
 		"buape",
 		"crossbuild",
 		"crossbuildjs",
+		"disabledpagecount",
 		"paginators",
 		"Rsvps",
 		"slowmode"

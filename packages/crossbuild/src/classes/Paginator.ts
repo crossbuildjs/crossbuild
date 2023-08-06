@@ -16,7 +16,7 @@ type PaginatorSettings = {
 	discordJumpToPage?: boolean
 }
 
-type PaginatorMessage = Pick<GeneratedMessageObject, "embeds" | "content">
+type PaginatorMessage = Pick<GeneratedMessageObject, "embeds" | "content" | "components">
 
 export default class Paginator {
     public id: string
@@ -30,7 +30,7 @@ export default class Paginator {
             userId: settings.userId,
             crossbuild: settings.crossbuild,
             timeout: settings.timeout ?? 30000,
-            discordJumpToPage: settings.discordJumpToPage ?? true,
+            discordJumpToPage: settings.discordJumpToPage ?? true
         }
         if (this.settings.id.length > 75) throw new Error("Paginator ID must be less than 75 characters.")
         this.id = this.settings.id
@@ -44,7 +44,6 @@ export default class Paginator {
     public async send(interaction: ReceivedInteraction, page: number = 1) {
         const channel = interaction.channel
         if (!channel) return console.error("No channel provided to send paginator to.")
-
 
         switch (interaction.source) {
             case "guilded":
@@ -100,10 +99,12 @@ export default class Paginator {
     private getDiscordMessage(page: number = 1): GeneratedMessageObject {
         const data = this.pages[page - 1]
         if (!data) throw new Error("No page data found for paginator.")
-        return { components: this.generateDiscordComponents(page), ...data }
+        const generatedButtons = this.generateDiscordComponents(page)
+        data.components ? data.components.push(generatedButtons[0]) : (data.components = generatedButtons)
+        return { ...data }
     }
 
-    private generateDiscordComponents(thisPage: number = 1): GeneratedMessageObject["components"] {
+    private generateDiscordComponents(thisPage: number = 1): NonNullable<GeneratedMessageObject["components"]> {
         if (this.pages.length === 1) return []
         const { previous, next } = this.getPrevNext(thisPage)
         const row = {
@@ -118,18 +119,25 @@ export default class Paginator {
                 },
                 {
                     type: 2,
+                    label: `Page ${thisPage}/${this.pages.length}`,
+                    style: 2,
+                    custom_id: `cb:disabledpagecount`,
+                    disabled: true
+                },
+                {
+                    type: 2,
                     label: "Next",
                     style: 2,
                     custom_id: `cb:${this.settings.id},${next}`,
                     disabled: thisPage === this.pages.length
-                },
+                }
             ]
         }
         console.log(row)
         return [row]
     }
 
-    private getPrevNext(page: number): { previous: number, next: number } {
+    private getPrevNext(page: number): { previous: number; next: number } {
         const previous = page - 1 < 1 ? 1 : page - 1
         const next = page + 1 > this.pages.length ? this.pages.length : page + 1
         return { previous, next }
