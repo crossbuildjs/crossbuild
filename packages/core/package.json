@@ -36,11 +36,14 @@
 		"LICENSE"
 	],
 	"engines": {
-		"node": ">=16.17.1"
+		"node": ">=18.17.0"
 	},
 	"dependencies": {
 		"@crossbuild/functions": "workspace:^",
 		"@crossbuild/types": "workspace:^",
 		"@discordjs/collection": "^1.5.2"
+	},
+	"devDependencies": {
+		"@types/node": "^18.17.0"
 	}
 }

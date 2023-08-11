@@ -1,11 +1,11 @@
 {
-	"name": "crossbuild",
-	"description": "A powerful framework to create cross-platform Discord and Guilded bots",
+	"name": "@crossbuild/worker",
+	"description": "Discord modules for HTTP Cloudflare Workers for CrossBuild",
 	"type": "module",
-	"version": "0.3.1",
-	"contributors": [
+	"version": "0.0.1",
+	"authors": [
 		"Shadow <shadow@buape.com>",
-		"Codeize <mrcodeize@gmail.com>"
+		"Codeize <codeize@buape.com>"
 	],
 	"scripts": {
 		"lint": "eslint . --fix",
@@ -25,7 +25,7 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/buape/crossbuild.git",
-		"directory": "packages/crossbuild"
+		"directory": "packages/guilded"
 	},
 	"license": "MIT",
 	"bugs": {
@@ -39,14 +39,12 @@
 		"node": ">=18.17.0"
 	},
 	"dependencies": {
+		"@cloudflare/workers-types": "4.20230807.0",
 		"@crossbuild/core": "workspace:^",
-		"@crossbuild/discord": "workspace:^",
-		"@crossbuild/functions": "workspace:^",
-		"@crossbuild/guilded": "workspace:^",
 		"@crossbuild/types": "workspace:^",
+		"@discordjs/rest": "^2.0.0",
+		"discord-api-types": "^0.37.50",
 		"discord-verify": "^1.2.0",
-		"discord.js": "^14.12.1",
-		"guilded.js": "^0.23.4",
 		"itty-router": "^4.0.14"
 	}
 }

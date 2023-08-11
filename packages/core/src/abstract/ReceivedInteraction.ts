@@ -4,7 +4,6 @@ import { GeneratedMessage } from "@crossbuild/types"
 export interface ReceivedInteractionData {
 	id: string
 	key: string
-	source: string
 	type: ComponentType
 	original: unknown
 	server: {
@@ -38,55 +37,54 @@ export abstract class ReceivedInteraction {
     readonly id: string
     /** The key of this interaction */
     public readonly key: string
-    /** The source of this interaction */
-    public readonly source: ReceivedInteractionData["source"]
-    /** The type of this interaction */
-    public readonly type: ReceivedInteractionData["type"]
-    /** The original message/interaction that this was created fom */
-    public readonly original: unknown
-    /** The raw unprocessed options of this interaction */
-    public readonly rawOptions: ReceivedInteractionData["rawOptions"]
-    /** The server this interaction was triggered in */
-    public readonly server?: ReceivedInteractionData["server"]
-    /** The channel this interaction was triggered in */
-    public channel?: ReceivedInteractionData["channel"]
-    /** The user that triggered this interaction */
-    public user?: ReceivedInteractionData["user"]
-    /** The values of the select menu that triggered this interaction */
-    public selectMenuValues?: ReceivedInteractionData["selectMenuValues"]
+	/** The source of this interaction */
+	abstract source: string
+	/** The type of this interaction */
+	public readonly type: ReceivedInteractionData["type"]
+	/** The original message/interaction that this was created fom */
+	public readonly original: unknown
+	/** The raw unprocessed options of this interaction */
+	public readonly rawOptions: ReceivedInteractionData["rawOptions"]
+	/** The server this interaction was triggered in */
+	public readonly server?: ReceivedInteractionData["server"]
+	/** The channel this interaction was triggered in */
+	public channel?: ReceivedInteractionData["channel"]
+	/** The user that triggered this interaction */
+	public user?: ReceivedInteractionData["user"]
+	/** The values of the select menu that triggered this interaction */
+	public selectMenuValues?: ReceivedInteractionData["selectMenuValues"]
 
-    constructor(crossbuild: CrossBuild, data: ReceivedInteractionData) {
-        this.crossbuild = crossbuild
+	constructor(crossbuild: CrossBuild, data: ReceivedInteractionData) {
+	    this.crossbuild = crossbuild
 
-        this.crossbuild.log(`${crossbuild}`, LogLevel.NULL)
-        this.id = data.id
-        this.key = data.key
-        this.source = data.source
-        this.type = data.type
+	    this.crossbuild.log(`${crossbuild}`, LogLevel.NULL)
+	    this.id = data.id
+	    this.key = data.key
+	    this.type = data.type
 
-        this.rawOptions = {}
-        for (const key in data.rawOptions) {
-            let value = data.rawOptions[key]
-            if (typeof value === "string") {
-                if (parseInt(value)) value = parseInt(value)
-                if (value === "true") value = true
-                if (value === "false") value = false
-            }
-            this.rawOptions[key] = value
-        }
+	    this.rawOptions = {}
+	    for (const key in data.rawOptions) {
+	        let value = data.rawOptions[key]
+	        if (typeof value === "string") {
+	            if (parseInt(value)) value = parseInt(value)
+	            if (value === "true") value = true
+	            if (value === "false") value = false
+	        }
+	        this.rawOptions[key] = value
+	    }
 
-        this.selectMenuValues = data.selectMenuValues
+	    this.selectMenuValues = data.selectMenuValues
 
-        this.server = data.server
-        this.channel = data.channel
-        this.user = data.user
+	    this.server = data.server
+	    this.channel = data.channel
+	    this.user = data.user
 
-        this.original = data.original
-    }
+	    this.original = data.original
+	}
 
-    public isDiscordComponent() {
-        return this.source === "discordInteraction" && this.type !== "command"
-    }
+	public isDiscordComponent() {
+	    return this.source === "discordInteraction" && this.type !== "command"
+	}
 
 	/**
 	 * Reply to an interaction with a message

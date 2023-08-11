@@ -104,6 +104,10 @@ importers:
       '@discordjs/collection':
         specifier: ^1.5.2
         version: 1.5.2
+    devDependencies:
+      '@types/node':
+        specifier: ^18.17.0
+        version: 18.17.0
 
   packages/crossbuild:
     dependencies:
@@ -180,6 +184,30 @@ importers:
       discord-api-types:
         specifier: ^0.37.50
         version: 0.37.50
+
+  packages/worker:
+    dependencies:
+      '@cloudflare/workers-types':
+        specifier: 4.20230807.0
+        version: 4.20230807.0
+      '@crossbuild/core':
+        specifier: workspace:^
+        version: link:../core
+      '@crossbuild/types':
+        specifier: workspace:^
+        version: link:../types
+      '@discordjs/rest':
+        specifier: ^2.0.0
+        version: 2.0.0
+      discord-api-types:
+        specifier: ^0.37.50
+        version: 0.37.50
+      discord-verify:
+        specifier: ^1.2.0
+        version: 1.2.0
+      itty-router:
+        specifier: ^4.0.14
+        version: 4.0.14
 
 packages:
 
@@ -640,7 +668,6 @@ packages:
 
   /@cloudflare/workers-types@4.20230807.0:
     resolution: {integrity: sha512-gQczWuGE2rxmpzOCNn0zLbx8Xz0gqspdE9S7tu4Xax39q1csgO/E9flcS+KG3GHB522ugOh84inmABDhpeJnvQ==}
-    dev: true
 
   /@discordjs/builders@1.6.4:
     resolution: {integrity: sha512-ARFKvmAkLhfkQQiNxqi0YIWqwUExvBRtvdtMFVJXvJoibsGkFrB/DWTf9byU7BTVUfsmW8w7NM55tYXR5S/iSg==}
@@ -679,7 +706,7 @@ packages:
       discord-api-types: 0.37.50
       magic-bytes.js: 1.0.15
       tslib: 2.6.1
-      undici: 5.22.1
+      undici: 5.23.0
     dev: false
 
   /@discordjs/util@1.0.0:
@@ -4396,7 +4423,7 @@ packages:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     requiresBuild: true
     dependencies:
-      tslib: 2.6.0
+      tslib: 2.6.1
     dev: false
     optional: true
 
@@ -4843,6 +4870,7 @@ packages:
 
   /tslib@2.6.0:
     resolution: {integrity: sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==}
+    dev: true
 
   /tslib@2.6.1:
     resolution: {integrity: sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==}

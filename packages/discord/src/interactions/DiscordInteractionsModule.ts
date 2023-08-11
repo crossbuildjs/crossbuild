@@ -132,7 +132,6 @@ export class DiscordInteractionsModule extends Module {
             const interaction = new DiscordReceivedInteraction(this.crossbuild, {
                 id: discordInteraction.id,
                 key: discordInteraction.commandName,
-                source: "discordInteraction",
                 type: "command",
                 original: discordInteraction,
                 server,
@@ -161,7 +160,6 @@ export class DiscordInteractionsModule extends Module {
             const interaction = new DiscordReceivedInteraction(this.crossbuild, {
                 id: discordInteraction.id,
                 key: discordInteraction.customId,
-                source: "discordInteraction",
                 type: "button",
                 original: discordInteraction,
                 server,
@@ -190,7 +188,6 @@ export class DiscordInteractionsModule extends Module {
             const interaction = new DiscordReceivedInteraction(this.crossbuild, {
                 id: discordInteraction.id,
                 key: discordInteraction.customId,
-                source: "discordInteraction",
                 type: "selectMenu",
                 original: discordInteraction,
                 server,
