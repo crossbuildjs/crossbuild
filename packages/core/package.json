@@ -41,8 +41,6 @@
 	"dependencies": {
 		"@crossbuild/functions": "workspace:^",
 		"@crossbuild/types": "workspace:^",
-		"@discordjs/collection": "^1.5.2",
-		"discord-verify": "^1.2.0",
-		"itty-router": "^4.0.14"
+		"@discordjs/collection": "^1.5.2"
 	}
 }

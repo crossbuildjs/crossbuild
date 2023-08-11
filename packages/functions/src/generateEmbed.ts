@@ -1,5 +1,5 @@
 import { GeneratedMessage, SimpleEmbed } from "@crossbuild/types"
-import { APIActionRowComponent, APIMessageActionRowComponent, ButtonStyle, ColorResolvable, ComponentType, EmbedBuilder } from "discord.js"
+import { APIActionRowComponent, APIMessageActionRowComponent, ButtonStyle, ComponentType } from "discord-api-types/v10"
 
 /**
  * Generate a message with the specified type (error, success, or warning).
@@ -17,7 +17,7 @@ export const generateEmbed = (
     ephemeral = false,
     supportLink: string | undefined = undefined
 ): GeneratedMessage => {
-    let color: ColorResolvable
+    let color: number
     switch (type) {
         case "error":
             color = 0xed4245
@@ -32,11 +32,8 @@ export const generateEmbed = (
             throw new Error(`Invalid message type: ${type}`)
     }
 
-    const embed = new EmbedBuilder(embedInfo).setColor(color).data
-    const embeds = [embed]
-
     const message: GeneratedMessage = {
-        embeds,
+        embeds: [{ ...embedInfo, color }],
         ephemeral,
         components
     }

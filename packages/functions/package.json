@@ -40,7 +40,10 @@
 	},
 	"dependencies": {
 		"@crossbuild/types": "workspace:^",
-		"discord.js": "^14.12.1",
-		"guilded.js": "^0.23.4"
+		"discord-api-types": "^0.37.50",
+		"undici": "^5.23.0"
+	},
+	"devDependencies": {
+		"@types/node": "^18.17.0"
 	}
 }
