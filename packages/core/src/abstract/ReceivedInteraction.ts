@@ -4,7 +4,7 @@ import { GeneratedMessage } from "@crossbuild/types"
 export interface ReceivedInteractionData {
 	id: string
 	key: string
-	source: "discordInteraction" | "discordMessage" | "guilded" | "http"
+	source: string
 	type: ComponentType
 	original: unknown
 	server: {

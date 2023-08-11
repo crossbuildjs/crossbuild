@@ -39,6 +39,7 @@ export class CrossBuild {
 
         for await (const module of this.modules.values()) {
             await module.init(this)
+            await module.startListening()
         }
 
         this.log("CrossBuild is ready!", LogLevel.DEBUG)
