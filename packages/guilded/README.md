@@ -3,6 +3,6 @@
 
 <h1 align="center"><b>@crossbuild/guilded</b></h1>
 
-This package contains the Guilded components of [CrossBuild](https://npmjs.com/package/crossbuild).
+This package contains the Guilded module for [CrossBuild](https://npmjs.com/package/crossbuild).
 
 </div>

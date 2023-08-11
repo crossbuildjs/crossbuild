@@ -3,6 +3,6 @@
 
 <h1 align="center"><b>@crossbuild/discord</b></h1>
 
-This package contains the Discord components of [CrossBuild](https://npmjs.com/package/crossbuild).
+This package contains the Discord module for [CrossBuild](https://npmjs.com/package/crossbuild).
 
 </div>
