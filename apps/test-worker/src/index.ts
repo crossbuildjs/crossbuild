@@ -1,23 +1,22 @@
-import { CrossBuild, LogLevel } from "../../../packages/core/dist"
+import { Request } from "@cloudflare/workers-types"
+import { CrossBuild } from "@crossbuild/core"
+import { WorkerModule } from "@crossbuild/worker"
 
-const cb = new CrossBuild({
+const workerModule = new WorkerModule({
+    name: "CF Worker",
+    publicKey: "96c3eaa7498c67cbdd16a3e4daa7ccafc15948ea4a2cce44ffdd3b935329303f",
+    token: process.env.DISCORD_TOKEN!
+})
+
+new CrossBuild({
     name: "Test Bot",
     componentPaths: ["/src/components/buttons", "/src/components/commands", "/src/components/selectMenus"],
     supportLink: "",
-    prefix: "-",
-    httpOptions: {
-        publicKey: "96c3eaa7498c67cbdd16a3e4daa7ccafc15948ea4a2cce44ffdd3b935329303f"
-    }
+    modules: [workerModule]
 })
-
-cb.log(`${cb}`, LogLevel.INFO)
 
 export default {
     async fetch(request: Request) {
-        return await cb.httpListener!.handle(request)
+        return await workerModule.handle(request)
     }
 }
-
-// const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-// sleep(3000).then(() => console.log(cb))

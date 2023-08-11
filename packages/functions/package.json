@@ -41,9 +41,10 @@
 	"dependencies": {
 		"@crossbuild/types": "workspace:^",
 		"discord-api-types": "^0.37.50",
-		"undici": "^5.23.0"
+		"node-fetch": "^2.6.12"
 	},
 	"devDependencies": {
-		"@types/node": "^18.17.0"
+		"@types/node": "^18.17.0",
+		"@types/node-fetch": "^2.6.4"
 	}
 }

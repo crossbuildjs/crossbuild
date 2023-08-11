@@ -1,4 +1,4 @@
-import { RequestInit, fetch } from "undici"
+import fetch, { RequestInit } from "node-fetch"
 
 /**
  * Upload content to the hastebin we use.
