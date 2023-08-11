@@ -1,6 +1,6 @@
 {
 	"name": "@crossbuild/discord",
-	"description": "Discord components for CrossBuild",
+	"description": "Discord modules for CrossBuild",
 	"type": "module",
 	"version": "0.0.1",
 	"authors": [
