@@ -1,4 +1,4 @@
-import { Component, CrossBuild, ReceivedInteraction, Paginator } from "crossbuild"
+import { Component, CrossBuild, ReceivedInteraction } from "crossbuild"
 
 export default class Cmd extends Component {
     constructor(client: CrossBuild) {
@@ -9,13 +9,13 @@ export default class Cmd extends Component {
 
     public override async run(interaction: ReceivedInteraction) {
         if(!interaction.user) return
-        const paginator = new Paginator({ id: interaction.id, userId: interaction.user.id, crossbuild: this.client })
-        paginator.addPages([{
-            embeds: [{ title: "Page 1" }]
-        }, {
-            embeds: [{ title: "Page 2" }]
-        }])
-        console.log(paginator)
-        paginator.send(interaction)
+        // const paginator = new Paginator({ id: interaction.id, userId: interaction.user.id, crossbuild: this.client })
+        // paginator.addPages([{
+        //     embeds: [{ title: "Page 1" }]
+        // }, {
+        //     embeds: [{ title: "Page 2" }]
+        // }])
+        // console.log(paginator)
+        // paginator.send(interaction)
     }
 }

@@ -7,7 +7,7 @@ import { APIActionRowComponent, APIMessageActionRowComponent, ButtonStyle, Color
  * @param embedInfo - The information to build our embed with.
  * @param components - The components for our message.
  * @param ephemeral - Whether our message should be ephemeral or not.
- * @param supportServer - Whether or not to add the support server link as a component (for error messages only).
+ * @param supportLink - Whether or not to add the support server link as a component (for error messages only).
  * @returns The generated message.
  */
 export const generateEmbed = (
@@ -15,7 +15,7 @@ export const generateEmbed = (
     embedInfo: SimpleEmbed,
     components?: APIActionRowComponent<APIMessageActionRowComponent>[],
     ephemeral = false,
-    supportServer: string | undefined = undefined
+    supportLink: string | undefined = undefined
 ): GeneratedMessage => {
     let color: ColorResolvable
     switch (type) {
@@ -41,14 +41,14 @@ export const generateEmbed = (
         components
     }
 
-    if (type === "error" && supportServer) {
+    if (type === "error" && supportLink) {
         message.components?.push({
             type: ComponentType.ActionRow,
             components: [
                 {
                     type: ComponentType.Button,
                     label: "Support Server",
-                    url: supportServer,
+                    url: supportLink,
                     style: ButtonStyle.Link
                 }
             ]

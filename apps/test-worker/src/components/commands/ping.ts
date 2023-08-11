@@ -1,14 +1,14 @@
-import { Component, CrossBuild, ReceivedInteraction } from "crossbuild"
+import { Component, CrossBuild, ReceivedInteraction } from "../../../../../packages/core/dist"
 import { ButtonStyle, ComponentType } from "discord.js"
 
 export default class Cmd extends Component {
     constructor(client: CrossBuild) {
         super("ping", "command", client, {
-            description: "Ping!"
-            // permissions: {
-            //     discord: ["ManageRoles"],
-            //     guilded: ["CanKickMembers"]
-            // }
+            description: "Ping!",
+            permissions: {
+                discord: ["ManageRoles"],
+                guilded: ["CanKickMembers"]
+            }
         })
     }
 

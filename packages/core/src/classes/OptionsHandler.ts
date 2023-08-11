@@ -1,6 +1,6 @@
 import { ComponentOption, InteractionRawOptions } from "../typings/types"
 
-export default class InteractionOptions {
+export class OptionsHandler {
     public data: Record<string, unknown> = {}
     private errorData: Array<string> = []
 

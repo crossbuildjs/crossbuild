@@ -1,7 +1,5 @@
-import { GeneratedMessage, GuildedPermissionString } from "@crossbuild/types"
-import { ClientEvents, ClientOptions as DiscordClientOptions, PermissionsString as DiscordPermissionsString } from "discord.js"
-import { ClientOptions as GuildedClientOptions } from "guilded.js"
-import { ReceivedInteraction, Component } from ".."
+import { GeneratedMessage } from "@crossbuild/types"
+import { ReceivedInteraction, Component, Module } from ".."
 
 export interface Config {
 	/** The name of the bot (to refer to itself as) */
@@ -10,13 +8,9 @@ export interface Config {
 	componentPaths: string[]
 	/** The prefix that the bot listens for. If none is specified, the prefix will default to mentioning the bot */
 	prefix?: string
+	supportLink?: string
 
-	supportServer?: string
-
-	discordOptions?: DiscordClientOptions
-	discordToken?: string
-
-	guildedOptions?: GuildedClientOptions
+	modules: Array<Module>
 }
 
 export enum LogLevel {
@@ -28,7 +22,7 @@ export enum LogLevel {
 }
 
 export interface EventOptions {
-	name?: keyof ClientEvents | string
+	name?: string
 	once?: boolean
 }
 
@@ -36,8 +30,6 @@ export interface ComponentData {
 	/** The description of the component */
 	description?: string
 	options?: Array<ComponentOption>
-	permissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
-	clientPermissions?: { guilded: Array<GuildedPermissionString>; discord: Array<DiscordPermissionsString> }
 	serverOnly?: boolean
 	ownerOnly?: boolean
 	cooldown?: number
