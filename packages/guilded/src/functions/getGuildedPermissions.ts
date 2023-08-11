@@ -1,5 +1,5 @@
-import { GuildedPermissionString } from "@crossbuild/types"
 import { Client, Member, Server } from "guilded.js"
+import { GuildedPermissionString } from ".."
 
 export const getGuildedPermissions = async (member: Member, serverId: Server["id"], client: Client): Promise<GuildedPermissionString[]> => {
     const roles = await member.getRoles()

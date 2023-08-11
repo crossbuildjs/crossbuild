@@ -70,7 +70,6 @@ export class GuildedModule extends Module {
         const interaction = new GuildedReceivedMessage(this.crossbuild!, {
             id: guildedMessage.id,
             key: command,
-            source: "guilded",
             type: "command",
             original: guildedMessage,
             rawOptions: flags,
