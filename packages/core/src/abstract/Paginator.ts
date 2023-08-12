@@ -1,7 +1,7 @@
 import { GeneratedMessageObject } from "@crossbuild/types"
 import { CrossBuild, ReceivedInteraction } from ".."
 
-type PaginatorSettings = {
+export type PaginatorSettings = {
 	/** A unique ID for this paginator, typically the ID of the interaction. Max 75 characters */
 	id: string
 	/** The user ID of the user who triggered this paginator */
@@ -14,7 +14,7 @@ type PaginatorSettings = {
 	discordJumpToPage?: boolean
 }
 
-type PaginatorMessage = Pick<GeneratedMessageObject, "embeds" | "content" | "components">
+export type PaginatorMessage = Pick<GeneratedMessageObject, "embeds" | "content" | "components">
 
 export type PageTrigger = {
 	/** The ID of the paginator that this trigger is for. */

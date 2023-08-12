@@ -1,6 +1,6 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"include": ["src/*.ts", "src/index.ts", "src/functions/getGuildedPermissions.ts"],
+	"include": ["src/*.ts", "src/index.ts"],
 	"compilerOptions": {
 		"outDir": "./dist",
 		"rootDir": "."
