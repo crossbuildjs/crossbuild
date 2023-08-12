@@ -3,6 +3,7 @@
 	"description": "Discord modules for HTTP Cloudflare Workers for CrossBuild",
 	"type": "module",
 	"version": "0.0.1",
+	"private": true,
 	"authors": [
 		"Shadow <shadow@buape.com>",
 		"Codeize <codeize@buape.com>"
