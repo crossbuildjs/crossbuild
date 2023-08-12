@@ -1,6 +1,5 @@
 export * from "./generateEmbed.js"
 export * from "./generateTimestamp.js"
 export * from "./getFiles.js"
-export * from "./getGuildedPermissions.js"
 export * from "./titleCase.js"
 export * from "./uploadHaste.js"

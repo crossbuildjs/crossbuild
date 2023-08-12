@@ -1,0 +1,8 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"include": ["src/*.ts", "src/index.ts", "src/functions/getGuildedPermissions.ts", "src/classes/WorkerModule.ts", "src/classes/JSONResponse.ts", "src/classes/WorkerReceivedInteraction.ts"],
+	"compilerOptions": {
+		"outDir": "./dist",
+		"rootDir": "."
+	}
+}

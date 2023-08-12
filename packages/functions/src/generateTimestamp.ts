@@ -1,5 +1,3 @@
-import { TimestampStylesString } from "discord.js"
-
 /**
  * Generate a unix timestamp for Discord to be rendered locally per user.
  * @param options - The options to use for the timestamp.
@@ -18,5 +16,17 @@ export const generateTimestamp = (options?: GenerateTimestampOptions): string =>
  */
 export interface GenerateTimestampOptions {
 	timestamp?: Date | number
-	type?: TimestampStylesString
+	type?: TimestampStyle
 }
+
+/**
+ * The style of the timestamp.
+ * t = Short time
+ * T = Long time
+ * d = Short date
+ * D = Long date
+ * f = Short date/time
+ * F = Long date/time
+ * R = Relative time
+ */
+export type TimestampStyle = "t" | "T" | "d" | "D" | "f" | "F" | "R"

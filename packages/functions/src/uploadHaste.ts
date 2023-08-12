@@ -1,3 +1,5 @@
+import fetch, { RequestInit } from "node-fetch"
+
 /**
  * Upload content to the hastebin we use.
  * @param content - The content to upload.
@@ -20,6 +22,6 @@ export const uploadHaste = async (content: string, userAgent: string, type = "md
     if (!res.ok) {
         throw new Error("Failed to upload haste")
     }
-    const data: { [key: string]: unknown } = await res.json()
+    const data = (await res.json()) as { key: string }
     return `${url}/${data.key}.${type}`
 }

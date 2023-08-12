@@ -4,11 +4,14 @@
 	"cSpell.words": [
 		"argstest",
 		"buape",
+		"buttonping",
 		"crossbuild",
 		"crossbuildjs",
 		"disabledpagecount",
+		"itty",
 		"paginators",
 		"Rsvps",
-		"slowmode"
+		"slowmode",
+		"undici"
 	]
 }

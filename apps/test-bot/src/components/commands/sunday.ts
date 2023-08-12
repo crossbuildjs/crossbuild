@@ -1,5 +1,5 @@
 import { Component, CrossBuild, ReceivedInteraction } from "crossbuild"
-import { todayIsSunday } from "../../customChecks"
+import { todayIsSunday } from "../../customChecks.js"
 
 export default class Cmd extends Component {
     constructor(client: CrossBuild) {

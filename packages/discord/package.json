@@ -1,0 +1,46 @@
+{
+	"name": "@crossbuild/discord",
+	"description": "Discord modules for CrossBuild",
+	"type": "module",
+	"version": "0.0.1",
+	"authors": [
+		"Shadow <shadow@buape.com>",
+		"Codeize <codeize@buape.com>"
+	],
+	"scripts": {
+		"lint": "eslint . --fix",
+		"build": "unbuild",
+		"clean": "rimraf dist"
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/buape/crossbuild.git",
+		"directory": "packages/discord"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/buape/crossbuild/issues"
+	},
+	"files": [
+		"dist",
+		"LICENSE"
+	],
+	"engines": {
+		"node": ">=18.17.0"
+	},
+	"dependencies": {
+		"@crossbuild/core": "workspace:^",
+		"@crossbuild/types": "workspace:^",
+		"discord.js": "^14.12.1"
+	}
+}

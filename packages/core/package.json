@@ -1,0 +1,49 @@
+{
+	"name": "@crossbuild/core",
+	"description": "The core classes for Crossbuild",
+	"type": "module",
+	"version": "0.0.1",
+	"contributors": [
+		"Shadow <shadow@buape.com>",
+		"Codeize <mrcodeize@gmail.com>"
+	],
+	"scripts": {
+		"lint": "eslint . --fix",
+		"build": "unbuild",
+		"clean": "rimraf dist"
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/buape/crossbuild.git",
+		"directory": "packages/core"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/buape/crossbuild/issues"
+	},
+	"files": [
+		"dist",
+		"LICENSE"
+	],
+	"engines": {
+		"node": ">=18.17.0"
+	},
+	"dependencies": {
+		"@crossbuild/functions": "workspace:^",
+		"@crossbuild/types": "workspace:^",
+		"@discordjs/collection": "^1.5.2"
+	},
+	"devDependencies": {
+		"@types/node": "^18.17.0"
+	}
+}
