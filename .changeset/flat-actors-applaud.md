@@ -3,7 +3,6 @@
 "@crossbuild/functions": minor
 "@crossbuild/discord": minor
 "@crossbuild/guilded": minor
-"@crossbuild/worker": minor
 "@crossbuild/types": minor
 "@crossbuild/core": minor
 ---
