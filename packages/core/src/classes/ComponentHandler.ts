@@ -1,43 +1,12 @@
 import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType, OptionsHandler } from "../index.js"
-import { generateEmbed, getFiles } from "@crossbuild/functions"
+import { generateEmbed } from "@crossbuild/functions"
 import { Collection } from "@discordjs/collection"
-import path from "path"
 
 export class ComponentHandler {
     public crossbuild: CrossBuild
 
     constructor(crossbuild: CrossBuild) {
         this.crossbuild = crossbuild
-    }
-
-    public async loadFiles() {
-        Promise.all(
-            this.crossbuild.config.componentPaths.map(async (dirPath) => {
-                try {
-                    const typePath = path.join(this.crossbuild.__dirname, dirPath)
-                    const files = getFiles(typePath, "js", true)
-
-                    for (const fileName of files) {
-                        const filePath = path.join(typePath, fileName)
-                        const fileUrl = `file://${filePath.replace(/\\/g, "/")}`
-                        const file = await import(fileUrl)
-                        const component = new file.default(this.crossbuild) as Component
-                        this.crossbuild.components.set(`${component.type}-${component.key}`, component)
-                    }
-                } catch (error) {
-                    this.crossbuild.log(`${error}`, LogLevel.DEBUG)
-                    this.crossbuild.log(
-                        `Failed to load files under ${dirPath}. Make sure you are only giving a subdirectory from ${this.crossbuild.__dirname}`,
-                        LogLevel.WARN
-                    )
-                }
-            })
-        )
-    }
-
-    public reloadFiles() {
-        this.crossbuild.components.clear()
-        this.loadFiles()
     }
 
     public fetchComponent(key: string, type: ComponentType) {

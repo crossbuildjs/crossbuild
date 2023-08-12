@@ -1,9 +1,8 @@
-import { CrossBuild, DiscordInteractionsModule, DiscordMessageModule, GuildedModule, LogLevel } from "crossbuild"
+import { CrossBuild, DiscordInteractionsModule, DiscordMessageModule, GuildedModule, LogLevel, getComponents } from "crossbuild"
 import { GatewayIntentBits } from "discord.js"
 
-const cb = new CrossBuild({
+const crossbuild = new CrossBuild({
     name: "Test Bot",
-    componentPaths: ["/src/components/buttons", "/src/components/commands", "/src/components/selectMenus"],
     modules: [
         new DiscordInteractionsModule({
             name: "Shadow Testing",
@@ -30,8 +29,8 @@ const cb = new CrossBuild({
     ]
 })
 
-cb.log(`${cb}`, LogLevel.NULL)
+crossbuild.addComponents(await getComponents(["/src/components/buttons", "/src/components/commands", "/src/components/selectMenus"], crossbuild))
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-sleep(3000).then(() => console.log(cb))
+sleep(3000).then(() => crossbuild.log(`${crossbuild}`, LogLevel.DEBUG))

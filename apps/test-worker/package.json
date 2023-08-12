@@ -15,7 +15,7 @@
 		"@crossbuild/core": "workspace:^",
 		"@crossbuild/functions": "workspace:^",
 		"@crossbuild/worker": "workspace:^",
+		"discord-api-types": "^0.37.50",
 		"wrangler": "^3.5.0"
-	},
-	"version": null
+	}
 }

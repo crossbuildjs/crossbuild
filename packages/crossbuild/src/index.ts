@@ -1,3 +1,7 @@
 export * from "@crossbuild/core"
 export * from "@crossbuild/discord"
+export * from "@crossbuild/functions"
 export * from "@crossbuild/guilded"
+export * from "@crossbuild/types"
+export * from "./functions/getFiles"
+export * from "./functions/loadComponents"

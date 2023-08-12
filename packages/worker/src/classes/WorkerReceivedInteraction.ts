@@ -1,4 +1,3 @@
-import { console } from "@cloudflare/workers-types"
 import { CrossBuild, GeneratedMessage, ReceivedInteraction, ReceivedInteractionData } from "@crossbuild/core"
 import { APIInteraction, Routes } from "discord-api-types/v10"
 import { WorkerModule } from ".."

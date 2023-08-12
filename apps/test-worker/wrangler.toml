@@ -1,5 +1,5 @@
 name = "crossbuild-test"
 account_id = "cb8680c9bbcf0c359fccbb5e634df935"
 main = "src/index.ts"
-compatibility_date = "2023-03-20"
-node_compat = true
+compatibility_date = "2023-08-07"
+compatibility_flags = ["nodejs_compat"]

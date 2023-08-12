@@ -1,14 +1,10 @@
-import { Component, CrossBuild, ReceivedInteraction } from "../../../../../packages/core/dist"
-import { ButtonStyle, ComponentType } from "discord.js"
+import { Component, CrossBuild, ReceivedInteraction } from "@crossbuild/core"
+import { ButtonStyle, ComponentType } from "discord-api-types/v10"
 
 export default class Cmd extends Component {
     constructor(client: CrossBuild) {
         super("ping", "command", client, {
-            description: "Ping!",
-            permissions: {
-                discord: ["ManageRoles"],
-                guilded: ["CanKickMembers"]
-            }
+            description: "Ping!"
         })
     }
 
@@ -22,38 +18,9 @@ export default class Cmd extends Component {
                     components: [
                         {
                             type: ComponentType.Button,
-                            style: ButtonStyle.Secondary,
                             label: "Ping",
-                            custom_id: "buttonping"
-                        },
-                        {
-                            type: ComponentType.Button,
-                            style: ButtonStyle.Link,
-                            label: "CrossBuild",
-                            url: "https://crossbuild.buape.com"
-                        }
-                    ]
-                },
-                {
-                    type: ComponentType.ActionRow,
-                    components: [
-                        {
-                            type: ComponentType.StringSelect,
-                            custom_id: "selectping",
-                            options: [
-                                {
-                                    label: "One",
-                                    value: "1"
-                                },
-                                {
-                                    label: "Two",
-                                    value: "2"
-                                },
-                                {
-                                    label: "Three",
-                                    value: "3"
-                                }
-                            ]
+                            custom_id: "buttonping",
+                            style: ButtonStyle.Secondary
                         }
                     ]
                 }

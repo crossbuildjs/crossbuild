@@ -4,8 +4,6 @@ import { ReceivedInteraction, Component, Module } from ".."
 export interface Config {
 	/** The name of the bot (to refer to itself as) */
 	name: string
-	/** Paths that the bot should search for components under */
-	componentPaths: string[]
 	/** The prefix that the bot listens for. If none is specified, the prefix will default to mentioning the bot */
 	prefix?: string
 	supportLink?: string

@@ -1,4 +1,3 @@
-import { resolve } from "path"
 import { Collection } from "@discordjs/collection"
 import { Component, ComponentHandler, ComponentType, Config, LogLevel, Module } from ".."
 import { uploadHaste } from "@crossbuild/functions"
@@ -9,8 +8,6 @@ export class CrossBuild {
     public hasteStore: Collection<string, string[]>
     public cooldowns = new Collection<`${ComponentType}-${string}`, Collection<string, number>>()
     public config: Config
-    public readonly __dirname: string
-
     public modules = new Collection<string, Module>()
 
     /**
@@ -19,8 +16,6 @@ export class CrossBuild {
 	 */
     constructor(config: Config) {
         this.config = config
-
-        this.__dirname = `${resolve()}/dist`
 
         this.components = new Collection()
 
@@ -34,9 +29,15 @@ export class CrossBuild {
         this.start()
     }
 
-    private async start() {
-        await this.componentHandler.loadFiles()
+    public addComponents(components: Component | Array<Component>) {
+        if (Array.isArray(components)) {
+            components.map((x) => this.components.set(`${x.type}-${x.key}`, x))
+        } else {
+            this.components.set(`${components.type}-${components.key}`, components)
+        }
+    }
 
+    private async start() {
         for await (const module of this.modules.values()) {
             await module.init(this)
             await module.startListening()
