@@ -1,5 +1,11 @@
 # @crossbuild/types
 
+## 0.2.0
+
+### Minor Changes
+
+-   d0929c4: Switch to a modular system for managing different platforms
+
 ## 0.1.1
 
 ### Patch Changes

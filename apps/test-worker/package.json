@@ -16,5 +16,6 @@
 		"@crossbuild/functions": "workspace:^",
 		"@crossbuild/worker": "workspace:^",
 		"wrangler": "^3.5.0"
-	}
+	},
+	"version": null
 }
