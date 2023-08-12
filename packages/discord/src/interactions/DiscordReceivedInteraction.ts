@@ -19,7 +19,7 @@ export class DiscordReceivedInteraction extends ReceivedInteraction {
         if (this.original.isChatInputCommand() || this.original.isButton() || this.original.isAnySelectMenu()) {
             return (await this.original.reply(message)).id
         } else {
-            throw new Error("A interaction that could not be replied to was found.")
+            throw new Error("An interaction that could not be replied to was found.")
         }
     }
 }

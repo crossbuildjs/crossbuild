@@ -30,16 +30,12 @@ export class DiscordMessageModule extends Module {
     public async startListening() {
         this.client?.on("interactionCreate", (interaction) => this.interactionHandle(interaction))
 
-        this.client?.on("messageCreate", (message) => {
-            this.message(message)
-        })
+        this.client?.on("messageCreate", (message) => this.message(message))
     }
 
     public async stopListening() {
         this.client?.off("interactionCreate", (interaction) => this.interactionHandle(interaction))
-        this.client?.off("messageCreate", (message) => {
-            this.message(message)
-        })
+        this.client?.off("messageCreate", (message) => this.message(message))
     }
 
     private async interactionHandle(interaction: Interaction) {

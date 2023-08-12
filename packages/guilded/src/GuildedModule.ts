@@ -26,9 +26,7 @@ export class GuildedModule extends Module {
     }
 
     public async startListening() {
-        this.client.on("messageCreated", (message) => {
-            this.message(message)
-        })
+        this.client.on("messageCreated", (message) => this.message(message))
         // this.client?.on("messageReactionCreated", (reaction) => {
         //     console.log(reaction)
         //     const paginator = this.paginators.get(reaction.messageId)
@@ -37,9 +35,7 @@ export class GuildedModule extends Module {
     }
 
     public async stopListening() {
-        this.client.off("messageCreated", (message) => {
-            this.message(message)
-        })
+        this.client.off("messageCreated", (message) => this.message(message))
     }
 
     public watchPaginator(paginator: Paginator) {

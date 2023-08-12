@@ -19,4 +19,14 @@ export interface GenerateTimestampOptions {
 	type?: TimestampStyle
 }
 
+/**
+ * The style of the timestamp.
+ * t = Short time
+ * T = Long time
+ * d = Short date
+ * D = Long date
+ * f = Short date/time
+ * F = Long date/time
+ * R = Relative time
+ */
 export type TimestampStyle = "t" | "T" | "d" | "D" | "f" | "F" | "R"
