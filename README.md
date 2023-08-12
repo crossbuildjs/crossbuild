@@ -14,7 +14,10 @@ This is a monorepo that contains all the code for CrossBuild and its sub-package
 ## Packages
 
 -   [`crossbuild`](/tree/main/packages/crossbuild) - The main library
+-   [`@crossbuild/core`](/tree/main/packages/core) - A package that contains the core functionality of CrossBuild
+-   [`@crossbuild/discord`](/tree/main/packages/discord) - A package that contains the Discord modules for CrossBuild
 -   [`@crossbuild/functions`](/tree/main/packages/functions) - A package that contains useful utility functions for use with CrossBuild
+-   [`@crossbuild/guilded`](/tree/main/packages/guilded) - A package that contains the Guilded modules for CrossBuild
 -   [`@crossbuild/types`](/tree/main/packages/types) - A package that contains typings that are used within CrossBuild.
 
 ## Contributing
