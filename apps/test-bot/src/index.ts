@@ -32,6 +32,6 @@ const cb = new CrossBuild({
 
 cb.log(`${cb}`, LogLevel.NULL)
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 sleep(3000).then(() => console.log(cb))
