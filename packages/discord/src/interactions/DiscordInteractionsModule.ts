@@ -1,4 +1,3 @@
-import { GeneratedMessage } from "@crossbuild/types"
 import { LogLevel, Module, ModuleConfig, Paginator } from "@crossbuild/core"
 import {
     ApplicationCommandData,
@@ -9,7 +8,7 @@ import {
     ClientOptions,
     Interaction
 } from "discord.js"
-import { DiscordReceivedInteraction } from ".."
+import { DiscordChannel, DiscordReceivedInteraction, DiscordServer, DiscordUser } from ".."
 
 export interface DiscordInteractionsModuleConfig extends ModuleConfig {
 	/** The options to pass to the Discord client */
@@ -92,110 +91,26 @@ export class DiscordInteractionsModule extends Module {
     }
 
     private async interaction(discordInteraction: Interaction<CacheType>) {
-        console.log(discordInteraction)
         if (!this.crossbuild) throw new Error("CrossBuild client not loaded")
-        const server = discordInteraction.guildId
-            ? {
-                id: discordInteraction.guildId,
-                name: discordInteraction.guild?.name,
-                ownerId: discordInteraction.guild?.ownerId || undefined,
-                iconURL: discordInteraction.guild?.iconURL() || undefined,
-                description: discordInteraction.guild?.description || undefined
-			  }
-            : null
-        const user = {
-            id: discordInteraction.user.id,
-            displayName: discordInteraction.user.displayName,
-            username: discordInteraction.user.username,
-            avatarURL: discordInteraction.user.avatarURL() || undefined,
-            permissions: discordInteraction.memberPermissions?.toArray() || []
-        }
+        const server = discordInteraction.guild ? new DiscordServer(discordInteraction.guild) : null
+        const user = new DiscordUser(discordInteraction.user)
+        const channel = discordInteraction.channel ? new DiscordChannel(discordInteraction.channel) : null
 
-        if (discordInteraction.isChatInputCommand()) {
-            const channel = discordInteraction.channel
-                ? discordInteraction.channel.isDMBased()
-                    ? {
-                        id: discordInteraction.channelId,
-                        send: async (message: GeneratedMessage) => {
-                            await discordInteraction.channel?.send(message)
-                        }
-					  }
-                    : {
-                        id: discordInteraction.channelId,
-                        name: discordInteraction.channel.name,
-                        parentId: discordInteraction.channel.parentId || undefined,
-                        send: async (message: GeneratedMessage) => {
-                            await discordInteraction?.channel?.send(message)
-                        }
-					  }
-                : null
-            const interaction = new DiscordReceivedInteraction(this.crossbuild, {
-                id: discordInteraction.id,
-                key: discordInteraction.commandName,
-                type: "command",
-                original: discordInteraction,
-                server,
-                user,
-                channel
-            })
-            this.crossbuild.componentHandler.handleComponent(interaction)
-        } else if (discordInteraction.isButton()) {
-            const channel = discordInteraction.channel
-                ? discordInteraction.channel.isDMBased()
-                    ? {
-                        id: discordInteraction.channelId,
-                        send: async (message: GeneratedMessage) => {
-                            await discordInteraction.channel?.send(message)
-                        }
-					  }
-                    : {
-                        id: discordInteraction.channelId,
-                        name: discordInteraction.channel.name,
-                        parentId: discordInteraction.channel.parentId || undefined,
-                        send: async (message: GeneratedMessage) => {
-                            await discordInteraction?.channel?.send(message)
-                        }
-					  }
-                : null
-            const interaction = new DiscordReceivedInteraction(this.crossbuild, {
-                id: discordInteraction.id,
-                key: discordInteraction.customId,
-                type: "button",
-                original: discordInteraction,
-                server,
-                user,
-                channel
-            })
-            this.crossbuild.componentHandler.handleComponent(interaction)
-        } else if (discordInteraction.isAnySelectMenu()) {
-            const channel = discordInteraction.channel
-                ? discordInteraction.channel.isDMBased()
-                    ? {
-                        id: discordInteraction.channelId,
-                        send: async (message: GeneratedMessage) => {
-                            await discordInteraction.channel?.send(message)
-                        }
-					  }
-                    : {
-                        id: discordInteraction.channelId,
-                        name: discordInteraction.channel.name,
-                        parentId: discordInteraction.channel.parentId || undefined,
-                        send: async (message: GeneratedMessage) => {
-                            await discordInteraction?.channel?.send(message)
-                        }
-					  }
-                : null
-            const interaction = new DiscordReceivedInteraction(this.crossbuild, {
-                id: discordInteraction.id,
-                key: discordInteraction.customId,
-                type: "selectMenu",
-                original: discordInteraction,
-                server,
-                user,
-                channel,
-                selectMenuValues: discordInteraction.values
-            })
-            this.crossbuild.componentHandler.handleComponent(interaction)
-        }
+        const interaction = new DiscordReceivedInteraction(this.crossbuild, {
+            id: discordInteraction.id,
+            key: discordInteraction.isCommand() || discordInteraction.isAutocomplete() ? discordInteraction.commandName : discordInteraction.customId,
+            type: discordInteraction.isChatInputCommand()
+                ? "command"
+                : discordInteraction.isButton()
+                    ? "button"
+                    : discordInteraction.isAnySelectMenu()
+                        ? "selectMenu"
+                        : "command",
+            original: discordInteraction,
+            server,
+            user,
+            channel
+        })
+        this.crossbuild.componentHandler.handleComponent(interaction)
     }
 }

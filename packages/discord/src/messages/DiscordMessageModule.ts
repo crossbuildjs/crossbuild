@@ -1,7 +1,6 @@
-import { GeneratedMessage } from "@crossbuild/types"
 import { Module, ModuleConfig, Paginator } from "@crossbuild/core"
 import { Client, ClientOptions, Interaction, Message } from "discord.js"
-import { DiscordReceivedMessage } from ".."
+import { DiscordChannel, DiscordReceivedMessage, DiscordServer, DiscordUser } from ".."
 
 export interface DiscordMessageModuleConfig extends ModuleConfig {
 	/** The options to pass to the Discord client */
@@ -74,39 +73,9 @@ export class DiscordMessageModule extends Module {
             type: "command",
             original: discordMessage,
             rawOptions: flags,
-            server: discordMessage.guildId
-                ? {
-                    id: discordMessage.guildId,
-                    name: discordMessage.guild?.name,
-                    ownerId: discordMessage.guild?.ownerId || undefined,
-                    iconURL: discordMessage.guild?.iconURL() || undefined,
-                    description: discordMessage.guild?.description || undefined
-				  }
-                : null,
-            user: {
-                id: discordMessage.author.id,
-                displayName: discordMessage.author.displayName,
-                username: discordMessage.author.username,
-                avatarURL: discordMessage.author.avatarURL() || undefined
-                // permissions: discordMessage.member?.permissions?.toArray() || []
-            },
-            channel: discordMessage.channel
-                ? discordMessage.channel.isDMBased()
-                    ? {
-                        id: discordMessage.channelId,
-                        send: async (message: GeneratedMessage) => {
-                            await discordMessage.channel?.send(message)
-                        }
-					  }
-                    : {
-                        id: discordMessage.channelId,
-                        name: discordMessage.channel.name,
-                        parentId: discordMessage.channel.parentId || undefined,
-                        send: async (message: GeneratedMessage) => {
-                            await discordMessage?.channel?.send(message)
-                        }
-					  }
-                : null
+            server: discordMessage.guild ? new DiscordServer(discordMessage.guild) : null,
+            user: new DiscordUser(discordMessage.author),
+            channel: new DiscordChannel(discordMessage.channel)
         })
 		this.crossbuild!.componentHandler.handleComponent(interaction)
     }
