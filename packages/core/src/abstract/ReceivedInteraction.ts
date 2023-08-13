@@ -1,4 +1,4 @@
-import { ComponentType, CrossBuild, InteractionRawOptions, LogLevel } from "../index.js"
+import { Channel, ComponentType, CrossBuild, InteractionRawOptions, LogLevel, Server, User } from ".."
 import { GeneratedMessage } from "@crossbuild/types"
 
 export interface ReceivedInteractionData {
@@ -6,27 +6,9 @@ export interface ReceivedInteractionData {
 	key: string
 	type: ComponentType
 	original: unknown
-	server: {
-		id: string
-		ownerId?: string
-		name?: string
-		iconURL?: string
-		description?: string
-	} | null
-	channel:
-		| ({
-				id: string
-				name?: string
-				parentId?: string
-		  } & { send: (message: GeneratedMessage) => Promise<void> })
-		| null
-	user: {
-		id: string
-		displayName?: string
-		username?: string
-		avatarURL?: string
-		// permissions?: PermissionsString[] | GuildedPermissionString[]
-	}
+	server: Server | null
+	channel: Channel | null
+	user: User
 	rawOptions?: InteractionRawOptions
 	selectMenuValues?: Array<string>
 }
@@ -34,7 +16,7 @@ export interface ReceivedInteractionData {
 export abstract class ReceivedInteraction {
     private readonly crossbuild: CrossBuild
     /** The ID of this interaction */
-    readonly id: string
+    public readonly id: string
     /** The key of this interaction */
     public readonly key: string
 	/** The source of this interaction */
@@ -46,18 +28,18 @@ export abstract class ReceivedInteraction {
 	/** The raw unprocessed options of this interaction */
 	public readonly rawOptions: ReceivedInteractionData["rawOptions"]
 	/** The server this interaction was triggered in */
-	public readonly server?: ReceivedInteractionData["server"]
+	public readonly server: ReceivedInteractionData["server"]
 	/** The channel this interaction was triggered in */
-	public channel?: ReceivedInteractionData["channel"]
+	public readonly channel: ReceivedInteractionData["channel"]
 	/** The user that triggered this interaction */
-	public user?: ReceivedInteractionData["user"]
+	public readonly user: ReceivedInteractionData["user"]
 	/** The values of the select menu that triggered this interaction */
-	public selectMenuValues?: ReceivedInteractionData["selectMenuValues"]
+	public readonly selectMenuValues: ReceivedInteractionData["selectMenuValues"]
 
 	constructor(crossbuild: CrossBuild, data: ReceivedInteractionData) {
 	    this.crossbuild = crossbuild
 
-	    this.crossbuild.log(`${crossbuild}`, LogLevel.NULL)
+	    this.crossbuild.log(`${this.crossbuild}`, LogLevel.NULL)
 	    this.id = data.id
 	    this.key = data.key
 	    this.type = data.type

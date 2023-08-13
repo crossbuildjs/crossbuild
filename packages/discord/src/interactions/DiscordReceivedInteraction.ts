@@ -1,8 +1,10 @@
 import { CrossBuild, GeneratedMessage, ReceivedInteraction, ReceivedInteractionData } from "@crossbuild/core"
 import { BaseInteraction } from "discord.js"
+import { DiscordServer } from ".."
 
-export type DiscordReceivedInteractionData = ReceivedInteractionData & {
+export interface DiscordReceivedInteractionData extends Omit<ReceivedInteractionData, "server"> {
 	original: BaseInteraction
+	server: DiscordServer | null
 }
 
 export class DiscordReceivedInteraction extends ReceivedInteraction {
