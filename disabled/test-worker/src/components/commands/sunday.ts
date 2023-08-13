@@ -1,4 +1,4 @@
-import { Component, CrossBuild, ReceivedInteraction } from "../../../../../packages/core/dist"
+import { Component, CrossBuild, ReceivedInteraction } from "@crossbuild/core"
 import { todayIsSunday } from "../../customChecks"
 
 export default class Cmd extends Component {

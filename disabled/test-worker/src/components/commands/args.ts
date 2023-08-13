@@ -1,4 +1,4 @@
-import { Component, CrossBuild, OptionsHandler, ReceivedInteraction } from "../../../../../packages/core/dist"
+import { Component, CrossBuild, OptionsHandler, ReceivedInteraction } from "@crossbuild/core"
 
 export default class Cmd extends Component {
     constructor(client: CrossBuild) {

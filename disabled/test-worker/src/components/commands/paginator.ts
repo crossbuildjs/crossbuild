@@ -1,4 +1,4 @@
-import { Component, CrossBuild, ReceivedInteraction, Paginator } from "../../../../../packages/core/dist"
+import { Component, CrossBuild, ReceivedInteraction, Paginator } from "@crossbuild/core"
 
 export default class Cmd extends Component {
     constructor(client: CrossBuild) {

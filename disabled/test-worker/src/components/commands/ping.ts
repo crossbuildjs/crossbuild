@@ -1,4 +1,4 @@
-import { Component, CrossBuild, ReceivedInteraction } from "../../../../../packages/core/dist"
+import { Component, CrossBuild, ReceivedInteraction } from "@crossbuild/core"
 import { ButtonStyle, ComponentType } from "discord.js"
 
 export default class Cmd extends Component {
