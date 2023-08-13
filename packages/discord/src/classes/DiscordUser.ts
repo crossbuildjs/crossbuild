@@ -13,6 +13,10 @@ export class DiscordUser extends User {
         this.djsUser = user
     }
 
+    get isBot(): boolean {
+        return this.djsUser.bot
+    }
+
     async send(message: GeneratedMessage): Promise<string> {
         return (await this.djsUser.createDM())
             .send(message)

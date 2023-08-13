@@ -91,7 +91,6 @@ export class DiscordInteractionsModule extends Module {
     }
 
     private async interaction(discordInteraction: Interaction<CacheType>) {
-        console.log(discordInteraction)
         if (!this.crossbuild) throw new Error("CrossBuild client not loaded")
         const server = discordInteraction.guild ? new DiscordServer(discordInteraction.guild) : null
         const user = new DiscordUser(discordInteraction.user)

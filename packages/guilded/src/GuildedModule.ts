@@ -1,7 +1,7 @@
-import { GeneratedMessage } from "@crossbuild/types"
 import { LogLevel, Module, ModuleConfig, Paginator } from "@crossbuild/core"
 import { Client, ClientOptions, Message } from "guilded.js"
-import { GuildedReceivedMessage } from "./GuildedReceivedMessage"
+import { GuildedReceivedMessage } from "./classes/GuildedReceivedMessage"
+import { GuildedChannel, GuildedServer, GuildedUser } from "."
 
 export interface GuildedModuleConfig extends ModuleConfig {
 	// The options to pass to the Guilded client
@@ -63,50 +63,29 @@ export class GuildedModule extends Module {
             flags[match[1]] = match[2]
         }
 
+        const channel: GuildedChannel | null = guildedMessage.channel
+            ? new GuildedChannel(guildedMessage.channel)
+            : guildedMessage.channelId
+                ? new GuildedChannel(await this.client.channels.fetch(guildedMessage.channelId))
+                : null
+
+        const server: GuildedServer | null = guildedMessage.server
+            ? new GuildedServer(guildedMessage.server)
+            : guildedMessage.serverId
+                ? new GuildedServer(await this.client.servers.fetch(guildedMessage.serverId))
+                : null
+
+        const user: GuildedUser | null = guildedMessage.author ? new GuildedUser(guildedMessage.author) : null
+
         const interaction = new GuildedReceivedMessage(this.crossbuild!, {
             id: guildedMessage.id,
             key: command,
             type: "command",
             original: guildedMessage,
             rawOptions: flags,
-            server: guildedMessage.server
-                ? {
-                    id: guildedMessage.server.id,
-                    ownerId: guildedMessage.server.ownerId,
-                    name: guildedMessage.server.name,
-                    iconURL: guildedMessage.server.iconURL || undefined,
-                    description: guildedMessage.server.description || undefined
-				  }
-                : guildedMessage.serverId
-                    ? { id: guildedMessage.serverId }
-                    : null,
-            channel: guildedMessage.channel
-                ? {
-                    id: guildedMessage.channel.id,
-                    name: guildedMessage.channel.name,
-                    parentId: guildedMessage.channel.parentId || undefined,
-                    send: async (message: GeneratedMessage) => {
-                        await guildedMessage.channel?.send(message)
-                    }
-				  }
-                : guildedMessage.channelId
-                    ? {
-                        id: guildedMessage.channelId,
-                        send: async (message: GeneratedMessage) => {
-                            const channel = await this.client.channels.fetch(guildedMessage.channelId)
-                            channel?.send(message)
-                        }
-				  }
-                    : null,
-            user: guildedMessage.author
-                ? {
-                    id: guildedMessage.author.id,
-                    displayName: guildedMessage.author.name,
-                    username: guildedMessage.author.name,
-                    avatarURL: guildedMessage.author.avatar || undefined
-                    // permissions: []
-				  }
-                : { id: guildedMessage.authorId }
+            server,
+            channel,
+            user
         })
 		this.crossbuild!.componentHandler.handleComponent(interaction)
     }

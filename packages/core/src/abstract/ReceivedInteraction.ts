@@ -8,7 +8,7 @@ export interface ReceivedInteractionData {
 	original: unknown
 	server: Server | null
 	channel: Channel | null
-	user: User
+	user: User | null
 	rawOptions?: InteractionRawOptions
 	selectMenuValues?: Array<string>
 }

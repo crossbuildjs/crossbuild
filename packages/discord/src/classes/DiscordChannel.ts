@@ -10,13 +10,13 @@ export class DiscordChannel extends Channel {
                 id: channel.id,
                 name: null,
                 parentId: null,
-                description: null
+                topic: null
 			  }
             : {
                 id: channel.id,
                 name: channel.name,
                 parentId: channel.parentId,
-                description: "topic" in channel ? channel.topic : null
+                topic: "topic" in channel ? channel.topic : null
 			  }
         super(data)
         this.djsChannel = channel
@@ -35,9 +35,9 @@ export class DiscordChannel extends Channel {
             })
     }
 
-    async fetchMessage(id: string): Promise<DiscordMessage> {
+    async fetchMessage(id: string): Promise<DiscordMessage | null> {
         const message = await this.djsChannel.messages.fetch(id)
-        if (!message) throw new Error("Message not found")
+        if (!message) return null
         return new DiscordMessage(message)
     }
 }

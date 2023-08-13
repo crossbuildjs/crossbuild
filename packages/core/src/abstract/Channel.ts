@@ -4,7 +4,7 @@ export type ChannelData = {
 	id: string
 	name: string | null
 	parentId: string | null
-	description: string | null
+	topic: string | null
 }
 
 export abstract class Channel {
@@ -17,7 +17,7 @@ export abstract class Channel {
         this.id = data.id
         this.name = data.name
         this.parentId = data.parentId
-        this.topic = data.description
+        this.topic = data.topic
     }
 
 	/**
@@ -35,7 +35,7 @@ export abstract class Channel {
 	/**
 	 * Fetch a message from this channel
 	 * @param id The ID of the message to fetch
-	 * @returns The message that was fetched
+	 * @returns The message that was fetched or null if no message could be found.
 	 */
-	abstract fetchMessage(id: string): Promise<Message>
+	abstract fetchMessage(id: string): Promise<Message | null>
 }

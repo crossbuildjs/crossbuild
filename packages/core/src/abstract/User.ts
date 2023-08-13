@@ -2,23 +2,25 @@ import { GeneratedMessage } from ".."
 
 export type UserData = {
 	id: string
-	displayName?: string
-	username?: string
-	avatarURL?: string
+	displayName?: string | null
+	username?: string | null
+	avatarURL?: string | null
 }
 
 export abstract class User {
     readonly id: string
-    readonly displayName?: string
-    readonly username?: string
-    readonly avatarURL?: string
+    readonly displayName: string | null
+    readonly username: string | null
+    readonly avatarURL: string | null
 
     constructor(data: UserData) {
         this.id = data.id
-        this.displayName = data.displayName
-        this.username = data.username
-        this.avatarURL = data.avatarURL
+        this.displayName = data.displayName || null
+        this.username = data.username || null
+        this.avatarURL = data.avatarURL || null
     }
+
+	abstract get isBot(): boolean
 
 	/**
 	 * Send a DM to this user

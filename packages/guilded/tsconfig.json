@@ -1,6 +1,6 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"include": ["src/*.ts", "src/index.ts"],
+	"include": ["src/*.ts", "src/index.ts", "src/classes/GuildedReceivedMessage.ts"],
 	"compilerOptions": {
 		"outDir": "./dist",
 		"rootDir": "."
