@@ -1,6 +1,6 @@
 import { Module, ModuleConfig } from "@crossbuild/core"
-import { Client, ClientOptions, Message } from "discord.js"
-import { DiscordChannel, DiscordInteractionModulePaginator, DiscordReceivedMessage, DiscordServer, DiscordUser } from ".."
+import { Client, ClientOptions, Interaction, Message } from "discord.js"
+import { DiscordChannel, DiscordInteractionModulePaginator, DiscordReceivedInteraction, DiscordReceivedMessage, DiscordServer, DiscordUser } from ".."
 
 export interface DiscordMessageModuleConfig extends ModuleConfig {
 	/** The options to pass to the Discord client */
@@ -29,22 +29,31 @@ export class DiscordMessageModule extends Module {
     }
 
     public async startListening() {
-        // this.client?.on("interactionCreate", (interaction) => this.interactionHandle(interaction))
+        this.client?.on("interactionCreate", (interaction) => this.interactionHandle(interaction))
 
         this.client?.on("messageCreate", (message) => this.message(message))
     }
 
     public async stopListening() {
-        // this.client?.off("interactionCreate", (interaction) => this.interactionHandle(interaction))
+        this.client?.off("interactionCreate", (interaction) => this.interactionHandle(interaction))
         this.client?.off("messageCreate", (message) => this.message(message))
     }
 
-    // private async interactionHandle(interaction: Interaction) {
-    // if (interaction.isButton() && interaction.customId.startsWith("cb")) {
-    //     const paginator = this.paginators.get(interaction.customId.split(":")[1].split(",")[0])
-    //     if (paginator) return paginator.handlePage(interaction)
-    // }
-    // }
+    private async interactionHandle(discordInteraction: Interaction) {
+        if (discordInteraction.isButton() && discordInteraction.customId.startsWith("cb")) {
+            const paginator = this.modulePaginator.paginators.get(discordInteraction.customId.split(":")[1].split(",")[0])
+            const interaction = new DiscordReceivedInteraction(this.crossbuild!, {
+                id: discordInteraction.id,
+                key: discordInteraction.customId,
+                type: "button",
+                original: discordInteraction,
+                server: discordInteraction.guild ? new DiscordServer(discordInteraction.guild) : null,
+                user: new DiscordUser(discordInteraction.user),
+                channel: discordInteraction.channel ? new DiscordChannel(discordInteraction.channel) : null
+            })
+            if (paginator) return this.modulePaginator.handlePage(paginator, interaction)
+        }
+    }
 
     private async message(discordMessage: Message) {
         if (!discordMessage.content.startsWith(this.config.prefix)) return
