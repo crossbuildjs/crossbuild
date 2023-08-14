@@ -11,6 +11,7 @@ export interface GuildedModuleConfig extends ModuleConfig {
 }
 
 export class GuildedModule extends Module {
+    key = "guilded"
     config: GuildedModuleConfig
     client: Client
 

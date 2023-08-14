@@ -5,7 +5,8 @@ export * from "./classes/DiscordServer"
 export * from "./classes/DiscordUser"
 
 // ================== Interactions ==================
-export * from "./interactions/DiscordInteractionsModule"
+export * from "./interactions/DiscordInteractionModule"
+export * from "./interactions/DiscordInteractionModulePaginator"
 export * from "./interactions/DiscordReceivedInteraction"
 
 // ================== Messages ==================

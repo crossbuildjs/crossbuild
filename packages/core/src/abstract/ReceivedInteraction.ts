@@ -62,6 +62,14 @@ export abstract class ReceivedInteraction {
 	    this.user = data.user
 
 	    this.original = data.original
+
+	    this.checkSource()
+	}
+
+	private checkSource() {
+	    // get an array of all the keys for crossbuild.modules
+	    const keys = Object.keys(this.crossbuild.modules)
+	    if (!keys.includes(this.source)) throw new Error(`Invalid source: ${this.source}. The source must be the same as the module key`)
 	}
 
 	public isDiscordComponent() {

@@ -1,5 +1,4 @@
-import { Collection } from "@discordjs/collection"
-import { CrossBuild, Paginator } from ".."
+import { CrossBuild, ModulePaginator } from ".."
 
 export type ModuleConfig = {
 	/** An easily recognizable name for this module */
@@ -7,12 +6,14 @@ export type ModuleConfig = {
 }
 
 export abstract class Module {
-    /** A friendly name to refer to this module by */
-    name: string
-    config: ModuleConfig
-    /** The CrossBuild client. Undefined when the module has not been loaded */
-    crossbuild: CrossBuild | undefined
-    paginators: Collection<string, Paginator> = new Collection()
+	/** The ID for CrossBuild to store this module as */
+	abstract key: string
+	/** An easily recognizable name for this module */
+	name: string
+	config: ModuleConfig
+	/** The CrossBuild client. Undefined when the module has not been loaded */
+	crossbuild: CrossBuild | undefined
+	abstract modulePaginator: ModulePaginator
 	abstract client: unknown
 
 	constructor(config: ModuleConfig) {
@@ -28,6 +29,4 @@ export abstract class Module {
 	public abstract load(): Promise<boolean>
 	public abstract startListening(): Promise<void>
 	public abstract stopListening(): Promise<void>
-	public abstract watchPaginator(paginator: Paginator): void
-	public abstract unwatchPaginator(paginator: Paginator): void
 }

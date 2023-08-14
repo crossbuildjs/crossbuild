@@ -1,4 +1,4 @@
-import { LogLevel, Module, ModuleConfig, Paginator } from "@crossbuild/core"
+import { LogLevel, Module, ModuleConfig, ModulePaginator } from "@crossbuild/core"
 import {
     ApplicationCommandData,
     ApplicationCommandOptionData,
@@ -8,23 +8,26 @@ import {
     ClientOptions,
     Interaction
 } from "discord.js"
-import { DiscordChannel, DiscordReceivedInteraction, DiscordServer, DiscordUser } from ".."
+import { DiscordChannel, DiscordReceivedInteraction, DiscordServer, DiscordUser, DiscordInteractionModulePaginator } from ".."
 
-export interface DiscordInteractionsModuleConfig extends ModuleConfig {
+export interface DiscordInteractionModuleConfig extends ModuleConfig {
 	/** The options to pass to the Discord client */
 	options: ClientOptions
 	/** The token of your bot */
 	token: string
 }
 
-export class DiscordInteractionsModule extends Module {
-    config: DiscordInteractionsModuleConfig
+export class DiscordInteractionModule extends Module {
+    key = "discordInteraction"
+    config: DiscordInteractionModuleConfig
     client: Client
+    modulePaginator: ModulePaginator
 
-    constructor(config: DiscordInteractionsModuleConfig) {
+    constructor(config: DiscordInteractionModuleConfig) {
         super(config)
         this.client = new Client(config.options)
         this.config = config
+        this.modulePaginator = new DiscordInteractionModulePaginator()
     }
 
     public async load() {
@@ -67,27 +70,11 @@ export class DiscordInteractionsModule extends Module {
     }
 
     public async startListening() {
-        this.client.on("interactionCreate", (interaction) => this.handleInteraction(interaction))
+        this.client.on("interactionCreate", (interaction) => this.interaction(interaction))
     }
 
     public async stopListening() {
-        this.client.off("interactionCreate", (interaction) => this.handleInteraction(interaction))
-    }
-
-    private handleInteraction(interaction: Interaction) {
-        if (interaction.isButton() && interaction.customId.startsWith("cb")) {
-            const paginator = this.paginators.get(interaction.customId.split(":")[1].split(",")[0])
-            if (paginator) return paginator.handlePage(interaction)
-        }
-        this.interaction(interaction)
-    }
-
-    public watchPaginator(paginator: Paginator) {
-        this.paginators.set(paginator.id, paginator)
-    }
-
-    public unwatchPaginator(paginator: Paginator) {
-        this.paginators.delete(paginator.id)
+        this.client.off("interactionCreate", (interaction) => this.interaction(interaction))
     }
 
     private async interaction(discordInteraction: Interaction<CacheType>) {
@@ -111,6 +98,11 @@ export class DiscordInteractionsModule extends Module {
             user,
             channel
         })
+        if (discordInteraction.isButton() && discordInteraction.customId.startsWith("cb")) {
+            const paginator = this.modulePaginator.paginators.get(discordInteraction.customId.split(":")[1].split(",")[0])
+            if (paginator) return this.modulePaginator.handlePage(paginator, interaction)
+        }
+
         this.crossbuild.componentHandler.handleComponent(interaction)
     }
 }
