@@ -1,4 +1,4 @@
-import { Channel, ComponentType, CrossBuild, InteractionRawOptions, LogLevel, Server, User } from ".."
+import { Channel, ComponentType, CrossBuild, InteractionRawOptions, LogLevel, Message, Server, User } from ".."
 import { GeneratedMessage } from "@crossbuild/types"
 
 export interface ReceivedInteractionData {
@@ -73,5 +73,8 @@ export abstract class ReceivedInteraction {
 	 * @param message The message you want to send
 	 * @returns The ID of the resulting message
 	 */
-	abstract reply(message: GeneratedMessage): Promise<string>
+	abstract reply(message: GeneratedMessage): Promise<Message>
+	abstract editReply(message: GeneratedMessage): Promise<Message>
+	abstract deferReply(): Promise<void>
+	abstract followUp(message: GeneratedMessage): Promise<Message>
 }
