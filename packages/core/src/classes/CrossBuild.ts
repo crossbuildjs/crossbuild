@@ -29,7 +29,7 @@ export class CrossBuild {
         this.componentHandler = new ComponentHandler(this)
 
         this.modules = new Collection()
-        this.config.modules.map((x) => this.modules.set(x.name, x))
+        this.config.modules.map((x) => this.modules.set(x.key, x))
 
         this.start()
     }

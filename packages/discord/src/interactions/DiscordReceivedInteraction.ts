@@ -85,4 +85,25 @@ export class DiscordReceivedInteraction extends ReceivedInteraction {
             throw new Error("An interaction that could not be replied to was found.")
         }
     }
+
+    public async update(message: GeneratedMessage) {
+        if (this.original.isButton() || this.original.isAnySelectMenu()) {
+            const msg = await this.original.update(
+                typeof message === "string"
+                    ? {
+                        content: message,
+                        fetchReply: true
+					  }
+                    : {
+                        embeds: message.embeds,
+                        components: message.components,
+                        content: message.content,
+                        fetchReply: true
+					  }
+            )
+            return new DiscordMessage(msg)
+        } else {
+            throw new Error("An interaction that could not be updated was found.")
+        }
+    }
 }

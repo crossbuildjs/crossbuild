@@ -1,6 +1,6 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"include": ["src/*.ts", "src/index.ts", "src/interactions/DiscordInteractionsModule.ts", "src/classes/DiscordServer.ts"],
+	"include": ["src/*.ts", "src/index.ts", "src/classes/DiscordModulePaginator.ts"],
 	"compilerOptions": {
 		"outDir": "./dist",
 		"rootDir": "."

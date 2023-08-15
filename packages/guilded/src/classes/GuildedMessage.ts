@@ -1,5 +1,6 @@
 import { Message } from "@crossbuild/core"
 import { Message as GJSMessage } from "guilded.js"
+import { GuildedEmojiID } from ".."
 
 export class GuildedMessage extends Message {
     private readonly gjsMessage: GJSMessage
@@ -32,6 +33,12 @@ export class GuildedMessage extends Message {
 
     async delete(): Promise<void> {
         await this.gjsMessage.delete().catch((e) => {
+            throw e
+        })
+    }
+
+    async react(emoji: GuildedEmojiID | number) {
+        await this.gjsMessage.client.reactions.create(this.gjsMessage.channelId, this.gjsMessage.id, emoji).catch((e) => {
             throw e
         })
     }
