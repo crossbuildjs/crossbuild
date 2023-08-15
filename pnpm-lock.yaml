@@ -162,6 +162,9 @@ importers:
       '@crossbuild/types':
         specifier: workspace:^
         version: link:../types
+      '@discordjs/collection':
+        specifier: ^1.5.2
+        version: 1.5.2
       guilded.js:
         specifier: ^0.23.4
         version: 0.23.4

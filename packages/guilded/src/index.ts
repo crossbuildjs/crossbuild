@@ -3,6 +3,7 @@ export * from "./GuildedModule"
 // ==================== Classes ====================
 export * from "./classes/GuildedChannel"
 export * from "./classes/GuildedMessage"
+export * from "./classes/GuildedModulePaginator"
 export * from "./classes/GuildedReceivedMessage"
 export * from "./classes/GuildedServer"
 export * from "./classes/GuildedUser"

@@ -32,6 +32,10 @@ export class Paginator {
     public id: string
     public settings: PaginatorSettings
     public pages: PaginatorMessage[]
+    /** The ID of the message that was sent from this paginator */
+    public messageId?: string
+    /** The page that was last sent */
+    public activePage?: number
 
     constructor(settings: PaginatorSettings, pages?: PaginatorMessage[]) {
         this.settings = {

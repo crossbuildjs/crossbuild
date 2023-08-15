@@ -8,8 +8,14 @@ export abstract class ModulePaginator {
         return this.paginators.size
     }
 
-	public abstract watchPaginator(paginator: Paginator): void
-	public abstract unwatchPaginator(paginator: Paginator): void
+    public watchPaginator(paginator: Paginator) {
+        this.paginators.set(paginator.id, paginator)
+    }
+
+    public unwatchPaginator(paginator: Paginator) {
+        this.paginators.delete(paginator.id)
+    }
+
 	public abstract createPaginatorMessage(message: PaginatorMessage, prevNext: PrevNext, id: string): GeneratedMessageObject
 	public abstract sendPaginatorMessage(message: GeneratedMessageObject, interaction: ReceivedInteraction): Promise<void>
 	public abstract handlePage(paginator: Paginator, interaction: ReceivedInteraction): Promise<void>

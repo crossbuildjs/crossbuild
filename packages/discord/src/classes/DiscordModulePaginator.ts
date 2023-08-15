@@ -2,18 +2,6 @@ import { GeneratedMessageObject, ModulePaginator, Paginator, PaginatorMessage, P
 import { DiscordReceivedInteraction } from ".."
 
 export class DiscordInteractionModulePaginator extends ModulePaginator {
-    constructor() {
-        super()
-    }
-
-    public watchPaginator(paginator: Paginator) {
-        this.paginators.set(paginator.id, paginator)
-    }
-
-    public unwatchPaginator(paginator: Paginator) {
-        this.paginators.delete(paginator.id)
-    }
-
     public createPaginatorMessage(message: PaginatorMessage, prevNext: PrevNext, id: string): GeneratedMessageObject {
         const generatedButtons = this.generateDiscordComponents(prevNext, id)
         message.components ? message.components.push(generatedButtons[0]) : (message.components = generatedButtons)

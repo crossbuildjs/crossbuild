@@ -1,7 +1,7 @@
-import { LogLevel, Module, ModuleConfig, Paginator } from "@crossbuild/core"
+import { Module, ModuleConfig } from "@crossbuild/core"
 import { Client, ClientOptions, Message } from "guilded.js"
 import { GuildedReceivedMessage } from "./classes/GuildedReceivedMessage"
-import { GuildedChannel, GuildedServer, GuildedUser } from "."
+import { GuildedChannel, GuildedEmojiID, GuildedModulePaginator, GuildedServer, GuildedUser } from "."
 
 export interface GuildedModuleConfig extends ModuleConfig {
 	// The options to pass to the Guilded client
@@ -14,6 +14,7 @@ export class GuildedModule extends Module {
     key = "guilded"
     config: GuildedModuleConfig
     client: Client
+    modulePaginator = new GuildedModulePaginator()
 
     constructor(config: GuildedModuleConfig) {
         super(config)
@@ -28,25 +29,32 @@ export class GuildedModule extends Module {
 
     public async startListening() {
         this.client.on("messageCreated", (message) => this.message(message))
-        // this.client?.on("messageReactionCreated", (reaction) => {
-        //     console.log(reaction)
-        //     const paginator = this.paginators.get(reaction.messageId)
-        //     if (paginator) return paginator.handleGuildedReaction(reaction)
-        // })
+
+        // Paginator
+        this.client?.on("messageReactionCreated", async (reaction) => {
+            if (reaction.createdBy === this.client.user!.id) return
+            const message = await this.client.messages.fetch(reaction.channelId, reaction.messageId)
+            if (!message) throw new Error("Unable to find Guilded message for paginator.")
+            const paginator = this.modulePaginator.getMessagesPaginator(message.id)
+            if (!paginator) return
+            await message.deleteReaction(reaction.emote.id, reaction.createdBy)
+            if (reaction.createdBy !== paginator.settings.userId) return
+            const { previous, next } = paginator.getPrevNext(paginator.activePage!)
+            const toSend = this.modulePaginator.createPaginatorMessage(
+                paginator.pages[
+                    reaction.emote.id === GuildedEmojiID.ARROW_LEFT
+                        ? previous
+                        : reaction.emote.id === GuildedEmojiID.ARROW_RIGHT
+                            ? next
+                            : paginator.activePage!
+                ]
+            )
+            await message.edit(toSend)
+        })
     }
 
     public async stopListening() {
         this.client.off("messageCreated", (message) => this.message(message))
-    }
-
-    public watchPaginator(paginator: Paginator) {
-        this.crossbuild?.log(`${paginator}`, LogLevel.NULL)
-        // if (!paginator.guildedMessageId) throw new Error("Guilded paginator must have a guildedMessageId")
-        // this.paginators.set(paginator.guildedMessageId, paginator)
-    }
-
-    public unwatchPaginator(paginator: Paginator) {
-        this.paginators.delete(paginator.id)
     }
 
     private async message(guildedMessage: Message) {
