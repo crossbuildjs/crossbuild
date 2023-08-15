@@ -1,11 +1,11 @@
-import { CrossBuild, DiscordInteractionsModule, DiscordMessageModule, GuildedModule, LogLevel } from "crossbuild"
+import { CrossBuild, DiscordInteractionModule, DiscordMessageModule, GuildedModule, LogLevel } from "crossbuild"
 import { GatewayIntentBits } from "discord.js"
 
 const cb = new CrossBuild({
     name: "Test Bot",
     componentPaths: ["/src/components/buttons", "/src/components/commands", "/src/components/selectMenus"],
     modules: [
-        new DiscordInteractionsModule({
+        new DiscordInteractionModule({
             name: "Shadow Testing",
             options: {
                 intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]

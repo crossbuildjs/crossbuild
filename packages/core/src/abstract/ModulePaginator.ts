@@ -17,6 +17,6 @@ export abstract class ModulePaginator {
     }
 
 	public abstract createPaginatorMessage(message: PaginatorMessage, prevNext: PrevNext, id: string): GeneratedMessageObject
-	public abstract sendPaginatorMessage(message: GeneratedMessageObject, interaction: ReceivedInteraction): Promise<void>
+	public abstract sendPaginatorMessage(message: GeneratedMessageObject, interaction: ReceivedInteraction, paginator?: Paginator): Promise<void>
 	public abstract handlePage(paginator: Paginator, interaction: ReceivedInteraction): Promise<void>
 }

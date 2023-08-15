@@ -70,7 +70,6 @@ export class ComponentHandler {
     }
 
     public async handleComponent(interaction: ReceivedInteraction) {
-        console.log(interaction)
         const key = interaction.key
         const type = interaction.type
         if (interaction.isDiscordComponent() && key.startsWith("x-"))

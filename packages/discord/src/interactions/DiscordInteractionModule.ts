@@ -101,8 +101,8 @@ export class DiscordInteractionModule extends Module {
         if (discordInteraction.isButton() && discordInteraction.customId.startsWith("cb")) {
             const paginator = this.modulePaginator.paginators.get(discordInteraction.customId.split(":")[1].split(",")[0])
             if (paginator) return this.modulePaginator.handlePage(paginator, interaction)
+        } else {
+            this.crossbuild.componentHandler.handleComponent(interaction)
         }
-
-        this.crossbuild.componentHandler.handleComponent(interaction)
     }
 }

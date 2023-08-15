@@ -31,7 +31,7 @@ export class GuildedModule extends Module {
         this.client.on("messageCreated", (message) => this.message(message))
 
         // Paginator
-        this.client?.on("messageReactionCreated", async (reaction) => {
+        this.client.on("messageReactionCreated", async (reaction) => {
             if (reaction.createdBy === this.client.user!.id) return
             const message = await this.client.messages.fetch(reaction.channelId, reaction.messageId)
             if (!message) throw new Error("Unable to find Guilded message for paginator.")
@@ -39,17 +39,18 @@ export class GuildedModule extends Module {
             if (!paginator) return
             await message.deleteReaction(reaction.emote.id, reaction.createdBy)
             if (reaction.createdBy !== paginator.settings.userId) return
-            const { previous, next } = paginator.getPrevNext(paginator.activePage!)
+            const { previous, next } = paginator.getPrevNext(paginator.activePage)
             const toSend = this.modulePaginator.createPaginatorMessage(
                 paginator.pages[
-                    reaction.emote.id === GuildedEmojiID.ARROW_LEFT
+                    (reaction.emote.id === GuildedEmojiID.ARROW_LEFT
                         ? previous
                         : reaction.emote.id === GuildedEmojiID.ARROW_RIGHT
                             ? next
-                            : paginator.activePage!
+                            : paginator.activePage) - 1
                 ]
             )
             await message.edit(toSend)
+            paginator.activePage = reaction.emote.id === GuildedEmojiID.ARROW_LEFT ? previous : next
         })
     }
 

@@ -4,8 +4,9 @@ import { DiscordReceivedInteraction } from ".."
 export class DiscordInteractionModulePaginator extends ModulePaginator {
     public createPaginatorMessage(message: PaginatorMessage, prevNext: PrevNext, id: string): GeneratedMessageObject {
         const generatedButtons = this.generateDiscordComponents(prevNext, id)
-        message.components ? message.components.push(generatedButtons[0]) : (message.components = generatedButtons)
-        return { ...message }
+        const done = { ...message }
+        done.components ? done.components.push(generatedButtons[0]) : (done.components = generatedButtons)
+        return done
     }
 
     public async handlePage(paginator: Paginator, interaction: DiscordReceivedInteraction) {
@@ -15,7 +16,7 @@ export class DiscordInteractionModulePaginator extends ModulePaginator {
         }
         const page = parseInt(interaction.key.split(":")[1].split(",")[1])
         const message = this.createPaginatorMessage(paginator.pages[page - 1], paginator.getPrevNext(page), paginator.id)
-        await interaction.followUp(message)
+        await interaction.update(message)
         return
     }
 
@@ -50,7 +51,6 @@ export class DiscordInteractionModulePaginator extends ModulePaginator {
                 }
             ]
         }
-        console.log(row)
         return [row]
     }
 }

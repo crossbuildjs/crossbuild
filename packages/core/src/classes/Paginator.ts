@@ -35,7 +35,7 @@ export class Paginator {
     /** The ID of the message that was sent from this paginator */
     public messageId?: string
     /** The page that was last sent */
-    public activePage?: number
+    public activePage: number = 1
 
     constructor(settings: PaginatorSettings, pages?: PaginatorMessage[]) {
         this.settings = {
@@ -70,7 +70,8 @@ export class Paginator {
 
     private async moduleSend(data: GeneratedMessageObject, interaction: ReceivedInteraction) {
         const module = this.getModule(interaction.source)
-        await module.modulePaginator.sendPaginatorMessage(data, interaction)
+        await module.modulePaginator.sendPaginatorMessage(data, interaction, this)
+        module.modulePaginator.watchPaginator(this)
     }
 
     private createMessage(page: number, source: string): GeneratedMessageObject {
@@ -87,80 +88,3 @@ export class Paginator {
         return { previous, current: page, total: this.pages.length, next }
     }
 }
-
-// switch (interaction.source) {
-//     case "guilded":
-//         const guildedMsg = this.getGuildedMessage(page)
-//         const messageId = await interaction.reply(guildedMsg)
-//         const message = await this.settings.crossbuild.guildedClient?.messages.fetch(channel.id, messageId)
-//         await message?.addReaction(GuildedEmojiID.ARROW_LEFT)
-//         await message?.addReaction(GuildedEmojiID.ARROW_RIGHT)
-// 		this.settings.crossbuild.guildedListener!.watchPaginator(this)
-//         this.activePage = page
-//         break
-//     default:
-//         const discordMsg = this.getDiscordMessage(page)
-//         await interaction.reply(discordMsg)
-// 		this.settings.crossbuild.discordListener!.watchPaginator(this)
-//         this.activePage = page
-//         break
-// }
-
-// public async handleDiscordInteraction(interaction: ButtonInteraction) {
-//     if (interaction.user.id !== this.settings.userId) {
-//         interaction.reply({ content: "This button is not for you!", ephemeral: true })
-//         return
-//     }
-//     const page = parseInt(interaction.customId.split(":")[1].split(",")[1])
-//     const message = this.getDiscordMessage(page)
-//     await interaction.update(message)
-// }
-
-// public async handleGuildedReaction(reaction: GuildedMessageReaction) {
-//     if (reaction.createdBy === this.settings.crossbuild.guildedClient?.user?.id) return
-//     const message = await this.settings.crossbuild.guildedClient?.messages.fetch(reaction.channelId, reaction.messageId)
-//     if (!message) throw new Error("Unable to find Guilded message for paginator.")
-//     await message.deleteReaction(reaction.emote.id, reaction.createdBy)
-//     if (reaction.createdBy !== this.settings.userId) return
-//     const { previous, next } = this.getPrevNext(this.activePage)
-//     if (reaction.emote.id === GuildedEmojiID.ARROW_LEFT) {
-//         const toSend = this.getGuildedMessage(previous)
-//         await message.edit(toSend)
-//     } else if (reaction.emote.id === GuildedEmojiID.ARROW_RIGHT) {
-//         const toSend = this.getGuildedMessage(next)
-//         await message.edit(toSend)
-//     }
-// }
-
-// private generateDiscordComponents(thisPage: number = 1): NonNullable<GeneratedMessageObject["components"]> {
-//     if (this.pages.length === 1) return []
-//     const { previous, next } = this.getPrevNext(thisPage)
-//     const row = {
-//         type: 1,
-//         components: [
-//             {
-//                 type: 2,
-//                 label: "Previous",
-//                 style: 2,
-//                 custom_id: `cb:${this.settings.id},${previous}`,
-//                 disabled: thisPage === 1
-//             },
-//             {
-//                 type: 2,
-//                 label: `Page ${thisPage}/${this.pages.length}`,
-//                 style: 2,
-//                 custom_id: `cb:disabledpagecount`,
-//                 disabled: true
-//             },
-//             {
-//                 type: 2,
-//                 label: "Next",
-//                 style: 2,
-//                 custom_id: `cb:${this.settings.id},${next}`,
-//                 disabled: thisPage === this.pages.length
-//             }
-//         ]
-//     }
-//     console.log(row)
-//     return [row]
-// }
