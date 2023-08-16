@@ -1,4 +1,4 @@
-import { LogLevel, Module, ModuleConfig, ModulePaginator } from "@crossbuild/core"
+import { ComponentOption, LogLevel, Module, ModuleConfig, ModulePaginator } from "@crossbuild/core"
 import {
     ApplicationCommandData,
     ApplicationCommandOptionData,
@@ -8,7 +8,14 @@ import {
     ClientOptions,
     Interaction
 } from "discord.js"
-import { DiscordChannel, DiscordReceivedInteraction, DiscordServer, DiscordUser, DiscordInteractionModulePaginator } from ".."
+import {
+    DiscordChannel,
+    DiscordReceivedInteraction,
+    DiscordServer,
+    DiscordUser,
+    DiscordInteractionModulePaginator,
+    DiscordInteractionOptionsHandler
+} from ".."
 
 export interface DiscordInteractionModuleConfig extends ModuleConfig {
 	/** The options to pass to the Discord client */
@@ -28,6 +35,10 @@ export class DiscordInteractionModule extends Module {
         this.client = new Client(config.options)
         this.config = config
         this.modulePaginator = new DiscordInteractionModulePaginator()
+    }
+
+    public optionsHandler(interaction: DiscordReceivedInteraction, componentOptions: ComponentOption[]): DiscordInteractionOptionsHandler {
+        return new DiscordInteractionOptionsHandler(interaction, componentOptions)
     }
 
     public async load() {

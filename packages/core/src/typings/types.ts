@@ -49,7 +49,7 @@ export interface ComponentOption {
 	/** Whether the option is required */
 	required?: boolean
 	/** The type of the option */
-	type: "string" | "integer" | "number" | "boolean" // | "channel" | "role" | "attachment" | "user"
+	type: "string" | "integer" | "number" | "boolean" | "channel" | "role" | "user" // | "attachment"
 	/** If you want to restrict the user to a set of choices, you can specify them here. */
 	choices?: { name: string; value: string | number | boolean }[]
 	/** If the type is a number, you can specify a minimum value */

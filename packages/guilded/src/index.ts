@@ -6,6 +6,7 @@ export * from "./classes/GuildedMessage"
 export * from "./classes/GuildedModulePaginator"
 export * from "./classes/GuildedOptionsHandler"
 export * from "./classes/GuildedReceivedMessage"
+export * from "./classes/GuildedRole"
 export * from "./classes/GuildedServer"
 export * from "./classes/GuildedUser"
 

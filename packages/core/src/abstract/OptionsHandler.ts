@@ -7,8 +7,9 @@ export abstract class OptionsHandler {
 
     constructor(interaction: ReceivedInteraction, componentOptions: Array<ComponentOption>) {
         if (interaction.rawOptions) {
+            const rawOptions = interaction.rawOptions // stupid foreach: https://stackoverflow.com/a/61468316/12586914
             componentOptions.forEach((option) => {
-                const optionData = interaction.rawOptions[option.name]
+                const optionData = rawOptions[option.name]
                 this.data[option.name] = this.parseOption(optionData, option)
             })
         }
@@ -18,34 +19,34 @@ export abstract class OptionsHandler {
         return this.errorData
     }
 
-    public getString(key: string) {
+    public getString(key: string): string | undefined {
         const value = this.data[key]
         if (typeof value !== "string") return undefined
         return value
     }
 
-    public getInteger(key: string) {
+    public getInteger(key: string): number | undefined {
         const value = this.data[key]
         if (typeof value !== "number") return undefined
         if (!Number.isSafeInteger(value)) return undefined
         return value
     }
 
-    public getNumber(key: string) {
+    public getNumber(key: string): number | undefined {
         const value = this.data[key]
         if (typeof value !== "number") return undefined
         return value
     }
 
-    public getBoolean(key: string) {
+    public getBoolean(key: string): boolean | undefined {
         const value = this.data[key]
         if (typeof value !== "boolean") return undefined
         return value
     }
 
-	public abstract getUserData(value: string): User
-	public abstract getChannelData(value: string): Channel
-	public abstract getRoleData(value: string): Role
+	abstract getUser(key: string): Promise<User | undefined>
+	abstract getChannel(key: string): Promise<Channel | undefined>
+	abstract getRole(key: string): Promise<Role | undefined>
 
 	private parseOption(option: unknown, shouldBe: ComponentOption) {
 	    if (!option) {
@@ -105,6 +106,10 @@ export abstract class OptionsHandler {
 	            if (typeof option !== "boolean") return this.errorData.push(`Expected type boolean for ${shouldBe.name}, got ${typeof option}!`)
 	            return option
 	        }
+	        case "user":
+	        case "channel":
+	        case "role":
+	            if (typeof option !== "string") return this.errorData.push(`Expected type string for ${shouldBe.name}, got ${typeof option}!`)
 	        default: {
 	            return this.errorData.push(`Invalid option type for ${shouldBe.name}!`)
 	        }

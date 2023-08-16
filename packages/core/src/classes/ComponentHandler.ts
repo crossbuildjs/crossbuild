@@ -80,7 +80,7 @@ export class ComponentHandler {
         this.checkCooldown(interaction, component)
 
         const module = this.getModule(interaction.source)
-        const options = module.optionsHandler(interaction.rawOptions || {}, component.options || [])
+        const options = module.optionsHandler(interaction, component.options || [])
 
         const missingPermissions = await component.validate(interaction, options)
         if (missingPermissions) return interaction.reply(generateEmbed("error", missingPermissions))
