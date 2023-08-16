@@ -11,6 +11,7 @@ export interface Config {
 	supportLink?: string
 
 	modules: Array<Module>
+	customChecks: Array<CustomCheckFunction>
 }
 
 export enum LogLevel {
@@ -33,7 +34,11 @@ export interface ComponentData {
 	serverOnly?: boolean
 	ownerOnly?: boolean
 	cooldown?: number
-	customChecks?: Array<CustomCheckFunction>
+	/**
+	 * Any custom checks that should be run before the component is executed.
+	 * These are specified in the initialization of the client, and you can use the name of the function here.
+	 */
+	customChecks?: Array<string>
 }
 
 export interface ComponentOption {

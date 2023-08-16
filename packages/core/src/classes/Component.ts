@@ -53,8 +53,20 @@ export class Component {
         this.serverOnly = options.serverOnly || false
         this.ownerOnly = options.ownerOnly || false
         this.description = options.description
-        this.customChecks = options.customChecks || []
         this.options = options.options
+
+        this.customChecks = []
+        options.customChecks?.map((x) => {
+            const check = this.client.customChecks.get(x)
+            if (!check) {
+                this.client.log(
+                    `Unable to find custom check ${x} for component ${
+                        this.key
+                    }, that check is being ignored. Valid checks are one of ${this.client.customChecks.map((x) => x.name).join(", ")}`,
+                    LogLevel.WARN
+                )
+            } else this.customChecks!.push(check)
+        })
     }
 
     public async validate(interaction: ReceivedInteraction, options: OptionsHandler): Promise<SimpleEmbed | null> {
