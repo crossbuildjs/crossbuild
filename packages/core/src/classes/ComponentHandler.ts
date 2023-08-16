@@ -79,7 +79,8 @@ export class ComponentHandler {
 
         this.checkCooldown(interaction, component)
 
-        const options = new OptionsHandler(interaction.rawOptions || {}, component.options || [])
+        const module = this.getModule(interaction.source)
+        const options = module.optionsHandler(interaction.rawOptions || {}, component.options || [])
 
         const missingPermissions = await component.validate(interaction, options)
         if (missingPermissions) return interaction.reply(generateEmbed("error", missingPermissions))
@@ -92,6 +93,12 @@ export class ComponentHandler {
         }
 
         return this.runComponent(component, interaction, options)
+    }
+
+    private getModule(source: string) {
+        const module = this.crossbuild.modules.get(source)
+        if (!module) throw new Error(`Module ${source} does not exist.`)
+        return module
     }
 
     private async runComponent(component: Component, interaction: ReceivedInteraction, options: OptionsHandler) {

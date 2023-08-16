@@ -1,7 +1,8 @@
 import { Module, ModuleConfig } from "@crossbuild/core"
 import { Client, ClientOptions, Message } from "guilded.js"
 import { GuildedReceivedMessage } from "./classes/GuildedReceivedMessage"
-import { GuildedChannel, GuildedEmojiID, GuildedModulePaginator, GuildedServer, GuildedUser } from "."
+import { GuildedChannel, GuildedEmojiID, GuildedModulePaginator, GuildedOptionsHandler, GuildedServer, GuildedUser } from "."
+import { InteractionRawOptions, ComponentOption } from "@crossbuild/core"
 
 export interface GuildedModuleConfig extends ModuleConfig {
 	// The options to pass to the Guilded client
@@ -56,6 +57,10 @@ export class GuildedModule extends Module {
 
     public async stopListening() {
         this.client.off("messageCreated", (message) => this.message(message))
+    }
+
+    public optionsHandler(interactionOptions: InteractionRawOptions, componentOptions: Array<ComponentOption>) {
+        return new GuildedOptionsHandler(interactionOptions, componentOptions)
     }
 
     private async message(guildedMessage: Message) {

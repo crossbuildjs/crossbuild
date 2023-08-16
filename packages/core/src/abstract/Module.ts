@@ -1,4 +1,4 @@
-import { CrossBuild, ModulePaginator } from ".."
+import { ComponentOption, CrossBuild, InteractionRawOptions, ModulePaginator, OptionsHandler } from ".."
 
 export type ModuleConfig = {
 	/** An easily recognizable name for this module */
@@ -29,4 +29,5 @@ export abstract class Module {
 	public abstract load(): Promise<boolean>
 	public abstract startListening(): Promise<void>
 	public abstract stopListening(): Promise<void>
+	public abstract optionsHandler(interactionOptions: InteractionRawOptions, componentOptions: Array<ComponentOption>): OptionsHandler
 }
