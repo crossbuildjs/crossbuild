@@ -1,5 +1,6 @@
-import { CrossBuild, DiscordInteractionModule, DiscordMessageModule, GuildedModule, LogLevel } from "crossbuild"
+import { Component, CrossBuild, DiscordInteractionModule, DiscordMessageModule, GeneratedMessage, GuildedModule, LogLevel, ReceivedInteraction } from "crossbuild"
 import { GatewayIntentBits } from "discord.js"
+import { todayIsSunday } from "./customChecks.js"
 
 const cb = new CrossBuild({
     name: "Test Bot",
@@ -27,7 +28,17 @@ const cb = new CrossBuild({
             },
             prefix: "-"
         })
-    ]
+    ],
+    customChecks: [todayIsSunday, async (interaction: ReceivedInteraction, component: Component): Promise<GeneratedMessage | null> => {
+        // check if today is sunday
+        const today = new Date()
+        if (today.getDay() !== 0) {
+            return {
+                content: `Today is not Sunday, ${interaction.user?.displayName}, so you can't use this ${component.type}!`
+            }
+        }
+        return null
+    }]
 })
 
 cb.log(`${cb}`, LogLevel.NULL)

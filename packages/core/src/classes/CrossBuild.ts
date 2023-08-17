@@ -1,6 +1,6 @@
 import { resolve } from "path"
 import { Collection } from "@discordjs/collection"
-import { Component, ComponentHandler, ComponentType, Config, LogLevel, Module } from ".."
+import { Component, ComponentHandler, ComponentType, Config, CustomCheckFunction, LogLevel, Module } from ".."
 import { uploadHaste } from "@crossbuild/functions"
 
 export class CrossBuild {
@@ -12,6 +12,8 @@ export class CrossBuild {
     public readonly __dirname: string
 
     public modules = new Collection<string, Module>()
+
+    public customChecks = new Collection<string, CustomCheckFunction>()
 
     /**
 	 * Create our client.
@@ -30,6 +32,18 @@ export class CrossBuild {
 
         this.modules = new Collection()
         this.config.modules.map((x) => this.modules.set(x.key, x))
+
+        this.customChecks = new Collection()
+        this.config.customChecks.map((x) => {
+            if (["", "anonymous"].includes(x.name)) {
+                this.log(
+                    "Skipping anonymous custom check. Make sure you separately define custom check functions with a name before passing them to CrossBuild",
+                    LogLevel.WARN
+                )
+            } else {
+                this.customChecks.set(x.name, x)
+            }
+        })
 
         this.start()
     }
