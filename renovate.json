@@ -8,5 +8,8 @@
 	"automerge": true,
 	"automergeType": "pr",
 	"automergeStrategy": "squash",
-	"platformAutomerge": true
+	"platformAutomerge": true,
+	"ignorePaths": [
+		"**/disabled/**"
+	]
 }
