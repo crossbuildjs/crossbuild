@@ -15,6 +15,15 @@ export class DiscordMessage extends Message {
         })
         this.djsMessage = msg
     }
+    
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (key, value) => {
+                if (key === "djsMessage") return undefined
+                return value
+            })
+        )
+    }
 
     get url(): string {
         return this.djsMessage.url

@@ -32,6 +32,8 @@ export abstract class Message {
         this.deletedAt = data.deletedAt || null
     }
 
+	abstract toString(): string
+
 	abstract get url(): string
 
 	abstract reply(message: GeneratedMessage): Promise<string>

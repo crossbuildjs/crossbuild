@@ -1,6 +1,14 @@
-import { Module, ModuleConfig } from "@crossbuild/core"
+import { ComponentOption, Module, ModuleConfig } from "@crossbuild/core"
 import { Client, ClientOptions, Interaction, Message } from "discord.js"
-import { DiscordChannel, DiscordInteractionModulePaginator, DiscordReceivedInteraction, DiscordReceivedMessage, DiscordServer, DiscordUser } from ".."
+import {
+    DiscordChannel,
+    DiscordInteractionModulePaginator,
+    DiscordReceivedInteraction,
+    DiscordReceivedMessage,
+    DiscordServer,
+    DiscordUser,
+    DiscordMessageOptionsHandler
+} from ".."
 
 export interface DiscordMessageModuleConfig extends ModuleConfig {
 	/** The options to pass to the Discord client */
@@ -26,6 +34,10 @@ export class DiscordMessageModule extends Module {
     public async load() {
         await this.client.login(this.config.token)
         return true
+    }
+
+    public optionsHandler(interaction: DiscordReceivedMessage, componentOptions: ComponentOption[]): DiscordMessageOptionsHandler {
+        return new DiscordMessageOptionsHandler(interaction, componentOptions)
     }
 
     public async startListening() {

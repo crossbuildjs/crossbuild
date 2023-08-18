@@ -13,6 +13,15 @@ export class DiscordUser extends User {
         this.djsUser = user
     }
 
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (key, value) => {
+                if (key === "djsUser") return undefined
+                return value
+            })
+        )
+    }
+
     get isBot(): boolean {
         return this.djsUser.bot
     }

@@ -12,6 +12,15 @@ export class GuildedUser extends User {
         this.gjsUser = user
     }
 
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (key, value) => {
+                if (key === "gjsUser") return undefined
+                return value
+            })
+        )
+    }
+
     get isBot(): boolean {
         return this.gjsUser.type === UserType.Bot
     }

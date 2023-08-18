@@ -7,14 +7,13 @@ export type GuildedReceivedMessageData = ReceivedInteractionData & {
 }
 
 export class GuildedReceivedMessage extends ReceivedInteraction {
-    source: "guilded"
+    source = "guilded"
     original: GJSMessage
 
     deferred?: GJSMessage
 
     constructor(crossbuild: CrossBuild, data: GuildedReceivedMessageData) {
         super(crossbuild, data)
-        this.source = "guilded"
         this.original = data.original
     }
 

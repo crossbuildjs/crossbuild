@@ -1,4 +1,4 @@
-import { LogLevel, Module, ModuleConfig, ModulePaginator } from "@crossbuild/core"
+import { ComponentOption, LogLevel, Module, ModuleConfig, ModulePaginator } from "@crossbuild/core"
 import {
     ApplicationCommandData,
     ApplicationCommandOptionData,
@@ -8,7 +8,15 @@ import {
     ClientOptions,
     Interaction
 } from "discord.js"
-import { DiscordChannel, DiscordReceivedInteraction, DiscordServer, DiscordUser, DiscordInteractionModulePaginator } from ".."
+import {
+    DiscordChannel,
+    DiscordReceivedInteraction,
+    DiscordServer,
+    DiscordUser,
+    DiscordInteractionModulePaginator,
+    DiscordInteractionOptionsHandler,
+    DiscordReceivedInteractionData
+} from ".."
 
 export interface DiscordInteractionModuleConfig extends ModuleConfig {
 	/** The options to pass to the Discord client */
@@ -30,6 +38,10 @@ export class DiscordInteractionModule extends Module {
         this.modulePaginator = new DiscordInteractionModulePaginator()
     }
 
+    public optionsHandler(interaction: DiscordReceivedInteraction, componentOptions: ComponentOption[]): DiscordInteractionOptionsHandler {
+        return new DiscordInteractionOptionsHandler(interaction, componentOptions)
+    }
+
     public async load() {
         await this.client.login(this.config.token)
 
@@ -41,14 +53,7 @@ export class DiscordInteractionModule extends Module {
 				        description: command.description || "No description provided",
 				        options: command.options?.map((option) => {
 				            return {
-				                type:
-									option.type === "string"
-									    ? ApplicationCommandOptionType.String
-									    : option.type === "integer"
-									        ? ApplicationCommandOptionType.Integer
-									        : option.type === "boolean"
-									            ? ApplicationCommandOptionType.Boolean
-									            : ApplicationCommandOptionType.String,
+				                type: mapType(option.type),
 				                name: option.name,
 				                description: option.description || "No description provided",
 				                required: option.required || false,
@@ -83,6 +88,14 @@ export class DiscordInteractionModule extends Module {
         const user = new DiscordUser(discordInteraction.user)
         const channel = discordInteraction.channel ? new DiscordChannel(discordInteraction.channel) : null
 
+        const rawOptions: DiscordReceivedInteractionData["rawOptions"] = {}
+
+        if (discordInteraction.isChatInputCommand()) {
+            discordInteraction.options.data.map((option) => {
+                if (option.value !== undefined) rawOptions[option.name] = option.value
+            })
+        }
+
         const interaction = new DiscordReceivedInteraction(this.crossbuild, {
             id: discordInteraction.id,
             key: discordInteraction.isCommand() || discordInteraction.isAutocomplete() ? discordInteraction.commandName : discordInteraction.customId,
@@ -96,7 +109,9 @@ export class DiscordInteractionModule extends Module {
             original: discordInteraction,
             server,
             user,
-            channel
+            channel,
+            rawOptions,
+            selectMenuValues: discordInteraction.isAnySelectMenu() ? discordInteraction.values : undefined
         })
         if (discordInteraction.isButton() && discordInteraction.customId.startsWith("cb")) {
             const paginator = this.modulePaginator.paginators.get(discordInteraction.customId.split(":")[1].split(",")[0])
@@ -104,5 +119,26 @@ export class DiscordInteractionModule extends Module {
         } else {
             this.crossbuild.componentHandler.handleComponent(interaction)
         }
+    }
+}
+
+const mapType = (type: ComponentOption["type"]): ApplicationCommandOptionType => {
+    switch (type) {
+        case "string":
+            return ApplicationCommandOptionType.String
+        case "integer":
+            return ApplicationCommandOptionType.Integer
+        case "boolean":
+            return ApplicationCommandOptionType.Boolean
+        case "number":
+            return ApplicationCommandOptionType.Number
+        case "user":
+            return ApplicationCommandOptionType.User
+        case "channel":
+            return ApplicationCommandOptionType.Channel
+        case "role":
+            return ApplicationCommandOptionType.Role
+        default:
+            return ApplicationCommandOptionType.String
     }
 }

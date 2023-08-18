@@ -20,6 +20,8 @@ export abstract class Channel {
         this.topic = data.topic
     }
 
+	abstract toString(): string
+
 	/**
 	 * Whether this channel is a DM
 	 */

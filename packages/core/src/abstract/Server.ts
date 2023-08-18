@@ -20,4 +20,6 @@ export abstract class Server {
         this.ownerId = data.ownerId || null
         this.iconURL = data.iconURL || null
     }
+
+	abstract toString(): string
 }
