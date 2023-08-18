@@ -1,4 +1,4 @@
-import { Channel, OptionsHandler, Role, User, ComponentOption } from "@crossbuild/core"
+import { OptionsHandler, ComponentOption } from "@crossbuild/core"
 import { GuildedChannel, GuildedReceivedMessage, GuildedRole, GuildedUser } from ".."
 
 export class GuildedOptionsHandler extends OptionsHandler {
@@ -14,7 +14,7 @@ export class GuildedOptionsHandler extends OptionsHandler {
         this.getRole
     }
 
-    public async getUser(key: string): Promise<User | undefined> {
+    public async getUser(key: string): Promise<GuildedUser | undefined> {
         const value = this.getString(key)
         if (!value) return undefined
         const name = value.replace("@", "").trim()
@@ -28,7 +28,7 @@ export class GuildedOptionsHandler extends OptionsHandler {
         return undefined
     }
 
-    public async getChannel(key: string): Promise<Channel | undefined> {
+    public async getChannel(key: string): Promise<GuildedChannel | undefined> {
         const value = this.getString(key)
         if (!value) return undefined
         const name = value.replace("#", "").trim()
@@ -42,7 +42,7 @@ export class GuildedOptionsHandler extends OptionsHandler {
         return undefined
     }
 
-    public async getRole(key: string): Promise<Role | undefined> {
+    public async getRole(key: string): Promise<GuildedRole | undefined> {
         const value = this.getString(key)
         if (!value) return undefined
         const name = value.replace("@", "").trim()

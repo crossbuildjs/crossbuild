@@ -15,7 +15,6 @@ export class GuildedReceivedMessage extends ReceivedInteraction {
     constructor(crossbuild: CrossBuild, data: GuildedReceivedMessageData) {
         super(crossbuild, data)
         this.original = data.original
-        console.log(this.original.mentions)
     }
 
     public async reply(message: GeneratedMessage) {

@@ -11,4 +11,6 @@ export abstract class Role {
         this.id = data.id
         this.name = data.name
     }
+
+	abstract toString(): string
 }

@@ -20,6 +20,7 @@ export abstract class User {
         this.avatarURL = data.avatarURL || null
     }
 
+	abstract toString(): string
 	abstract get isBot(): boolean
 
 	/**

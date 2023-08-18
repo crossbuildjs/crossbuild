@@ -48,7 +48,6 @@ export abstract class ReceivedInteraction {
 	    for (const key in data.rawOptions) {
 	        let value = data.rawOptions[key]
 	        if (typeof value === "string") {
-	            if (parseInt(value)) value = parseInt(value)
 	            if (value === "true") value = true
 	            if (value === "false") value = false
 	        }

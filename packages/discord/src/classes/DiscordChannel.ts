@@ -21,6 +21,15 @@ export class DiscordChannel extends Channel {
         super(data)
         this.djsChannel = channel
     }
+    
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (key, value) => {
+                if (key === "djsChannel") return undefined
+                return value
+            })
+        )
+    }
 
     get isDm(): boolean {
         return this.djsChannel.isDMBased()

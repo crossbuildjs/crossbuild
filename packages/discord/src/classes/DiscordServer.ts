@@ -26,4 +26,12 @@ export class DiscordServer extends Server {
         this.nsfwLevel = guild.nsfwLevel
         this.preferredLocale = guild.preferredLocale
     }
+
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (_, value) => {
+                return value
+            })
+        )
+    }
 }

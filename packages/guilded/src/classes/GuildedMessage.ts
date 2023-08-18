@@ -17,6 +17,15 @@ export class GuildedMessage extends Message {
         this.gjsMessage = msg
     }
 
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (key, value) => {
+                if (key === "gjsMessage") return undefined
+                return value
+            })
+        )
+    }
+
     get url(): string {
         return this.gjsMessage.url
     }

@@ -11,4 +11,12 @@ export class GuildedServer extends Server {
             iconURL: server.iconURL
         })
     }
+
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (_, value) => {
+                return value
+            })
+        )
+    }
 }

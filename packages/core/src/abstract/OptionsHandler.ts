@@ -27,15 +27,19 @@ export abstract class OptionsHandler {
 
     public getInteger(key: string): number | undefined {
         const value = this.data[key]
-        if (typeof value !== "number") return undefined
-        if (!Number.isSafeInteger(value)) return undefined
-        return value
+        if (typeof value !== "string") return undefined
+        const num = parseInt(value)
+        if (typeof num !== "number") return undefined
+        if (!Number.isSafeInteger(num)) return undefined
+        return num
     }
 
     public getNumber(key: string): number | undefined {
         const value = this.data[key]
-        if (typeof value !== "number") return undefined
-        return value
+        if (typeof value !== "string") return undefined
+        const num = parseFloat(value)
+        if (typeof num !== "number") return undefined
+        return num
     }
 
     public getBoolean(key: string): boolean | undefined {
@@ -74,29 +78,31 @@ export abstract class OptionsHandler {
 	            return option
 	        }
 	        case "integer": {
-	            if (typeof option !== "number") return this.errorData.push(`Expected type integer for ${shouldBe.name}, got ${typeof option}!`)
-	            if (!Number.isSafeInteger(option)) return this.errorData.push(`Expected a valid integer for ${shouldBe.name}, got ${option}!`)
+	            const num = parseInt(option as string)
+	            if (typeof num !== "number") return this.errorData.push(`Expected type integer for ${shouldBe.name}, got ${typeof option}!`)
+	            if (!Number.isSafeInteger(num)) return this.errorData.push(`Expected a valid integer for ${shouldBe.name}, got ${option}!`)
 	            if (shouldBe.minValue) {
-	                if (option < shouldBe.minValue) {
+	                if (num < shouldBe.minValue) {
 	                    return this.errorData.push(`Option ${shouldBe.name} must be at least ${shouldBe.minValue}!`)
 	                }
 	            }
 	            if (shouldBe.maxValue) {
-	                if (option > shouldBe.maxValue) {
+	                if (num > shouldBe.maxValue) {
 	                    return this.errorData.push(`Option ${shouldBe.name} must be at most ${shouldBe.maxValue}!`)
 	                }
 	            }
 	            return option
 	        }
 	        case "number": {
-	            if (typeof option !== "number") return this.errorData.push(`Expected type number for ${shouldBe.name}, got ${typeof option}!`)
+	            const num = parseFloat(option as string)
+	            if (typeof num !== "number") return this.errorData.push(`Expected type number for ${shouldBe.name}, got ${typeof option}!`)
 	            if (shouldBe.minValue) {
-	                if (option < shouldBe.minValue) {
+	                if (num < shouldBe.minValue) {
 	                    return this.errorData.push(`Option ${shouldBe.name} must be at least ${shouldBe.minValue}!`)
 	                }
 	            }
 	            if (shouldBe.maxValue) {
-	                if (option > shouldBe.maxValue) {
+	                if (num > shouldBe.maxValue) {
 	                    return this.errorData.push(`Option ${shouldBe.name} must be at most ${shouldBe.maxValue}!`)
 	                }
 	            }
@@ -110,6 +116,7 @@ export abstract class OptionsHandler {
 	        case "channel":
 	        case "role":
 	            if (typeof option !== "string") return this.errorData.push(`Expected type string for ${shouldBe.name}, got ${typeof option}!`)
+	            return option
 	        default: {
 	            return this.errorData.push(`Invalid option type for ${shouldBe.name}!`)
 	        }

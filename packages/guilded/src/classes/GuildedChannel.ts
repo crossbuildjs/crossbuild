@@ -14,6 +14,15 @@ export class GuildedChannel extends Channel {
         this.gjsChannel = channel
     }
 
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (key, value) => {
+                if (key === "gjsChannel") return undefined
+                return value
+            })
+        )
+    }
+
     get isDm(): boolean {
         return false // DMs are not supported in the Guilded API
     }

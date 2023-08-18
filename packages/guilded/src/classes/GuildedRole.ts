@@ -8,4 +8,12 @@ export class GuildedRole extends Role {
             name: role.name
         })
     }
+
+    toString(): string {
+        return JSON.parse(
+            JSON.stringify(this, (_, value) => {
+                return value
+            })
+        )
+    }
 }
