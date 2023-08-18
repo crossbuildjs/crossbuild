@@ -3,6 +3,7 @@
 	"findUnusedExports.detectCircularImports": true,
 	"cSpell.words": [
 		"argstest",
+		"automerge",
 		"buape",
 		"buttonping",
 		"crossbuild",

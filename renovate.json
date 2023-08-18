@@ -1,11 +1,12 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base",
-    ":dependencyDashboard"
-  ],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
-  "assigneesFromCodeOwners": true
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:base", ":dependencyDashboard"],
+	"lockFileMaintenance": {
+		"enabled": true
+	},
+	"assigneesFromCodeOwners": true,
+	"automerge": true,
+	"automergeType": "pr",
+	"automergeStrategy": "squash",
+	"platformAutomerge": true
 }
