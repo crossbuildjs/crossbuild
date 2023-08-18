@@ -41,7 +41,7 @@
 	"dependencies": {
 		"@crossbuild/types": "workspace:^",
 		"discord-api-types": "^0.37.54",
-		"node-fetch": "^2.6.12"
+		"node-fetch": "^3.0.0"
 	},
 	"devDependencies": {
 		"@types/node": "^18.17.5",
