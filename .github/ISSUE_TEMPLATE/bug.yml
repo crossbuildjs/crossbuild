@@ -1,0 +1,59 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+    - type: textarea
+      id: description
+      attributes:
+        label: Issue description
+        description: Describe the issue in as much detail as possible.
+        placeholder: |
+          Steps to reproduce with below code sample:
+          1. Do thing
+          2. Do thing in Discord client
+          3. Observe behavior
+          4. See error logs below
+      validations:
+        required: true
+    - type: dropdown
+      id: module
+      attributes:
+          label: Module
+          description: What module are you seeing the issue in?
+          multiple: false
+          options:
+              - "Crossbuild"
+              - "Discord"
+              - "Guilded"
+    - type: textarea
+      id: version
+      attributes:
+          label: Version
+          description: What version of crossbuild are you using?
+      validations:
+          required: true
+    - type: textarea
+      id: node-version
+      attributes:
+          label: Version
+          description: What version of node.js are you using?
+      validations:
+          required: true
+    - type: dropdown
+      id: priority
+      attributes:
+        label: Issue priority
+        description: On your best guess, how important is this issue?
+        options:
+          - Low (slightly annoying)
+          - Medium (should be fixed soon)
+          - High (immediate attention needed)
+      validations:
+        required: true
+    - type: textarea
+      id: logs
+      attributes:
+          label: Relevant log output
+          description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+          render: Text
