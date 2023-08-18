@@ -64,7 +64,8 @@ export class CrossBuild {
 	 * @param message - The message to log.
 	 * @param level - The level of the log.
 	 */
-    public log = (message: string, level: LogLevel = LogLevel.INFO) => {
+    public log = (message: object | string, level: LogLevel = LogLevel.INFO) => {
+        if (typeof message === "object") message = message.toString()
         switch (level) {
             case LogLevel.INFO:
                 console.log(message)
