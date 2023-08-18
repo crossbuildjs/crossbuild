@@ -10,9 +10,9 @@
 	"dependencies": {
 		"@crossbuild/functions": "workspace:^",
 		"crossbuild": "workspace:^",
-		"discord.js": "^14.12.1"
+		"discord.js": "^14.13.0"
 	},
 	"devDependencies": {
-		"@types/node": "^18.17.0"
+		"@types/node": "^18.17.5"
 	}
 }

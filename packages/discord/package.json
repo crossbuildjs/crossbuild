@@ -41,6 +41,6 @@
 	"dependencies": {
 		"@crossbuild/core": "workspace:^",
 		"@crossbuild/types": "workspace:^",
-		"discord.js": "^14.12.1"
+		"discord.js": "^14.13.0"
 	}
 }

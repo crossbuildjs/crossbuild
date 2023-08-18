@@ -41,9 +41,9 @@
 	"dependencies": {
 		"@crossbuild/functions": "workspace:^",
 		"@crossbuild/types": "workspace:^",
-		"@discordjs/collection": "^1.5.2"
+		"@discordjs/collection": "^1.5.3"
 	},
 	"devDependencies": {
-		"@types/node": "^18.17.0"
+		"@types/node": "^18.17.5"
 	}
 }

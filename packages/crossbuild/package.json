@@ -45,8 +45,8 @@
 		"@crossbuild/guilded": "workspace:^",
 		"@crossbuild/types": "workspace:^",
 		"discord-verify": "^1.2.0",
-		"discord.js": "^14.12.1",
-		"guilded.js": "^0.23.4",
-		"itty-router": "^4.0.14"
+		"discord.js": "^14.13.0",
+		"guilded.js": "^0.23.5",
+		"itty-router": "^4.0.17"
 	}
 }

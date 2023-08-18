@@ -39,6 +39,6 @@
 		"node": ">=18.17.0"
 	},
 	"dependencies": {
-		"discord-api-types": "^0.37.50"
+		"discord-api-types": "^0.37.54"
 	}
 }
