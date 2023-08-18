@@ -1,0 +1,27 @@
+"meta/repo":
+    - "*"
+    - ".github/**"
+
+"dependencies":
+    - "pnpm-lock.yaml"
+
+"docs":
+    - "apps/website"
+
+"package: crossbuild":
+    - "packages/crossbuild/**"
+
+"package: core":
+    - "packages/core/**"
+
+"package: discord":
+    - "packages/discord/**"
+
+"package: functions":
+    - "packages/functions/**"
+
+"package: guilded":
+    - "packages/guilded/**"
+
+"package: types":
+    - "packages/types/**"
