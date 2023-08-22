@@ -32,7 +32,7 @@
 		"prettier": "^3.0.2",
 		"tsc-watch": "^6.0.4",
 		"turbo": "^1.10.12",
-		"unbuild": "^1.2.1"
+		"unbuild": "^2.0.0"
 	},
 	"devDependencies": {
 		"eslint-import-resolver-typescript": "^3.6.0",
