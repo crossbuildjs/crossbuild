@@ -14,7 +14,7 @@ export const generateEmbed = (
     type: "error" | "success" | "warning",
     embedInfo: SimpleEmbed,
     components?: APIActionRowComponent<APIMessageActionRowComponent>[],
-    ephemeral = false,
+    silent = false,
     supportLink: string | undefined = undefined
 ): GeneratedMessage => {
     let color: number
@@ -34,7 +34,7 @@ export const generateEmbed = (
 
     const message: GeneratedMessage = {
         embeds: [{ ...embedInfo, color }],
-        ephemeral,
+        silent,
         components
     }
 

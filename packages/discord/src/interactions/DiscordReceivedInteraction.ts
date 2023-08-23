@@ -29,7 +29,7 @@ export class DiscordReceivedInteraction extends ReceivedInteraction {
                         embeds: message.embeds,
                         components: message.components,
                         content: message.content,
-                        ephemeral: message.ephemeral,
+                        ephemeral: message.silent,
                         fetchReply: true
 					  }
             )
@@ -77,7 +77,7 @@ export class DiscordReceivedInteraction extends ReceivedInteraction {
                         embeds: message.embeds,
                         components: message.components,
                         content: message.content,
-                        ephemeral: message.ephemeral
+                        ephemeral: message.silent
 					  }
             )
             return new DiscordMessage(msg)
