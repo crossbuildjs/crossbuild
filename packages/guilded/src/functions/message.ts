@@ -7,7 +7,7 @@ export const createMessageData = (message: GeneratedMessage): MessageContent => 
         : {
             content: message.content,
             embeds: message.embeds,
-            isPrivate: message.ephemeral,
+            isPrivate: message.private,
             isSilent: message.silent
 		  }
 }
