@@ -1,6 +1,6 @@
 import { Message } from "@crossbuild/core"
 import { Message as GJSMessage } from "guilded.js"
-import { GuildedEmojiID } from ".."
+import { GuildedEmojiID, createMessageData } from ".."
 
 export class GuildedMessage extends Message {
     private readonly gjsMessage: GJSMessage
@@ -31,7 +31,7 @@ export class GuildedMessage extends Message {
     }
 
     async reply(message: string): Promise<string> {
-        return (await this.gjsMessage.reply(message)).id
+        return (await this.gjsMessage.reply(createMessageData(message))).id
     }
 
     async edit(message: string): Promise<void> {

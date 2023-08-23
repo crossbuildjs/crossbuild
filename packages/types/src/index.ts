@@ -16,6 +16,8 @@ export type GeneratedMessage =
 			components?: APIActionRowComponent<APIMessageActionRowComponent>[]
 			/** The basic text of the message */
 			content?: string
+			/** Should this message not ping any mentioned users or roles */
+			silent?: boolean
 	  }
 
 export type GeneratedMessageObject = Extract<GeneratedMessage, { content?: string }>

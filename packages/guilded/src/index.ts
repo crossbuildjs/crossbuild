@@ -12,6 +12,7 @@ export * from "./classes/GuildedUser"
 
 // ==================== Functions ====================
 export * from "./functions/getGuildedPermissions"
+export * from "./functions/message"
 
 // ==================== Types ====================
 export * from "./types/GuildedEmojiIDs"

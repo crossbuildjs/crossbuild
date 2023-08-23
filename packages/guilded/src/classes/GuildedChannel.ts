@@ -1,6 +1,6 @@
 import { Channel, GeneratedMessage } from "@crossbuild/core"
 import { Channel as GJSChannel } from "guilded.js"
-import { GuildedMessage } from ".."
+import { GuildedMessage, createMessageData } from ".."
 
 export class GuildedChannel extends Channel {
     private readonly gjsChannel: GJSChannel
@@ -28,7 +28,7 @@ export class GuildedChannel extends Channel {
     }
 
     async send(message: GeneratedMessage): Promise<string> {
-        return this.gjsChannel.send(message).then((m) => m.id)
+        return this.gjsChannel.send(createMessageData(message)).then((m) => m.id)
     }
 
     async fetchMessage(id: string): Promise<GuildedMessage | null> {
