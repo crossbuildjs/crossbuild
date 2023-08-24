@@ -1,7 +1,10 @@
 <div align="center">
-<img width="150" height="150" src="https://cdn.buape.com/crossbuild.png" alt="CrossBuild Logo" />
+<img src="https://cdn.buape.com/CB_Wordmark.png" alt="CrossBuild Logo" />
 
 <h1 align="center"><b>CrossBuild</b></h1>
+<a align="center" href="https://www.guilded.gg/i/2VVxVv32"><img src="https://shields.yoki-labs.xyz/shields/i/2VVxVv32?style=flat" alt="Guilded Server"></a>
+<a align="center" href="https://discord.gg/yNv6u5mHFE"><img alt="Discord" src="https://img.shields.io/discord/744282929684938844?style=flat&label=Discord&labelColor=5865F2&color=060706">
+</a>
 
 CrossBuild, a library that empowers bot developers to build bots for Discord and Guilded, at the same time.
 
@@ -22,4 +25,5 @@ This is a monorepo that contains all the code for CrossBuild and its sub-package
 
 ## Contributing
 
-If you want to contribute to CrossBuild, please read the [contributing guidelines](/CONTRIBUTING.md) first. We welcome all types of contributions, from bug fixes to documentation improvements! If you have any questions, feel free to join our [Discord server](https://go.buape.com/discord) and ask in the `#crossbuild` channel.
+If you want to contribute to CrossBuild, please read the [contributing guidelines](/CONTRIBUTING.md) first. We welcome all types of contributions, from bug fixes to documentation improvements! 
+If you have any questions, feel free to join our [Discord server](https://go.buape.com/discord) and ask in the `#crossbuild` channel, or join our [Guilded server](https://www.guilded.gg/i/2VVxVv32) and ask in the `#developing crossbuild` channel.
