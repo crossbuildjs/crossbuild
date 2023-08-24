@@ -2,7 +2,7 @@
 	"name": "@crossbuild/guilded",
 	"description": "Guilded modules for CrossBuild",
 	"type": "module",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"authors": [
 		"Shadow <shadow@buape.com>",
 		"Codeize <codeize@buape.com>"

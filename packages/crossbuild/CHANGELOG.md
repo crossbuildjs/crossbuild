@@ -1,5 +1,28 @@
 # crossbuild
 
+## 0.5.0
+
+### Minor Changes
+
+-   chore: update modules
+
+### Patch Changes
+
+-   294aba0: chore: Update dependencies
+-   8a6405e: chore: update dependencies
+-   Updated dependencies [294aba0]
+-   Updated dependencies [9470814]
+-   Updated dependencies [311a7a7]
+-   Updated dependencies [966da1d]
+-   Updated dependencies [311a7a7]
+-   Updated dependencies [8a6405e]
+-   Updated dependencies [ac09d9d]
+    -   @crossbuild/functions@0.3.1
+    -   @crossbuild/discord@0.2.0
+    -   @crossbuild/guilded@0.2.0
+    -   @crossbuild/types@0.2.1
+    -   @crossbuild/core@0.2.0
+
 ## 0.4.0
 
 ### Minor Changes

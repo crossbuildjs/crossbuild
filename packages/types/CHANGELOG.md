@@ -1,5 +1,12 @@
 # @crossbuild/types
 
+## 0.2.1
+
+### Patch Changes
+
+-   294aba0: chore: Update dependencies
+-   8a6405e: chore: update dependencies
+
 ## 0.2.0
 
 ### Minor Changes
