@@ -9,12 +9,13 @@
 	"scripts": {
 		"build": "turbo run build",
 		"clean": "turbo run clean",
-		"docs": "typedoc",
+		"docs": "turbo run web:start",
 		"dev": "dotenv -- turbo run dev",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
 		"lint": "turbo run lint",
 		"preinstall": "only-allow pnpm",
 		"pretty": "pnpm run format && pnpm run lint",
+		"web": "turbo run web:start",
 		"changeset": "changeset add",
 		"publish": "changeset version && pnpm run build && changeset publish"
 	},
