@@ -1,5 +1,4 @@
-import { Channel, ComponentType, CrossBuild, InteractionRawOptions, LogLevel, Message, Server, User } from ".."
-import { GeneratedMessage } from "@crossbuild/types"
+import { Channel, ComponentType, CrossBuild, InteractionRawOptions, LogLevel, Message, Server, User, GeneratedMessage } from ".."
 
 export interface ReceivedInteractionData {
 	id: string

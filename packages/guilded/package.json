@@ -40,7 +40,6 @@
 	},
 	"dependencies": {
 		"@crossbuild/core": "workspace:^",
-		"@crossbuild/types": "workspace:^",
 		"guilded.js": "^0.23.5"
 	}
 }

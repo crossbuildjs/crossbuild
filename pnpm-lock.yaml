@@ -63,9 +63,6 @@ importers:
 
   apps/test-bot:
     dependencies:
-      '@crossbuild/functions':
-        specifier: workspace:^
-        version: link:../../packages/functions
       crossbuild:
         specifier: workspace:^
         version: link:../../packages/crossbuild
@@ -79,19 +76,22 @@ importers:
 
   packages/core:
     dependencies:
-      '@crossbuild/functions':
-        specifier: workspace:^
-        version: link:../functions
-      '@crossbuild/types':
-        specifier: workspace:^
-        version: link:../types
       '@discordjs/collection':
         specifier: ^1.5.3
         version: 1.5.3
+      discord-api-types:
+        specifier: ^0.37.54
+        version: 0.37.54
+      node-fetch:
+        specifier: '2'
+        version: 2.6.12
     devDependencies:
       '@types/node':
         specifier: ^18.17.5
         version: 18.17.5
+      '@types/node-fetch':
+        specifier: ^2.6.4
+        version: 2.6.4
 
   packages/crossbuild:
     dependencies:
@@ -101,15 +101,9 @@ importers:
       '@crossbuild/discord':
         specifier: workspace:^
         version: link:../discord
-      '@crossbuild/functions':
-        specifier: workspace:^
-        version: link:../functions
       '@crossbuild/guilded':
         specifier: workspace:^
         version: link:../guilded
-      '@crossbuild/types':
-        specifier: workspace:^
-        version: link:../types
       discord-verify:
         specifier: ^1.2.0
         version: 1.2.0
@@ -128,9 +122,6 @@ importers:
       '@crossbuild/core':
         specifier: workspace:^
         version: link:../core
-      '@crossbuild/types':
-        specifier: workspace:^
-        version: link:../types
       discord.js:
         specifier: ^14.13.0
         version: 14.13.0
@@ -159,18 +150,11 @@ importers:
       '@crossbuild/core':
         specifier: workspace:^
         version: link:../core
-      '@crossbuild/types':
-        specifier: workspace:^
-        version: link:../types
       guilded.js:
         specifier: ^0.23.5
         version: 0.23.5
 
-  packages/types:
-    dependencies:
-      discord-api-types:
-        specifier: ^0.37.54
-        version: 0.37.54
+  packages/types: {}
 
 packages:
 
@@ -1362,7 +1346,7 @@ packages:
   /@types/node-fetch@2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
-      '@types/node': 18.17.5
+      '@types/node': 18.17.6
       form-data: 3.0.1
     dev: true
 
@@ -1375,7 +1359,6 @@ packages:
 
   /@types/node@18.17.6:
     resolution: {integrity: sha512-fGmT/P7z7ecA6bv/ia5DlaWCH4YeZvAQMNpUhrJjtAhOhZfoxS1VLUgU2pdk63efSjQaOJWdXMuAJsws+8I6dg==}
-    dev: false
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}

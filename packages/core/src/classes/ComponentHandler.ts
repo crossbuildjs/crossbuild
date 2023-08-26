@@ -1,5 +1,4 @@
-import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType, OptionsHandler } from "../index.js"
-import { generateEmbed, getFiles } from "@crossbuild/functions"
+import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType, OptionsHandler, generateEmbed, getFiles } from ".."
 import { Collection } from "@discordjs/collection"
 import path from "path"
 

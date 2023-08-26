@@ -41,9 +41,7 @@
 	"dependencies": {
 		"@crossbuild/core": "workspace:^",
 		"@crossbuild/discord": "workspace:^",
-		"@crossbuild/functions": "workspace:^",
 		"@crossbuild/guilded": "workspace:^",
-		"@crossbuild/types": "workspace:^",
 		"discord-verify": "^1.2.0",
 		"discord.js": "^14.13.0",
 		"guilded.js": "^0.23.5",

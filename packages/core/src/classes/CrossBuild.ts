@@ -1,8 +1,6 @@
 import { resolve } from "path"
 import { Collection } from "@discordjs/collection"
-import { Component, ComponentHandler, ComponentType, Config, CustomCheckFunction, LogLevel, Module } from ".."
-import { uploadHaste } from "@crossbuild/functions"
-
+import { Component, ComponentHandler, ComponentType, Config, CustomCheckFunction, LogLevel, Module, uploadHaste } from ".."
 export class CrossBuild {
     public readonly componentHandler: ComponentHandler
     public components: Collection<`${ComponentType}-${string}`, Component>

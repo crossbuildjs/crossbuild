@@ -1,5 +1,13 @@
-import { SimpleEmbed } from "@crossbuild/types"
-import { CrossBuild, ComponentData, LogLevel, ReceivedInteraction, ComponentType, OptionsHandler, CustomCheckFunction } from "../index.js"
+import {
+    SimpleEmbed,
+    CrossBuild,
+    ComponentData,
+    LogLevel,
+    ReceivedInteraction,
+    ComponentType,
+    OptionsHandler,
+    CustomCheckFunction
+} from "../index.js"
 
 /**
  * The base component class that other components extend from.

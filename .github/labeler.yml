@@ -5,7 +5,7 @@
 "dependencies":
     - "pnpm-lock.yaml"
 
-"docs":
+"documentation":
     - "apps/website"
 
 "package: crossbuild":

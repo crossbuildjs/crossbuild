@@ -1,5 +1,5 @@
-import { GeneratedMessage } from "@crossbuild/types"
 import { ReceivedInteraction, Component, Module } from ".."
+import { APIActionRowComponent, APIEmbed, APIMessageActionRowComponent } from "discord-api-types/v10"
 
 export interface Config {
 	/** The name of the bot (to refer to itself as) */
@@ -72,3 +72,23 @@ export type ComponentType = "command" | "button" | "selectMenu"
  * Otherwise, the function returns null and the component will be run.
  */
 export type CustomCheckFunction = (interaction: ReceivedInteraction, component: Component) => Promise<GeneratedMessage | null>
+
+export type SimpleEmbed = {
+	title?: string
+	description?: string
+}
+
+export type GeneratedMessage =
+	| string
+	| {
+			/** Any embeds that you want to send */
+			embeds?: APIEmbed[]
+			/** If the message is a response to a slash command from Discord, you can send an ephemeral response. This will be ignored for Guilded. */
+			ephemeral?: boolean
+			/** Any components to include when sending to Discord. */
+			components?: APIActionRowComponent<APIMessageActionRowComponent>[]
+			/** The basic text of the message */
+			content?: string
+	  }
+
+export type GeneratedMessageObject = Extract<GeneratedMessage, { content?: string }>

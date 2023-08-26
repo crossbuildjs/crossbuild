@@ -1,5 +1,4 @@
-import { GeneratedMessageObject } from "@crossbuild/types"
-import { CrossBuild, ReceivedInteraction } from ".."
+import { CrossBuild, ReceivedInteraction, GeneratedMessageObject } from ".."
 
 export type PaginatorSettings = {
 	/** A unique ID for this paginator, typically the ID of the interaction. Max 75 characters */

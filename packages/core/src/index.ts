@@ -17,4 +17,10 @@ export * from "./classes/Paginator.js"
 
 // ==================== TYPINGS ====================
 export * from "./typings/types.js"
-export * from "@crossbuild/types"
+
+// ==================== FUNCTIONS ====================
+export * from "./functions/generateEmbed.js"
+export * from "./functions/generateTimestamp.js"
+export * from "./functions/getFiles.js"
+export * from "./functions/titleCase.js"
+export * from "./functions/uploadHaste.js"

@@ -1,4 +1,4 @@
-# @crossbuild/functions
+# @crossbuild/discord
 
 ## 0.2.0
 
