@@ -1,5 +1,5 @@
-import { GeneratedMessage, SimpleEmbed } from "@crossbuild/types"
 import { APIActionRowComponent, APIMessageActionRowComponent, ButtonStyle, ComponentType } from "discord-api-types/v10"
+import { GeneratedMessage, SimpleEmbed } from ".."
 
 /**
  * Generate a message with the specified type (error, success, or warning).

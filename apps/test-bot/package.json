@@ -8,7 +8,6 @@
 		"dev": "pnpm run clean && tsc-watch --onSuccess \"node .\""
 	},
 	"dependencies": {
-		"@crossbuild/functions": "workspace:^",
 		"crossbuild": "workspace:^",
 		"discord.js": "^14.13.0"
 	},
