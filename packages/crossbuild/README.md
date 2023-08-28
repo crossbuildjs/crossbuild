@@ -33,7 +33,7 @@ CrossBuild is a library that allows you to build bots for Discord and Guilded, a
 
 ```ts
 // src/index.ts
-import { CrossBuild, LogLevel } from "crossbuild"
+import { CrossBuild } from "crossbuild"
 
 new CrossBuild({
 	name: "Test Bot",

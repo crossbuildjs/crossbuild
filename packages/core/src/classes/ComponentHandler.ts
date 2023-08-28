@@ -1,4 +1,4 @@
-import { CrossBuild, LogLevel, ReceivedInteraction, Component, ComponentType, OptionsHandler, generateEmbed, getFiles } from ".."
+import { CrossBuild, ReceivedInteraction, Component, ComponentType, OptionsHandler, generateEmbed, getFiles } from ".."
 import { Collection } from "@discordjs/collection"
 import path from "path"
 
@@ -24,10 +24,10 @@ export class ComponentHandler {
                         this.crossbuild.components.set(`${component.type}-${component.key}`, component)
                     }
                 } catch (error) {
-                    this.crossbuild.log(`${error}`, LogLevel.DEBUG)
-                    this.crossbuild.log(
-                        `Failed to load files under ${dirPath}. Make sure you are only giving a subdirectory from ${this.crossbuild.__dirname}`,
-                        LogLevel.WARN
+                    this.crossbuild.emit("debug", `${error}`)
+                    this.crossbuild.emit(
+                        "error",
+                        `Failed to load files under ${dirPath}. Make sure you are only giving a subdirectory from ${this.crossbuild.__dirname}`
                     )
                 }
             })
@@ -72,9 +72,9 @@ export class ComponentHandler {
         const key = interaction.key
         const type = interaction.type
         if (interaction.isDiscordComponent() && key.startsWith("x-"))
-            return this.crossbuild.log(`Ignoring ${type} with key ${key}, it should be handled with a collector on a message.`, LogLevel.DEBUG)
+            return this.crossbuild.emit("debug", `Ignoring ${type} with key ${key}, it should be handled with a collector on a message.`)
         const component = this.fetchComponent(key, type)
-        if (!component) return this.crossbuild.log(`Unable to find ${type} with key ${key}, but it was triggered by a user.`, LogLevel.WARN)
+        if (!component) return this.crossbuild.emit("warn", `Unable to find ${type} with key ${key}, but it was triggered by a user.`)
 
         this.checkCooldown(interaction, component)
 
@@ -102,7 +102,7 @@ export class ComponentHandler {
 
     private async runComponent(component: Component, interaction: ReceivedInteraction, options: OptionsHandler) {
         await component.run(interaction, options).catch(async (error: unknown): Promise<unknown> => {
-            this.crossbuild.log(`${error}`, LogLevel.ERROR)
+            this.crossbuild.emit("error", `${error}`)
             const toSend = generateEmbed(
                 "error",
                 {

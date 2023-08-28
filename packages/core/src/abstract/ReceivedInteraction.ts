@@ -1,4 +1,4 @@
-import { Channel, ComponentType, CrossBuild, InteractionRawOptions, LogLevel, Message, Server, User, GeneratedMessage } from ".."
+import { Channel, ComponentType, CrossBuild, InteractionRawOptions, Message, Server, User, GeneratedMessage } from ".."
 
 export interface ReceivedInteractionData {
 	id: string
@@ -37,8 +37,8 @@ export abstract class ReceivedInteraction {
 
 	constructor(crossbuild: CrossBuild, data: ReceivedInteractionData) {
 	    this.crossbuild = crossbuild
+	    ;((_x: typeof this.crossbuild) => {})(this.crossbuild) // No unused variable error prevention
 
-	    this.crossbuild.log(`${this.crossbuild}`, LogLevel.NULL)
 	    this.id = data.id
 	    this.key = data.key
 	    this.type = data.type

@@ -7,7 +7,8 @@ import {
     DiscordReceivedMessage,
     DiscordServer,
     DiscordUser,
-    DiscordMessageOptionsHandler
+    DiscordMessageOptionsHandler,
+    DiscordMessage
 } from ".."
 
 export interface DiscordMessageModuleConfig extends ModuleConfig {
@@ -68,6 +69,7 @@ export class DiscordMessageModule extends Module {
     }
 
     private async message(discordMessage: Message) {
+        this.crossbuild?.emit("message", new DiscordMessage(discordMessage))
         if (!discordMessage.content.startsWith(this.config.prefix)) return
 
         const args = discordMessage.content.slice(this.config.prefix.length).trim().split(/ +/g)

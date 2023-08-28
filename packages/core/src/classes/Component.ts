@@ -2,7 +2,6 @@ import {
     SimpleEmbed,
     CrossBuild,
     ComponentData,
-    LogLevel,
     ReceivedInteraction,
     ComponentType,
     OptionsHandler,
@@ -67,11 +66,11 @@ export class Component {
         options.customChecks?.map((x) => {
             const check = this.client.customChecks.get(x)
             if (!check) {
-                this.client.log(
+                this.client.emit(
+                    "warn",
                     `Unable to find custom check ${x} for component ${
                         this.key
-                    }, that check is being ignored. Valid checks are one of ${this.client.customChecks.map((x) => x.name).join(", ")}`,
-                    LogLevel.WARN
+                    }, that check is being ignored. Valid checks are one of ${this.client.customChecks.map((x) => x.name).join(", ")}`
                 )
             } else this.customChecks!.push(check)
         })
@@ -181,8 +180,7 @@ export class Component {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public async run(interaction: ReceivedInteraction, _options: OptionsHandler): Promise<any> {
-        this.client.log(`${interaction}`, LogLevel.NULL) // This line is here to prevent unused variable errors.
+    public async run(_interaction: ReceivedInteraction, _options: OptionsHandler): Promise<any> {
         throw new Error("Not implemented")
     }
 }
