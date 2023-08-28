@@ -1,4 +1,12 @@
-import { Component, CrossBuild, DiscordInteractionModule, DiscordMessageModule, GeneratedMessage, GuildedModule, LogLevel, ReceivedInteraction } from "crossbuild"
+import {
+    Component,
+    CrossBuild,
+    DiscordInteractionModule,
+    DiscordMessageModule,
+    GeneratedMessage,
+    GuildedModule,
+    ReceivedInteraction
+} from "crossbuild"
 import { GatewayIntentBits } from "discord.js"
 import { todayIsSunday } from "./customChecks.js"
 
@@ -29,20 +37,21 @@ const cb = new CrossBuild({
             prefix: "-"
         })
     ],
-    customChecks: [todayIsSunday, async (interaction: ReceivedInteraction, component: Component): Promise<GeneratedMessage | null> => {
-        // check if today is sunday
-        const today = new Date()
-        if (today.getDay() !== 0) {
-            return {
-                content: `Today is not Sunday, ${interaction.user?.displayName}, so you can't use this ${component.type}!`
+    customChecks: [
+        todayIsSunday,
+        async (interaction: ReceivedInteraction, component: Component): Promise<GeneratedMessage | null> => {
+            // check if today is sunday
+            const today = new Date()
+            if (today.getDay() !== 0) {
+                return {
+                    content: `Today is not Sunday, ${interaction.user?.displayName}, so you can't use this ${component.type}!`
+                }
             }
+            return null
         }
-        return null
-    }]
+    ]
 })
 
-cb.log(`${cb}`, LogLevel.NULL)
-
-export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-sleep(3000).then(() => console.log(cb))
+cb.on("ready", () => {
+    console.log(`${cb}`)
+})

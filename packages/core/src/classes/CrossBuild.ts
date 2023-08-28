@@ -1,7 +1,18 @@
 import { resolve } from "path"
 import { Collection } from "@discordjs/collection"
-import { Component, ComponentHandler, ComponentType, Config, CustomCheckFunction, LogLevel, Module, uploadHaste } from ".."
-export class CrossBuild {
+import {
+    ClientEvents,
+    Component,
+    ComponentHandler,
+    ComponentType,
+    Config,
+    CustomCheckFunction,
+    Module,
+    TypedEventEmitter,
+    uploadHaste
+} from ".."
+import EventEmitter from "events"
+export class CrossBuild extends (EventEmitter as new () => TypedEventEmitter<ClientEvents>) {
     public readonly componentHandler: ComponentHandler
     public components: Collection<`${ComponentType}-${string}`, Component>
     public hasteStore: Collection<string, string[]>
@@ -18,6 +29,7 @@ export class CrossBuild {
 	 * @param options - The options for our client.
 	 */
     constructor(config: Config) {
+        super()
         this.config = config
 
         this.__dirname = `${resolve()}/dist`
@@ -34,9 +46,9 @@ export class CrossBuild {
         this.customChecks = new Collection()
         this.config.customChecks.map((x) => {
             if (["", "anonymous"].includes(x.name)) {
-                this.log(
-                    "Skipping anonymous custom check. Make sure you separately define custom check functions with a name before passing them to CrossBuild",
-                    LogLevel.WARN
+                this.emit(
+                    "warn",
+                    "Skipping anonymous custom check. Make sure you separately define custom check functions with a name before passing them to CrossBuild"
                 )
             } else {
                 this.customChecks.set(x.name, x)
@@ -54,35 +66,7 @@ export class CrossBuild {
             await module.startListening()
         }
 
-        this.log("CrossBuild is ready!", LogLevel.DEBUG)
-    }
-
-    /**
-	 * Log to the console. This function can be overridden to provide a custom logger.
-	 * @param message - The message to log.
-	 * @param level - The level of the log.
-	 */
-    public log = (message: object | string, level: LogLevel = LogLevel.INFO) => {
-        if (typeof message === "object") message = message.toString()
-        switch (level) {
-            case LogLevel.INFO:
-                console.log(message)
-                break
-            case LogLevel.WARN:
-                console.warn(message)
-                break
-            case LogLevel.ERROR:
-                console.error(message)
-                break
-            case LogLevel.DEBUG:
-                console.debug(message)
-                break
-            case LogLevel.NULL:
-                break
-            default:
-                console.log(message)
-                break
-        }
+        this.emit("ready")
     }
 
     /**

@@ -1,4 +1,4 @@
-import { ComponentOption, LogLevel, Module, ModuleConfig, ModulePaginator } from "@crossbuild/core"
+import { ComponentOption, Module, ModuleConfig, ModulePaginator } from "@crossbuild/core"
 import {
     ApplicationCommandData,
     ApplicationCommandOptionData,
@@ -15,7 +15,9 @@ import {
     DiscordUser,
     DiscordInteractionModulePaginator,
     DiscordInteractionOptionsHandler,
-    DiscordReceivedInteractionData
+    DiscordReceivedInteractionData,
+    DiscordMessageModule,
+    DiscordMessage
 } from ".."
 
 export interface DiscordInteractionModuleConfig extends ModuleConfig {
@@ -69,17 +71,28 @@ export class DiscordInteractionModule extends Module {
 				})
             )
         } catch (error) {
-			this.crossbuild!.log(`Failed to sync Discord commands: ${error}`, LogLevel.WARN)
+			this.crossbuild!.emit("warn", `Failed to sync Discord commands: ${error}`)
         }
         return true
     }
 
     public async startListening() {
         this.client.on("interactionCreate", (interaction) => this.interaction(interaction))
+
+        if (!this.crossbuild?.modules.find((x) => x instanceof DiscordMessageModule)) {
+            this.client.on("messageCreate", (message) => {
+                this.crossbuild?.emit("message", new DiscordMessage(message))
+            })
+        }
     }
 
     public async stopListening() {
         this.client.off("interactionCreate", (interaction) => this.interaction(interaction))
+        if (!this.crossbuild?.modules.find((x) => x instanceof DiscordMessageModule)) {
+            this.client.on("messageCreate", (message) => {
+                this.crossbuild?.emit("message", new DiscordMessage(message))
+            })
+        }
     }
 
     private async interaction(discordInteraction: Interaction<CacheType>) {

@@ -1,6 +1,8 @@
 import { ReceivedInteraction, Component, Module } from ".."
 import { APIActionRowComponent, APIEmbed, APIMessageActionRowComponent } from "discord-api-types/v10"
 
+export * from "./events"
+
 export interface Config {
 	/** The name of the bot (to refer to itself as) */
 	name: string
@@ -12,14 +14,6 @@ export interface Config {
 
 	modules: Array<Module>
 	customChecks: Array<CustomCheckFunction>
-}
-
-export enum LogLevel {
-	DEBUG = "debug",
-	INFO = "info",
-	WARN = "warn",
-	ERROR = "error",
-	NULL = "null"
 }
 
 export interface EventOptions {
@@ -92,3 +86,31 @@ export type GeneratedMessage =
 	  }
 
 export type GeneratedMessageObject = Extract<GeneratedMessage, { content?: string }>
+
+// Source: https://www.npmjs.com/package/typed-emitter
+// tsc did not like the format of the package, so I just copied the types here.
+type EventMap = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: (...args: any[]) => void
+}
+export interface TypedEventEmitter<Events extends EventMap> {
+	addListener<E extends keyof Events>(event: E, listener: Events[E]): this
+	on<E extends keyof Events>(event: E, listener: Events[E]): this
+	once<E extends keyof Events>(event: E, listener: Events[E]): this
+	prependListener<E extends keyof Events>(event: E, listener: Events[E]): this
+	prependOnceListener<E extends keyof Events>(event: E, listener: Events[E]): this
+
+	off<E extends keyof Events>(event: E, listener: Events[E]): this
+	removeAllListeners<E extends keyof Events>(event?: E): this
+	removeListener<E extends keyof Events>(event: E, listener: Events[E]): this
+
+	emit<E extends keyof Events>(event: E, ...args: Parameters<Events[E]>): boolean
+	// The sloppy `eventNames()` return type is to mitigate type incompatibilities - see #5
+	eventNames(): (keyof Events | string | symbol)[]
+	rawListeners<E extends keyof Events>(event: E): Events[E][]
+	listeners<E extends keyof Events>(event: E): Events[E][]
+	listenerCount<E extends keyof Events>(event: E): number
+
+	getMaxListeners(): number
+	setMaxListeners(maxListeners: number): this
+}

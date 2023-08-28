@@ -1,7 +1,7 @@
 import { Module, ModuleConfig } from "@crossbuild/core"
 import { Client, ClientOptions, Message } from "guilded.js"
 import { GuildedReceivedMessage } from "./classes/GuildedReceivedMessage"
-import { GuildedChannel, GuildedEmojiID, GuildedModulePaginator, GuildedOptionsHandler, GuildedServer, GuildedUser } from "."
+import { GuildedChannel, GuildedEmojiID, GuildedMessage, GuildedModulePaginator, GuildedOptionsHandler, GuildedServer, GuildedUser } from "."
 import { ComponentOption } from "@crossbuild/core"
 
 export interface GuildedModuleConfig extends ModuleConfig {
@@ -30,7 +30,6 @@ export class GuildedModule extends Module {
 
     public async startListening() {
         this.client.on("messageCreated", (message) => this.message(message))
-
         // Paginator
         this.client.on("messageReactionCreated", async (reaction) => {
             if (reaction.createdBy === this.client.user!.id) return
@@ -64,6 +63,7 @@ export class GuildedModule extends Module {
     }
 
     private async message(guildedMessage: Message) {
+        this.crossbuild?.emit("message", new GuildedMessage(guildedMessage))
         if (!guildedMessage.content.startsWith(this.config.prefix)) return
 
         const args = guildedMessage.content.slice(this.config.prefix.length).trim().split(/ +/g)

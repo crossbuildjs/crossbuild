@@ -126,25 +126,6 @@ importers:
         specifier: ^14.13.0
         version: 14.13.0
 
-  packages/functions:
-    dependencies:
-      '@crossbuild/types':
-        specifier: workspace:^
-        version: link:../types
-      discord-api-types:
-        specifier: ^0.37.54
-        version: 0.37.54
-      node-fetch:
-        specifier: ^2.6.12
-        version: 2.6.12
-    devDependencies:
-      '@types/node':
-        specifier: ^18.17.5
-        version: 18.17.5
-      '@types/node-fetch':
-        specifier: ^2.6.4
-        version: 2.6.4
-
   packages/guilded:
     dependencies:
       '@crossbuild/core':
@@ -153,8 +134,6 @@ importers:
       guilded.js:
         specifier: ^0.23.5
         version: 0.23.5
-
-  packages/types: {}
 
 packages:
 
