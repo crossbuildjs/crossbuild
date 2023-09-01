@@ -2,7 +2,7 @@
 	"name": "@crossbuild/core",
 	"description": "The core classes for Crossbuild",
 	"type": "module",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"contributors": [
 		"Shadow <shadow@buape.com>",
 		"Codeize <mrcodeize@gmail.com>"
@@ -48,4 +48,3 @@
 		"@types/node-fetch": "^2.6.4"
 	}
 }
- 

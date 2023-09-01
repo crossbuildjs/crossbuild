@@ -1,5 +1,15 @@
 # @crossbuild/core
 
+## 0.3.0
+
+### Minor Changes
+
+-   05327aa: Add initial events support
+
+### Patch Changes
+
+-   78e8fa3: Remove the functions and types packages and consolidate those into the core package
+
 ## 0.2.0
 
 ### Minor Changes
