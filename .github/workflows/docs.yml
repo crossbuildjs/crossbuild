@@ -1,35 +1,28 @@
-name: Generate Docs
+name: Deploy to GitHub Pages
 
 on:
     push:
-        branches:
-            - main
+        branches: ["main"]
 
 jobs:
-    build:
-        name: Generate Documentation
-        timeout-minutes: 15
+    deploy:
+        name: Deploy to GitHub Pages
         runs-on: ubuntu-latest
-
         steps:
             - name: Check out code
               uses: actions/checkout@v3
-              with:
-                  fetch-depth: 2
 
             - name: Setup
               uses: ./.github/actions/setup
 
-            - name: Build packages for monorepo use
-              run: pnpm run build
+            - name: Build
+              run: pnpm build
 
-            - name: Generate Docs
-              run: pnpm run docs
-
-            - name: Deploy
+            - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
               with:
-                  publish_branch: gh-docs
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./docs
-                  cname: crossbuild.buape.com
+                  # Build output to publish to the `gh-pages` branch:
+                  publish_dir: ./apps/website/build
+                  user_name: buapebot
+                  user_email: 119761697+buapebot@users.noreply.github.com
