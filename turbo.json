@@ -13,9 +13,6 @@
 		"test": {
 			"dependsOn": ["build"]
 		},
-		"dev": {
-			"dependsOn": ["build"]
-		},
-		"docs": {}
+		"dev": {}
 	}
 }
