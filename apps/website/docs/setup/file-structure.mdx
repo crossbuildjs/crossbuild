@@ -1,0 +1,25 @@
+---
+title: File Structure
+sidebar_position: 3
+---
+
+Once your packages are installed, you can start setting up the files you will need for your bot.
+
+For our purposes in the tutorial, you will need three things
+
+-   The `package.json` file you created in the previous steps
+-   A `.env` file
+-   An index.js file
+-   A `components` folder next to the files.
+
+
+## The .env file
+
+The `.env` file is where you will store your bot's token. The file should be in the same directory as your `package.json` file.
+You can set it up in this structure:
+
+```env
+TOKEN=your-token-here
+```
+
+The code will then be able to access the token by using `process.env.TOKEN`.

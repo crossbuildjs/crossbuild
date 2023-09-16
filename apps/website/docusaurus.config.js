@@ -65,14 +65,14 @@ const config = {
 		        items: [
 		            {
 		                to: "api",
-		                label: "Docs",
+		                label: "API",
 		                position: "left"
 		            },
 		            {
 		                type: "docSidebar",
 		                sidebarId: "tutorialSidebar",
 		                position: "left",
-		                label: "Guide"
+		                label: "Docs"
 		            },
 		            {
 		                href: "https://github.com/crossbuildjs/crossbuild",

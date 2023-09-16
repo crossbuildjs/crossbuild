@@ -15,6 +15,7 @@
 		},
 		"dev": {
 			"dependsOn": ["build"]
-		}
+		},
+		"docs": {}
 	}
 }
