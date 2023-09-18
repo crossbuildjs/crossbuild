@@ -1,0 +1,20 @@
+---
+title: Modules
+sidebar_position: 1
+---
+
+CrossBuild is built off of a modular system. This means that you can add and remove modules as you please to connect to different services for your bot.
+
+Our in-house modules are all open source and can be found on our [GitHub](https://github.com/crossbuildjs/crossbuild/tree/main/packages), and anyone is able to create their own modules to use with CrossBuild.
+
+## Module Structure
+
+Modules, at their core, are just packages that extend a set of abstract classes that are provided by CrossBuild. These abstract classes provide a set of methods that are used to interact with the bot, and the bot will call these methods when it needs to interact with the module.
+
+For example, the [`Channel`](/api/core/class/Channel) class has a method called `send` that is used to send a message to a channel. When the bot needs to send a message to a channel, it will call the `send` method on the channel object that is passed to it.
+
+The module can then implement this method to send a message to the channel.
+
+## Example
+
+If you would like to see an example of a module, you can check out the [Guilded module](https://github.com/crossbuildjs/crossbuild/tree/main/packages/guilded), which is the module that is used to connect to [Guilded](https://guilded.gg)'s API

@@ -17,7 +17,7 @@ const cb = new CrossBuild({
         new DiscordInteractionModule({
             name: "Shadow Testing",
             options: {
-                intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+                intents: ["Guilds", "GuildMessages", "MessageContent"]
             },
             token: process.env.DISCORD_TOKEN!
         }),

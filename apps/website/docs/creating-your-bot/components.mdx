@@ -1,0 +1,49 @@
+---
+title: Components
+sidebar_position: 2
+---
+
+Components are the building blocks of your application. Components can take the form of commands, buttons, and more.
+
+For our bot, let's create a ping command. This command will respond with "Pong!" when the user runs it.
+
+## Creating a Component
+
+To create a component, we need to create a new file in the `components` folder. Let's call it `ping.js`.
+
+```js
+import { Component } from "crossbuild"
+
+export default class Cmpt extends Component {
+	constructor(client) {
+		super("ping", "command", client, {
+			description: "Ping the bot"
+		})
+	}
+}
+```
+
+Every component needs to extend the `Component` class. The constructor takes 4 arguments:
+
+-   The name of the component (such as the command's name)
+-   The type of the component (such as "command")
+-   The client received from the constructor
+-   The options for the component such as description, permission requirements, restrictions, etc
+
+## Adding a Handler
+
+Now that we have our component, we need to add a handler. This handler will be called when the component is triggered.
+
+Add this code below the constructor, but still within the class you created
+
+```js
+	public override async run(interaction, options) {
+		await interaction.reply("Pong!")
+	}
+```
+
+This run method will be called when the component is triggered. It takes 2 arguments:
+- `interaction`: The interaction received from the component
+- `options`: The options for the component
+
+

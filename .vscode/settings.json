@@ -6,6 +6,7 @@
 		"automerge",
 		"buape",
 		"buttonping",
+		"clsx",
 		"crossbuild",
 		"crossbuildjs",
 		"disabledpagecount",
@@ -14,6 +15,7 @@
 		"paginators",
 		"Rsvps",
 		"slowmode",
+		"typecheck",
 		"undici"
 	]
 }
