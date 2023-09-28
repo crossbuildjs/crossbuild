@@ -24,7 +24,7 @@ jobs:
         if: ${{ needs.skip_ci.outputs.canSkip != 'true' }}
         steps:
             - name: Check out code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Setup
               uses: ./.github/actions/setup
