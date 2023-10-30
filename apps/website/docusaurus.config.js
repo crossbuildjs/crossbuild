@@ -19,8 +19,8 @@ const config = {
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
-    organizationName: "crossbuild", // Usually your GitHub org/user name.
-    projectName: "crossbuildjs", // Usually your repo name.
+    organizationName: "crossbuildjs", // Usually your GitHub org/user name.
+    projectName: "crossbuild", // Usually your repo name.
 
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
