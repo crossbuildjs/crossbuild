@@ -7,6 +7,8 @@
 
 "documentation":
     - "apps/website"
+    - "typedoc*"
+    - 
 
 "package: crossbuild":
     - "packages/crossbuild/**"
@@ -17,11 +19,5 @@
 "package: discord":
     - "packages/discord/**"
 
-"package: functions":
-    - "packages/functions/**"
-
 "package: guilded":
     - "packages/guilded/**"
-
-"package: types":
-    - "packages/types/**"

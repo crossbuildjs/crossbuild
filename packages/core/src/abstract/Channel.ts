@@ -8,17 +8,17 @@ export type ChannelData = {
 }
 
 export abstract class Channel {
-    readonly id: string
-    readonly name: string | null
-    readonly parentId: string | null
-    readonly topic: string | null
+	readonly id: string
+	readonly name: string | null
+	readonly parentId: string | null
+	readonly topic: string | null
 
-    constructor(data: ChannelData) {
-        this.id = data.id
-        this.name = data.name
-        this.parentId = data.parentId
-        this.topic = data.topic
-    }
+	constructor(data: ChannelData) {
+		this.id = data.id
+		this.name = data.name
+		this.parentId = data.parentId
+		this.topic = data.topic
+	}
 
 	abstract toString(): string
 

@@ -9,7 +9,5 @@
 	"automergeType": "pr",
 	"automergeStrategy": "squash",
 	"platformAutomerge": true,
-	"ignorePaths": [
-		"**/disabled/**"
-	]
+	"ignorePaths": ["**/disabled/**"]
 }

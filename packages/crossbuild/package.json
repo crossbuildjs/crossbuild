@@ -8,7 +8,6 @@
 		"Codeize <mrcodeize@gmail.com>"
 	],
 	"scripts": {
-		"lint": "eslint . --fix",
 		"build": "unbuild",
 		"clean": "rimraf dist"
 	},
@@ -44,7 +43,7 @@
 		"@crossbuild/guilded": "workspace:^",
 		"discord-verify": "^1.2.0",
 		"discord.js": "^14.13.0",
-		"guilded.js": "^0.23.5",
-		"itty-router": "^4.0.17"
+		"guilded.js": "^0.23.7",
+		"itty-router": "^4.0.23"
 	}
 }

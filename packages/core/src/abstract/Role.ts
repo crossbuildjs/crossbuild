@@ -4,13 +4,13 @@ export type RoleData = {
 }
 
 export abstract class Role {
-    readonly id: string
-    readonly name: string
+	readonly id: string
+	readonly name: string
 
-    constructor(data: RoleData) {
-        this.id = data.id
-        this.name = data.name
-    }
+	constructor(data: RoleData) {
+		this.id = data.id
+		this.name = data.name
+	}
 
 	abstract toString(): string
 }

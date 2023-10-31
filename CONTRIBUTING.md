@@ -10,5 +10,6 @@ To get ready to work on the codebase, please do the following:
 4. Add your feature or bug fix!
 5. Create a `.env` file for the test bot, copying the `.env.example` file.
 6. Test your new feature or bug fix using the `test-bot` app by running `pnpm dev`, adding tests if needed. 
-7. Run `pnpm pretty` to format your code (this uses ESLint and Prettier)
+7. Run `pnpm pretty` to format your code (this uses Biome)
+   - You can also just do `pnpm lint` or `pnpm format` to run only one of those, but both must be done before submitting a PR.
 8. [Submit a pull request](https://github.com/crossbuildjs/crossbuild/compare)
