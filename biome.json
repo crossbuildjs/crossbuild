@@ -1,10 +1,11 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"files": {
-		"ignore": ["dist", ".next", ".turbo", ".docusaurus"]
+		"ignore": ["dist", ".next", ".turbo", ".docusaurus", "build"]
 	},
 	"linter": {
 		"enabled": true,
+		"ignore": ["website"],
 		"rules": {
 			"recommended": true,
 			"correctness": {
@@ -13,7 +14,8 @@
 				"noUndeclaredVariables": "error"
 			},
 			"style": {
-				"noUnusedTemplateLiteral": "off"
+				"noUnusedTemplateLiteral": "off",
+				"noNonNullAssertion": "off"
 			},
 			"suspicious": {
 				"noRedeclare": "off"

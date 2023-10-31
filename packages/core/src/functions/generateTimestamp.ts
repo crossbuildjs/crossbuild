@@ -4,12 +4,12 @@
  * @returns The generated timestamp.
  */
 export const generateTimestamp = (
-	options?: GenerateTimestampOptions
+    options?: GenerateTimestampOptions
 ): string => {
-	let timestamp = options?.timestamp || new Date()
-	const type = options?.type || "f"
-	if (timestamp instanceof Date) timestamp = timestamp.getTime()
-	return `<t:${Math.floor(timestamp / 1000)}:${type}>`
+    let timestamp = options?.timestamp || new Date()
+    const type = options?.type || "f"
+    if (timestamp instanceof Date) timestamp = timestamp.getTime()
+    return `<t:${Math.floor(timestamp / 1000)}:${type}>`
 }
 
 /**
@@ -17,8 +17,8 @@ export const generateTimestamp = (
  * @example {"timestamp": 1620000000000, "type": "f"}
  */
 export interface GenerateTimestampOptions {
-	timestamp?: Date | number
-	type?: TimestampStyle
+    timestamp?: Date | number
+    type?: TimestampStyle
 }
 
 /**

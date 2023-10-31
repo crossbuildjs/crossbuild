@@ -16,7 +16,7 @@ jobs:
               uses: ./.github/actions/setup
 
             - name: Build
-              run: pnpm build
+              run: pnpm web:build
 
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
