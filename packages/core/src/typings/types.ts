@@ -1,5 +1,9 @@
-import { ReceivedInteraction, Component, Module } from ".."
-import { APIActionRowComponent, APIEmbed, APIMessageActionRowComponent } from "discord-api-types/v10"
+import {
+	APIActionRowComponent,
+	APIEmbed,
+	APIMessageActionRowComponent
+} from "discord-api-types/v10"
+import { Component, Module, ReceivedInteraction } from ".."
 
 export * from "./events"
 
@@ -43,7 +47,14 @@ export interface ComponentOption {
 	/** Whether the option is required */
 	required?: boolean
 	/** The type of the option */
-	type: "string" | "integer" | "number" | "boolean" | "channel" | "role" | "user" // | "attachment"
+	type:
+		| "string"
+		| "integer"
+		| "number"
+		| "boolean"
+		| "channel"
+		| "role"
+		| "user" // | "attachment"
 	/** If you want to restrict the user to a set of choices, you can specify them here. */
 	choices?: { name: string; value: string | number | boolean }[]
 	/** If the type is a number, you can specify a minimum value */
@@ -65,7 +76,10 @@ export type ComponentType = "command" | "button" | "selectMenu"
  * If the function returns a {@link GeneratedMessage}, the message will be sent to the channel that the interaction was received in.
  * Otherwise, the function returns null and the component will be run.
  */
-export type CustomCheckFunction = (interaction: ReceivedInteraction, component: Component) => Promise<GeneratedMessage | null>
+export type CustomCheckFunction = (
+	interaction: ReceivedInteraction,
+	component: Component
+) => Promise<GeneratedMessage | null>
 
 export type SimpleEmbed = {
 	title?: string
@@ -85,31 +99,43 @@ export type GeneratedMessage =
 			content?: string
 	  }
 
-export type GeneratedMessageObject = Extract<GeneratedMessage, { content?: string }>
+export type GeneratedMessageObject = Extract<
+	GeneratedMessage,
+	{ content?: string }
+>
 
 // Source: https://www.npmjs.com/package/typed-emitter
 // tsc did not like the format of the package, so I just copied the types here.
 type EventMap = {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// biome-ignore lint/suspicious/noExplicitAny: this is a true any
 	[key: string]: (...args: any[]) => void
 }
 export interface TypedEventEmitter<Events extends EventMap> {
-	addListener<E extends keyof Events>(event: E, listener: Events[E]): this
-	on<E extends keyof Events>(event: E, listener: Events[E]): this
-	once<E extends keyof Events>(event: E, listener: Events[E]): this
-	prependListener<E extends keyof Events>(event: E, listener: Events[E]): this
-	prependOnceListener<E extends keyof Events>(event: E, listener: Events[E]): this
+	addListener<_E extends keyof Events>(event: _E, listener: Events[_E]): this
+	on<_E extends keyof Events>(event: _E, listener: Events[_E]): this
+	once<_E extends keyof Events>(event: _E, listener: Events[_E]): this
+	prependListener<_E extends keyof Events>(
+		event: _E,
+		listener: Events[_E]
+	): this
+	prependOnceListener<_E extends keyof Events>(
+		event: _E,
+		listener: Events[_E]
+	): this
 
-	off<E extends keyof Events>(event: E, listener: Events[E]): this
-	removeAllListeners<E extends keyof Events>(event?: E): this
-	removeListener<E extends keyof Events>(event: E, listener: Events[E]): this
+	off<_E extends keyof Events>(event: _E, listener: Events[_E]): this
+	removeAllListeners<_E extends keyof Events>(event?: _E): this
+	removeListener<_E extends keyof Events>(event: _E, listener: Events[_E]): this
 
-	emit<E extends keyof Events>(event: E, ...args: Parameters<Events[E]>): boolean
+	emit<_E extends keyof Events>(
+		event: _E,
+		...args: Parameters<Events[_E]>
+	): boolean
 	// The sloppy `eventNames()` return type is to mitigate type incompatibilities - see #5
 	eventNames(): (keyof Events | string | symbol)[]
-	rawListeners<E extends keyof Events>(event: E): Events[E][]
-	listeners<E extends keyof Events>(event: E): Events[E][]
-	listenerCount<E extends keyof Events>(event: E): number
+	rawListeners<_E extends keyof Events>(event: _E): Events[_E][]
+	listeners<_E extends keyof Events>(event: _E): Events[_E][]
+	listenerCount<_E extends keyof Events>(event: _E): number
 
 	getMaxListeners(): number
 	setMaxListeners(maxListeners: number): this

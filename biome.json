@@ -1,0 +1,31 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"files": {
+		"ignore": ["dist", ".next", ".turbo", ".docusaurus"]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedVariables": "warn",
+				"noConstAssign": "error",
+				"noUndeclaredVariables": "error"
+			},
+			"style": {
+				"noUnusedTemplateLiteral": "off"
+			},
+			"suspicious": {
+				"noRedeclare": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"semicolons": "asNeeded",
+			"trailingComma": "none",
+			"indentWidth": 4,
+			"indentStyle": "space"
+		}
+	}
+}

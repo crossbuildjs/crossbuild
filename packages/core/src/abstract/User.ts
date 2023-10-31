@@ -8,17 +8,17 @@ export type UserData = {
 }
 
 export abstract class User {
-    readonly id: string
-    readonly displayName: string | null
-    readonly username: string | null
-    readonly avatarURL: string | null
+	readonly id: string
+	readonly displayName: string | null
+	readonly username: string | null
+	readonly avatarURL: string | null
 
-    constructor(data: UserData) {
-        this.id = data.id
-        this.displayName = data.displayName || null
-        this.username = data.username || null
-        this.avatarURL = data.avatarURL || null
-    }
+	constructor(data: UserData) {
+		this.id = data.id
+		this.displayName = data.displayName || null
+		this.username = data.username || null
+		this.avatarURL = data.avatarURL || null
+	}
 
 	abstract toString(): string
 	abstract get isBot(): boolean

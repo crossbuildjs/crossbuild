@@ -3,24 +3,20 @@
 	"display": "Default",
 	"compilerOptions": {
 		"allowJs": false,
-		"declaration": true,
-		"declarationMap": true,
+		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"inlineSources": false,
 		"isolatedModules": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"preserveWatchOutput": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"sourceMap": true,
 		"useUnknownInCatchVariables": true,
-		"lib": ["ES2021"],
+		"lib": ["ESNext"],
 		"module": "ESNext",
-		"target": "ES2021",
-		"moduleResolution": "node",
-		"resolveJsonModule": true
+		"target": "ESNext",
+		"moduleResolution": "node"
 	},
 	"exclude": ["node_modules", "dist"]
 }

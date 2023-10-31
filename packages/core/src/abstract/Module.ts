@@ -1,4 +1,10 @@
-import { ComponentOption, CrossBuild, ModulePaginator, OptionsHandler, ReceivedInteraction } from ".."
+import {
+	ComponentOption,
+	CrossBuild,
+	ModulePaginator,
+	OptionsHandler,
+	ReceivedInteraction
+} from ".."
 
 export type ModuleConfig = {
 	/** An easily recognizable name for this module */
@@ -17,17 +23,20 @@ export abstract class Module {
 	abstract client: unknown
 
 	constructor(config: ModuleConfig) {
-	    this.config = config
-	    this.name = config.name
+		this.config = config
+		this.name = config.name
 	}
 
 	public init(crossbuild: CrossBuild): Promise<boolean> {
-	    this.crossbuild = crossbuild
-	    return this.load()
+		this.crossbuild = crossbuild
+		return this.load()
 	}
 
 	public abstract load(): Promise<boolean>
 	public abstract startListening(): Promise<void>
 	public abstract stopListening(): Promise<void>
-	public abstract optionsHandler(interaction: ReceivedInteraction, componentOptions: Array<ComponentOption>): OptionsHandler
+	public abstract optionsHandler(
+		interaction: ReceivedInteraction,
+		componentOptions: Array<ComponentOption>
+	): OptionsHandler
 }

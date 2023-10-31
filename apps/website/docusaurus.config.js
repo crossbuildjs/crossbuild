@@ -99,7 +99,7 @@ const config = {
             "docusaurus-plugin-typedoc-api",
             {
                 projectRoot: path.join(__dirname, "../.."),
-                packages: ["core", "crossbuild", "discord", "functions", "guilded", "types"].map((x) => `packages/${x}`),
+                packages: ["core", "crossbuild", "discord", "guilded"].map((x) => `packages/${x}`),
                 tsconfigName: "tsconfig.base.json"
             }
         ]

@@ -1,4 +1,13 @@
-import { Channel, ComponentType, CrossBuild, InteractionRawOptions, Message, Server, User, GeneratedMessage } from ".."
+import {
+	Channel,
+	ComponentType,
+	CrossBuild,
+	GeneratedMessage,
+	InteractionRawOptions,
+	Message,
+	Server,
+	User
+} from ".."
 
 export interface ReceivedInteractionData {
 	id: string
@@ -13,11 +22,11 @@ export interface ReceivedInteractionData {
 }
 
 export abstract class ReceivedInteraction {
-    private readonly crossbuild: CrossBuild
-    /** The ID of this interaction */
-    public readonly id: string
-    /** The key of this interaction */
-    public readonly key: string
+	private readonly crossbuild: CrossBuild
+	/** The ID of this interaction */
+	public readonly id: string
+	/** The key of this interaction */
+	public readonly key: string
 	/** The source of this interaction */
 	abstract source: string
 	/** The type of this interaction */
@@ -36,34 +45,34 @@ export abstract class ReceivedInteraction {
 	public readonly selectMenuValues: ReceivedInteractionData["selectMenuValues"]
 
 	constructor(crossbuild: CrossBuild, data: ReceivedInteractionData) {
-	    this.crossbuild = crossbuild
-	    ;((_x: typeof this.crossbuild) => {})(this.crossbuild) // No unused variable error prevention
+		this.crossbuild = crossbuild
+		;((_x: typeof this.crossbuild) => {})(this.crossbuild) // No unused variable error prevention
 
-	    this.id = data.id
-	    this.key = data.key
-	    this.type = data.type
+		this.id = data.id
+		this.key = data.key
+		this.type = data.type
 
-	    this.rawOptions = {}
-	    for (const key in data.rawOptions) {
-	        let value = data.rawOptions[key]
-	        if (typeof value === "string") {
-	            if (value === "true") value = true
-	            if (value === "false") value = false
-	        }
-	        this.rawOptions[key] = value
-	    }
+		this.rawOptions = {}
+		for (const key in data.rawOptions) {
+			let value = data.rawOptions[key]
+			if (typeof value === "string") {
+				if (value === "true") value = true
+				if (value === "false") value = false
+			}
+			this.rawOptions[key] = value
+		}
 
-	    this.selectMenuValues = data.selectMenuValues
+		this.selectMenuValues = data.selectMenuValues
 
-	    this.server = data.server
-	    this.channel = data.channel
-	    this.user = data.user
+		this.server = data.server
+		this.channel = data.channel
+		this.user = data.user
 
-	    this.original = data.original
+		this.original = data.original
 	}
 
 	public isDiscordComponent() {
-	    return this.source === "discordInteraction" && this.type !== "command"
+		return this.source === "discordInteraction" && this.type !== "command"
 	}
 
 	/**
