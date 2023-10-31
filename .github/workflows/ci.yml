@@ -33,7 +33,7 @@ jobs:
               uses: ./.github/actions/setup
 
             - name: Build
-              run: pnpm run ci
+              run: pnpm run build
 
     biome:
         name: Check Formatting
