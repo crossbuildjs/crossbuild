@@ -11,7 +11,7 @@
 		"clean": "turbo run clean",
 		"dev": "dotenv -- turbo run dev",
 		"format": "biome format --write .",
-		"lint": "biome check . --apply",
+		"lint": "biome lint . --apply",
 		"preinstall": "only-allow pnpm",
 		"pretty": "pnpm run format && pnpm run lint",
 		"web": "turbo run dev --filter website",

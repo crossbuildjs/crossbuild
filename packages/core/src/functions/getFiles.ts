@@ -8,10 +8,10 @@ import { existsSync, mkdirSync, readdirSync } from "fs"
  * @returns The files in the directory.
  */
 export const getFiles = (
-	directory: string,
-	fileExtension: string,
-	createDirIfNotFound = false
+    directory: string,
+    fileExtension: string,
+    createDirIfNotFound = false
 ): string[] => {
-	if (createDirIfNotFound && !existsSync(directory)) mkdirSync(directory)
-	return readdirSync(directory).filter((file) => file.endsWith(fileExtension))
+    if (createDirIfNotFound && !existsSync(directory)) mkdirSync(directory)
+    return readdirSync(directory).filter((file) => file.endsWith(fileExtension))
 }
