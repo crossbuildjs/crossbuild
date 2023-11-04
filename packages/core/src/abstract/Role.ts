@@ -1,6 +1,6 @@
 export type RoleData = {
-	id: string
-	name: string
+    id: string
+    name: string
 }
 
 export abstract class Role {
@@ -12,5 +12,5 @@ export abstract class Role {
         this.name = data.name
     }
 
-	abstract toString(): string
+    abstract toString(): string
 }

@@ -1,14 +1,14 @@
 import { GeneratedMessage } from ".."
 
 export type MessageData = {
-	id: string
-	content: string
-	authorId: string
-	channelId?: string | null
-	serverId?: string | null
-	createdAt: Date
-	updatedAt?: Date | null
-	deletedAt?: Date | null
+    id: string
+    content: string
+    authorId: string
+    channelId?: string | null
+    serverId?: string | null
+    createdAt: Date
+    updatedAt?: Date | null
+    deletedAt?: Date | null
 }
 
 export abstract class Message {
@@ -32,11 +32,11 @@ export abstract class Message {
         this.deletedAt = data.deletedAt || null
     }
 
-	abstract toString(): string
+    abstract toString(): string
 
-	abstract get url(): string
+    abstract get url(): string
 
-	abstract reply(message: GeneratedMessage): Promise<string>
-	abstract edit(message: GeneratedMessage): Promise<void>
-	abstract delete(): Promise<void>
+    abstract reply(message: GeneratedMessage): Promise<string>
+    abstract edit(message: GeneratedMessage): Promise<void>
+    abstract delete(): Promise<void>
 }

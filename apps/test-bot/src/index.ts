@@ -12,7 +12,11 @@ import { todayIsSunday } from "./customChecks.js"
 
 const cb = new CrossBuild({
     name: "Test Bot",
-    componentPaths: ["/src/components/buttons", "/src/components/commands", "/src/components/selectMenus"],
+    componentPaths: [
+        "/src/components/buttons",
+        "/src/components/commands",
+        "/src/components/selectMenus"
+    ],
     modules: [
         new DiscordInteractionModule({
             name: "Shadow Testing",
@@ -24,7 +28,11 @@ const cb = new CrossBuild({
         new DiscordMessageModule({
             name: "Shadow Testing Messages",
             options: {
-                intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+                intents: [
+                    GatewayIntentBits.Guilds,
+                    GatewayIntentBits.GuildMessages,
+                    GatewayIntentBits.MessageContent
+                ]
             },
             token: process.env.DISCORD_TOKEN!,
             prefix: "-"
@@ -39,7 +47,10 @@ const cb = new CrossBuild({
     ],
     customChecks: [
         todayIsSunday,
-        async (interaction: ReceivedInteraction, component: Component): Promise<GeneratedMessage | null> => {
+        async (
+            interaction: ReceivedInteraction,
+            component: Component
+        ): Promise<GeneratedMessage | null> => {
             // check if today is sunday
             const today = new Date()
             if (today.getDay() !== 0) {

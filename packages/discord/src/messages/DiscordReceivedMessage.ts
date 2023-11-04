@@ -1,9 +1,14 @@
-import { CrossBuild, GeneratedMessage, ReceivedInteraction, ReceivedInteractionData } from "@crossbuild/core"
+import {
+    CrossBuild,
+    GeneratedMessage,
+    ReceivedInteraction,
+    ReceivedInteractionData
+} from "@crossbuild/core"
 import { Message as DJSMessage } from "discord.js"
 import { DiscordMessage } from ".."
 
 export type DiscordReceivedMessageData = ReceivedInteractionData & {
-	original: DJSMessage
+    original: DJSMessage
 }
 
 export class DiscordReceivedMessage extends ReceivedInteraction {

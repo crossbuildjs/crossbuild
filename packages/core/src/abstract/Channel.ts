@@ -1,10 +1,10 @@
 import { GeneratedMessage, Message } from ".."
 
 export type ChannelData = {
-	id: string
-	name: string | null
-	parentId: string | null
-	topic: string | null
+    id: string
+    name: string | null
+    parentId: string | null
+    topic: string | null
 }
 
 export abstract class Channel {
@@ -20,24 +20,24 @@ export abstract class Channel {
         this.topic = data.topic
     }
 
-	abstract toString(): string
+    abstract toString(): string
 
-	/**
-	 * Whether this channel is a DM
-	 */
-	abstract get isDm(): boolean
+    /**
+     * Whether this channel is a DM
+     */
+    abstract get isDm(): boolean
 
-	/**
-	 * Send a message to this channel
-	 * @param message The message to send
-	 * @returns The ID of the message that was sent
-	 */
-	abstract send(message: GeneratedMessage): Promise<string>
+    /**
+     * Send a message to this channel
+     * @param message The message to send
+     * @returns The ID of the message that was sent
+     */
+    abstract send(message: GeneratedMessage): Promise<string>
 
-	/**
-	 * Fetch a message from this channel
-	 * @param id The ID of the message to fetch
-	 * @returns The message that was fetched or null if no message could be found.
-	 */
-	abstract fetchMessage(id: string): Promise<Message | null>
+    /**
+     * Fetch a message from this channel
+     * @param id The ID of the message to fetch
+     * @returns The message that was fetched or null if no message could be found.
+     */
+    abstract fetchMessage(id: string): Promise<Message | null>
 }

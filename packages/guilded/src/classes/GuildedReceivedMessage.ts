@@ -1,9 +1,14 @@
-import { CrossBuild, GeneratedMessage, ReceivedInteraction, ReceivedInteractionData } from "@crossbuild/core"
+import {
+    CrossBuild,
+    GeneratedMessage,
+    ReceivedInteraction,
+    ReceivedInteractionData
+} from "@crossbuild/core"
 import { Message as GJSMessage } from "guilded.js"
 import { GuildedMessage } from ".."
 
 export type GuildedReceivedMessageData = ReceivedInteractionData & {
-	original: GJSMessage
+    original: GJSMessage
 }
 
 export class GuildedReceivedMessage extends ReceivedInteraction {

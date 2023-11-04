@@ -1,4 +1,9 @@
-import { Component, CrossBuild, OptionsHandler, ReceivedInteraction } from "crossbuild"
+import {
+    Component,
+    CrossBuild,
+    OptionsHandler,
+    ReceivedInteraction
+} from "crossbuild"
 
 export default class Cmd extends Component {
     constructor(client: CrossBuild) {
@@ -81,7 +86,10 @@ export default class Cmd extends Component {
         })
     }
 
-    public override async run(interaction: ReceivedInteraction, options: OptionsHandler) {
+    public override async run(
+        interaction: ReceivedInteraction,
+        options: OptionsHandler
+    ) {
         console.log(options)
         await interaction.reply({
             content: `Arguments: ${JSON.stringify(options.data)}`

@@ -1,5 +1,10 @@
 import { Server } from "@crossbuild/core"
-import { Guild as DJSGuild, GuildFeature, GuildNSFWLevel, Locale } from "discord.js"
+import {
+    Guild as DJSGuild,
+    GuildFeature,
+    GuildNSFWLevel,
+    Locale
+} from "discord.js"
 
 export class DiscordServer extends Server {
     readonly available: boolean

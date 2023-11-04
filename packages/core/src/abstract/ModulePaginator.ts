@@ -1,5 +1,11 @@
 import { Collection } from "@discordjs/collection"
-import { GeneratedMessageObject, Paginator, PaginatorMessage, PrevNext, ReceivedInteraction } from ".."
+import {
+    GeneratedMessageObject,
+    Paginator,
+    PaginatorMessage,
+    PrevNext,
+    ReceivedInteraction
+} from ".."
 
 export abstract class ModulePaginator {
     paginators: Collection<string, Paginator> = new Collection()
@@ -16,7 +22,18 @@ export abstract class ModulePaginator {
         this.paginators.delete(paginator.id)
     }
 
-	public abstract createPaginatorMessage(message: PaginatorMessage, prevNext: PrevNext, id: string): GeneratedMessageObject
-	public abstract sendPaginatorMessage(message: GeneratedMessageObject, interaction: ReceivedInteraction, paginator?: Paginator): Promise<void>
-	public abstract handlePage(paginator: Paginator, interaction: ReceivedInteraction): Promise<void>
+    public abstract createPaginatorMessage(
+        message: PaginatorMessage,
+        prevNext: PrevNext,
+        id: string
+    ): GeneratedMessageObject
+    public abstract sendPaginatorMessage(
+        message: GeneratedMessageObject,
+        interaction: ReceivedInteraction,
+        paginator?: Paginator
+    ): Promise<void>
+    public abstract handlePage(
+        paginator: Paginator,
+        interaction: ReceivedInteraction
+    ): Promise<void>
 }

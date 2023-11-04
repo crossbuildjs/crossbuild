@@ -15,7 +15,7 @@ export class DiscordMessage extends Message {
         })
         this.djsMessage = msg
     }
-    
+
     toString(): string {
         return JSON.parse(
             JSON.stringify(this, (key, value) => {

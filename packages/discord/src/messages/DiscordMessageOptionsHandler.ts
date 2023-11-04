@@ -1,10 +1,24 @@
-import { Channel, OptionsHandler, Role, User, ComponentOption } from "@crossbuild/core"
-import { DiscordChannel, DiscordReceivedMessage, DiscordRole, DiscordUser } from ".."
+import {
+    Channel,
+    ComponentOption,
+    OptionsHandler,
+    Role,
+    User
+} from "@crossbuild/core"
+import {
+    DiscordChannel,
+    DiscordReceivedMessage,
+    DiscordRole,
+    DiscordUser
+} from ".."
 
 export class DiscordMessageOptionsHandler extends OptionsHandler {
     private interaction: DiscordReceivedMessage
 
-    constructor(interaction: DiscordReceivedMessage, componentOptions: Array<ComponentOption>) {
+    constructor(
+        interaction: DiscordReceivedMessage,
+        componentOptions: Array<ComponentOption>
+    ) {
         super(interaction, componentOptions)
         this.interaction = interaction
 

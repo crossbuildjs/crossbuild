@@ -1,4 +1,9 @@
-import { APIActionRowComponent, APIMessageActionRowComponent, ButtonStyle, ComponentType } from "discord-api-types/v10"
+import {
+    APIActionRowComponent,
+    APIMessageActionRowComponent,
+    ButtonStyle,
+    ComponentType
+} from "discord-api-types/v10"
 import { GeneratedMessage, SimpleEmbed } from ".."
 
 /**

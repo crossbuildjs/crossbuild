@@ -1,10 +1,10 @@
 {
 	"dotenv.enableAutocloaking": false,
-	"findUnusedExports.detectCircularImports": true,
 	"cSpell.words": [
 		"argstest",
 		"automerge",
 		"buape",
+		"buapebot",
 		"buttonping",
 		"clsx",
 		"crossbuild",
@@ -16,6 +16,11 @@
 		"Rsvps",
 		"slowmode",
 		"typecheck",
+		"typedoc",
 		"undici"
-	]
+	],
+	"editor.defaultFormatter": "biomejs.biome",
+	"[yaml]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	}
 }

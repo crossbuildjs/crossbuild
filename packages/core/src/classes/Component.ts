@@ -1,11 +1,11 @@
 import {
-    SimpleEmbed,
-    CrossBuild,
     ComponentData,
-    ReceivedInteraction,
     ComponentType,
+    CrossBuild,
+    CustomCheckFunction,
     OptionsHandler,
-    CustomCheckFunction
+    ReceivedInteraction,
+    SimpleEmbed
 } from "../index.js"
 
 /**
@@ -13,46 +13,51 @@ import {
  */
 export class Component {
     /**
-	 * The client that instantiated this component.
-	 */
+     * The client that instantiated this component.
+     */
     public readonly client: CrossBuild
     /**
-	 * The key of this component.
-	 * This is used to identify the component, and is usually used as the custom ID or the command name.
-	 */
+     * The key of this component.
+     * This is used to identify the component, and is usually used as the custom ID or the command name.
+     */
     public readonly key: string
     /**
-	 * The type of the component.
-	 */
+     * The type of the component.
+     */
     public readonly type: ComponentType
     /**
-	 * The cooldown for this component, given in milliseconds.
-	 */
+     * The cooldown for this component, given in milliseconds.
+     */
     public readonly cooldown?: number
     /**
-	 * Whether this component can only be used in servers.
-	 */
+     * Whether this component can only be used in servers.
+     */
     private readonly serverOnly: boolean
     /**
-	 * Whether this component can only be used by the owner of the server.
-	 */
+     * Whether this component can only be used by the owner of the server.
+     */
     private readonly ownerOnly: boolean
     /**
-	 * The description of this component.
-	 * This is used in Discord for the command description.
-	 */
+     * The description of this component.
+     * This is used in Discord for the command description.
+     */
     public readonly description?: string
     /**
-	 * The options of this component.
-	 * This is used in Discord for the command options within the slash commands, as well as what is parsed from the message in text commands.
-	 */
+     * The options of this component.
+     * This is used in Discord for the command options within the slash commands, as well as what is parsed from the message in text commands.
+     */
     public readonly options?: ComponentData["options"]
     /**
-	 * Any custom checks that should be run before the component is executed.
-	 */
+     * Any custom checks that should be run before the component is executed.
+     */
     public readonly customChecks?: Array<CustomCheckFunction>
 
-    constructor(key: string, type: ComponentType, client: CrossBuild, options: ComponentData) {
+    constructor(
+        key: string,
+        type: ComponentType,
+        client: CrossBuild,
+        options: ComponentData
+    ) {
         this.key = key
         this.type = type
         this.client = client
@@ -70,17 +75,24 @@ export class Component {
                     "warn",
                     `Unable to find custom check ${x} for component ${
                         this.key
-                    }, that check is being ignored. Valid checks are one of ${this.client.customChecks.map((x) => x.name).join(", ")}`
+                    }, that check is being ignored. Valid checks are one of ${this.client.customChecks
+                        .map((x) => x.name)
+                        .join(", ")}`
                 )
             } else this.customChecks!.push(check)
         })
     }
 
-    public async validate(interaction: ReceivedInteraction, options: OptionsHandler): Promise<SimpleEmbed | null> {
+    public async validate(
+        interaction: ReceivedInteraction,
+        options: OptionsHandler
+    ): Promise<SimpleEmbed | null> {
         if (options.errors.length > 0) {
             return {
                 title: "Invalid Options",
-                description: `The following options are invalid:\n${options.errors.join("\n")}`
+                description: `The following options are invalid:\n${options.errors.join(
+                    "\n"
+                )}`
             }
         }
         if (this.serverOnly && !interaction.server) {
@@ -91,7 +103,10 @@ export class Component {
         }
 
         if (interaction.server && interaction.user) {
-            if (this.ownerOnly && interaction.server?.ownerId !== interaction.user?.id) {
+            if (
+                this.ownerOnly &&
+                interaction.server?.ownerId !== interaction.user?.id
+            ) {
                 return {
                     title: "Missing Permissions",
                     description: `This ${this.type} can only be run by the owner of this server!`
@@ -179,8 +194,10 @@ export class Component {
         return null
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public async run(_interaction: ReceivedInteraction, _options: OptionsHandler): Promise<any> {
+    public async run(
+        _interaction: ReceivedInteraction,
+        _options: OptionsHandler
+    ): Promise<unknown> {
         throw new Error("Not implemented")
     }
 }

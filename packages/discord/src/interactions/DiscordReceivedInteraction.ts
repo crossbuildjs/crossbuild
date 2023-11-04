@@ -1,10 +1,16 @@
-import { CrossBuild, GeneratedMessage, ReceivedInteraction, ReceivedInteractionData } from "@crossbuild/core"
+import {
+    CrossBuild,
+    GeneratedMessage,
+    ReceivedInteraction,
+    ReceivedInteractionData
+} from "@crossbuild/core"
 import { BaseInteraction } from "discord.js"
 import { DiscordMessage, DiscordServer } from ".."
 
-export interface DiscordReceivedInteractionData extends Omit<ReceivedInteractionData, "server"> {
-	original: BaseInteraction
-	server: DiscordServer | null
+export interface DiscordReceivedInteractionData
+    extends Omit<ReceivedInteractionData, "server"> {
+    original: BaseInteraction
+    server: DiscordServer | null
 }
 
 export class DiscordReceivedInteraction extends ReceivedInteraction {
@@ -18,71 +24,95 @@ export class DiscordReceivedInteraction extends ReceivedInteraction {
     }
 
     public async reply(message: GeneratedMessage) {
-        if (this.original.isChatInputCommand() || this.original.isButton() || this.original.isAnySelectMenu()) {
+        if (
+            this.original.isChatInputCommand() ||
+            this.original.isButton() ||
+            this.original.isAnySelectMenu()
+        ) {
             const msg = await this.original.reply(
                 typeof message === "string"
                     ? {
-                        content: message,
-                        fetchReply: true
-					  }
+                          content: message,
+                          fetchReply: true
+                      }
                     : {
-                        embeds: message.embeds,
-                        components: message.components,
-                        content: message.content,
-                        ephemeral: message.ephemeral,
-                        fetchReply: true
-					  }
+                          embeds: message.embeds,
+                          components: message.components,
+                          content: message.content,
+                          ephemeral: message.ephemeral,
+                          fetchReply: true
+                      }
             )
             return new DiscordMessage(msg)
         } else {
-            throw new Error("An interaction that could not be replied to was found.")
+            throw new Error(
+                "An interaction that could not be replied to was found."
+            )
         }
     }
 
     public async deferReply(ephemeral = false) {
-        if (this.original.isChatInputCommand() || this.original.isButton() || this.original.isAnySelectMenu()) {
+        if (
+            this.original.isChatInputCommand() ||
+            this.original.isButton() ||
+            this.original.isAnySelectMenu()
+        ) {
             await this.original.deferReply({ ephemeral, fetchReply: true })
         } else {
-            throw new Error("An interaction that could not be replied to was found.")
+            throw new Error(
+                "An interaction that could not be replied to was found."
+            )
         }
     }
 
     public async editReply(message: GeneratedMessage) {
-        if (this.original.isChatInputCommand() || this.original.isButton() || this.original.isAnySelectMenu()) {
+        if (
+            this.original.isChatInputCommand() ||
+            this.original.isButton() ||
+            this.original.isAnySelectMenu()
+        ) {
             const msg = await this.original.editReply(
                 typeof message === "string"
                     ? {
-                        content: message
-					  }
+                          content: message
+                      }
                     : {
-                        embeds: message.embeds,
-                        components: message.components,
-                        content: message.content
-					  }
+                          embeds: message.embeds,
+                          components: message.components,
+                          content: message.content
+                      }
             )
             return new DiscordMessage(msg)
         } else {
-            throw new Error("An interaction that could not be replied to was found.")
+            throw new Error(
+                "An interaction that could not be replied to was found."
+            )
         }
     }
 
     public async followUp(message: GeneratedMessage) {
-        if (this.original.isChatInputCommand() || this.original.isButton() || this.original.isAnySelectMenu()) {
+        if (
+            this.original.isChatInputCommand() ||
+            this.original.isButton() ||
+            this.original.isAnySelectMenu()
+        ) {
             const msg = await this.original.followUp(
                 typeof message === "string"
                     ? {
-                        content: message
-					  }
+                          content: message
+                      }
                     : {
-                        embeds: message.embeds,
-                        components: message.components,
-                        content: message.content,
-                        ephemeral: message.ephemeral
-					  }
+                          embeds: message.embeds,
+                          components: message.components,
+                          content: message.content,
+                          ephemeral: message.ephemeral
+                      }
             )
             return new DiscordMessage(msg)
         } else {
-            throw new Error("An interaction that could not be replied to was found.")
+            throw new Error(
+                "An interaction that could not be replied to was found."
+            )
         }
     }
 
@@ -91,19 +121,21 @@ export class DiscordReceivedInteraction extends ReceivedInteraction {
             const msg = await this.original.update(
                 typeof message === "string"
                     ? {
-                        content: message,
-                        fetchReply: true
-					  }
+                          content: message,
+                          fetchReply: true
+                      }
                     : {
-                        embeds: message.embeds,
-                        components: message.components,
-                        content: message.content,
-                        fetchReply: true
-					  }
+                          embeds: message.embeds,
+                          components: message.components,
+                          content: message.content,
+                          fetchReply: true
+                      }
             )
             return new DiscordMessage(msg)
         } else {
-            throw new Error("An interaction that could not be updated was found.")
+            throw new Error(
+                "An interaction that could not be updated was found."
+            )
         }
     }
 }

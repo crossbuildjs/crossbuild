@@ -1,9 +1,9 @@
 export type ServerData = {
-	id: string
-	name?: string | null
-	description?: string | null
-	ownerId?: string | null
-	iconURL?: string | null
+    id: string
+    name?: string | null
+    description?: string | null
+    ownerId?: string | null
+    iconURL?: string | null
 }
 
 export abstract class Server {
@@ -21,5 +21,5 @@ export abstract class Server {
         this.iconURL = data.iconURL || null
     }
 
-	abstract toString(): string
+    abstract toString(): string
 }

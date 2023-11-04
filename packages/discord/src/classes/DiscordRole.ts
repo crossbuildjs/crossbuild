@@ -8,7 +8,7 @@ export class DiscordRole extends Role {
             name: role.name
         })
     }
-    
+
     toString(): string {
         return JSON.parse(
             JSON.stringify(this, (_, value) => {

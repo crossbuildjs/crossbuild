@@ -47,8 +47,10 @@ export class GuildedMessage extends Message {
     }
 
     async react(emoji: GuildedEmojiID | number) {
-        await this.gjsMessage.client.reactions.create(this.gjsMessage.channelId, this.gjsMessage.id, emoji).catch((e) => {
-            throw e
-        })
+        await this.gjsMessage.client.reactions
+            .create(this.gjsMessage.channelId, this.gjsMessage.id, emoji)
+            .catch((e) => {
+                throw e
+            })
     }
 }

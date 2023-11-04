@@ -22,6 +22,9 @@ jobs:
         runs-on: ubuntu-latest
         needs: [skip_ci]
         if: ${{ needs.skip_ci.outputs.canSkip != 'true' }}
+        env:
+            TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+            TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
         steps:
             - name: Check out code
               uses: actions/checkout@v4
@@ -30,24 +33,20 @@ jobs:
               uses: ./.github/actions/setup
 
             - name: Build
-              run: pnpm build
+              run: pnpm run build
 
-    # eslint:
-    #     name: Check Formatting
-    #     timeout-minutes: 15
-    #     runs-on: ubuntu-latest
-    #     needs: [skip_ci]
-    #     if: ${{ needs.skip_ci.outputs.canSkip != 'true' }}
-    #     steps:
-    #         - name: Check out code
-    #           uses: actions/checkout@v3
-
-    #         - name: Setup
-    #           uses: ./.github/actions/setup
-
-    #         - name: Run ESLint
-    #           uses: sibiraj-s/action-eslint@v2
-    #           with:
-    #               eslint-args: "--quiet"
-    #               extensions: "js,jsx,ts,tsx"
-    #               annotations: true
+    biome:
+        name: Check Formatting
+        timeout-minutes: 15
+        runs-on: ubuntu-latest
+        needs: [skip_ci]
+        if: ${{ needs.skip_ci.outputs.canSkip != 'true' }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Setup Biome
+              uses: biomejs/setup-biome@v1
+              with:
+                  version: "latest"
+            - name: Run Biome
+              run: biome ci .

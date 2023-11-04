@@ -3,7 +3,9 @@
  * @param options - The options to use for the timestamp.
  * @returns The generated timestamp.
  */
-export const generateTimestamp = (options?: GenerateTimestampOptions): string => {
+export const generateTimestamp = (
+    options?: GenerateTimestampOptions
+): string => {
     let timestamp = options?.timestamp || new Date()
     const type = options?.type || "f"
     if (timestamp instanceof Date) timestamp = timestamp.getTime()
@@ -15,8 +17,8 @@ export const generateTimestamp = (options?: GenerateTimestampOptions): string =>
  * @example {"timestamp": 1620000000000, "type": "f"}
  */
 export interface GenerateTimestampOptions {
-	timestamp?: Date | number
-	type?: TimestampStyle
+    timestamp?: Date | number
+    type?: TimestampStyle
 }
 
 /**

@@ -1,3 +1,4 @@
+import EventEmitter from "events"
 import { resolve } from "path"
 import { Collection } from "@discordjs/collection"
 import {
@@ -11,12 +12,14 @@ import {
     TypedEventEmitter,
     uploadHaste
 } from ".."
-import EventEmitter from "events"
 export class CrossBuild extends (EventEmitter as new () => TypedEventEmitter<ClientEvents>) {
     public readonly componentHandler: ComponentHandler
     public components: Collection<`${ComponentType}-${string}`, Component>
     public hasteStore: Collection<string, string[]>
-    public cooldowns = new Collection<`${ComponentType}-${string}`, Collection<string, number>>()
+    public cooldowns = new Collection<
+        `${ComponentType}-${string}`,
+        Collection<string, number>
+    >()
     public config: Config
     public readonly __dirname: string
 
@@ -25,9 +28,9 @@ export class CrossBuild extends (EventEmitter as new () => TypedEventEmitter<Cli
     public customChecks = new Collection<string, CustomCheckFunction>()
 
     /**
-	 * Create our client.
-	 * @param options - The options for our client.
-	 */
+     * Create our client.
+     * @param options - The options for our client.
+     */
     constructor(config: Config) {
         super()
         this.config = config
@@ -70,12 +73,12 @@ export class CrossBuild extends (EventEmitter as new () => TypedEventEmitter<Cli
     }
 
     /**
-	 * This function is used when you want to slowly generate a hastebin.
-	 * It provides a collection that can be accessed from the client, and will automatically append each string to a new line.
-	 * You can use the {@link hasteFlush} function to upload the hastebin.
-	 * @param id The ID of the store you are using.
-	 * @param text The text to add to the store.
-	 */
+     * This function is used when you want to slowly generate a hastebin.
+     * It provides a collection that can be accessed from the client, and will automatically append each string to a new line.
+     * You can use the {@link hasteFlush} function to upload the hastebin.
+     * @param id The ID of the store you are using.
+     * @param text The text to add to the store.
+     */
     public hasteLog(id: string, text: string) {
         const data = this.hasteStore.get(id) || []
         data.push(`${text}\n`)
@@ -83,11 +86,11 @@ export class CrossBuild extends (EventEmitter as new () => TypedEventEmitter<Cli
     }
 
     /**
-	 * This function is used to upload a hastebin stored using the {@link hasteLog} function.
-	 * @param id - The ID of the store you are using.
-	 * @param url - The URL to upload the hastebin to. If not provided, it will use the default hastebin.
-	 * @returns The resulting URL
-	 */
+     * This function is used to upload a hastebin stored using the {@link hasteLog} function.
+     * @param id - The ID of the store you are using.
+     * @param url - The URL to upload the hastebin to. If not provided, it will use the default hastebin.
+     * @returns The resulting URL
+     */
     public async hasteFlush(id: string, url?: string) {
         const raw = this.hasteStore.get(id) || []
         const final = raw.join("\n")

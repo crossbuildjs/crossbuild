@@ -8,7 +8,6 @@
 		"Codeize <mrcodeize@gmail.com>"
 	],
 	"scripts": {
-		"lint": "eslint . --fix",
 		"build": "unbuild",
 		"clean": "rimraf dist"
 	},
@@ -40,11 +39,11 @@
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.5.3",
-		"discord-api-types": "^0.37.54",
-		"node-fetch": "2"
+		"discord-api-types": "^0.37.62",
+		"node-fetch": "^2.7.0"
 	},
 	"devDependencies": {
-		"@types/node": "^18.17.5",
-		"@types/node-fetch": "^2.6.4"
+		"@types/node": "^18.18.7",
+		"@types/node-fetch": "^2.6.8"
 	}
 }

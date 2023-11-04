@@ -8,7 +8,6 @@
 		"Codeize <codeize@buape.com>"
 	],
 	"scripts": {
-		"lint": "eslint . --fix",
 		"build": "unbuild",
 		"clean": "rimraf dist"
 	},

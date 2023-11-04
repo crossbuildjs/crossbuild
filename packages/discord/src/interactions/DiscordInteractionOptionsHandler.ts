@@ -1,10 +1,18 @@
 import { ComponentOption, OptionsHandler } from "@crossbuild/core"
-import { DiscordChannel, DiscordReceivedInteraction, DiscordUser, DiscordRole } from ".."
+import {
+    DiscordChannel,
+    DiscordReceivedInteraction,
+    DiscordRole,
+    DiscordUser
+} from ".."
 
 export class DiscordInteractionOptionsHandler extends OptionsHandler {
     private interaction: DiscordReceivedInteraction
 
-    constructor(interaction: DiscordReceivedInteraction, componentOptions: Array<ComponentOption>) {
+    constructor(
+        interaction: DiscordReceivedInteraction,
+        componentOptions: Array<ComponentOption>
+    ) {
         super(interaction, componentOptions)
         this.interaction = interaction
     }
@@ -20,7 +28,9 @@ export class DiscordInteractionOptionsHandler extends OptionsHandler {
         if (!this.interaction.original.isChatInputCommand()) return undefined
         const channelData = this.interaction.original.options.getChannel(key)
         if (!channelData) return undefined
-        const channel = await this.interaction.original.client.channels.fetch(channelData.id)
+        const channel = await this.interaction.original.client.channels.fetch(
+            channelData.id
+        )
         if (!channel) return undefined
         return new DiscordChannel(channel)
     }

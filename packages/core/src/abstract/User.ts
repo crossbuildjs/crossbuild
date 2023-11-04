@@ -1,10 +1,10 @@
 import { GeneratedMessage } from ".."
 
 export type UserData = {
-	id: string
-	displayName?: string | null
-	username?: string | null
-	avatarURL?: string | null
+    id: string
+    displayName?: string | null
+    username?: string | null
+    avatarURL?: string | null
 }
 
 export abstract class User {
@@ -20,13 +20,13 @@ export abstract class User {
         this.avatarURL = data.avatarURL || null
     }
 
-	abstract toString(): string
-	abstract get isBot(): boolean
+    abstract toString(): string
+    abstract get isBot(): boolean
 
-	/**
-	 * Send a DM to this user
-	 * @param message The message to send
-	 * @returns The ID of the message that was sent
-	 */
-	abstract send(message: GeneratedMessage): Promise<string>
+    /**
+     * Send a DM to this user
+     * @param message The message to send
+     * @returns The ID of the message that was sent
+     */
+    abstract send(message: GeneratedMessage): Promise<string>
 }

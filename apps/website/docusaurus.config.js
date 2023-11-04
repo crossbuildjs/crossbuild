@@ -43,7 +43,8 @@ const config = {
                     sidebarPath: require.resolve("./sidebars.js"),
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl: "https://github.com/crossbuild/crossbuildjs/tree/main/apps/website/docs"
+                    editUrl:
+                        "https://github.com/crossbuild/crossbuildjs/tree/main/apps/website/docs"
                 },
                 theme: {
                     customCss: require.resolve("./src/css/custom.css")
@@ -53,53 +54,55 @@ const config = {
     ],
 
     themeConfig:
-		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-		({
-		    // Replace with your project's social card
-		    image: "img/docusaurus-social-card.jpg",
-		    navbar: {
-		        title: "CrossBuild",
-		        logo: {
-		            alt: "My Site Logo",
-		            src: "img/logo.svg"
-		        },
-		        items: [
-		            {
-		                to: "api",
-		                label: "API",
-		                position: "left"
-		            },
-		            {
-		                type: "docSidebar",
-		                sidebarId: "tutorialSidebar",
-		                position: "left",
-		                label: "Docs"
-		            },
-		            {
-		                href: "https://github.com/crossbuildjs/crossbuild",
-		                className: "navbar-item-github",
-		                position: "right"
-		            },
-		            {
-		                href: "https://go.buape.com/discord",
-		                className: "navbar-item-discord",
-		                position: "right"
-		            }
-		        ]
-		    },
+        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+        ({
+            // Replace with your project's social card
+            image: "img/docusaurus-social-card.jpg",
+            navbar: {
+                title: "CrossBuild",
+                logo: {
+                    alt: "My Site Logo",
+                    src: "img/logo.svg"
+                },
+                items: [
+                    {
+                        to: "api",
+                        label: "API",
+                        position: "left"
+                    },
+                    {
+                        type: "docSidebar",
+                        sidebarId: "tutorialSidebar",
+                        position: "left",
+                        label: "Docs"
+                    },
+                    {
+                        href: "https://github.com/crossbuildjs/crossbuild",
+                        className: "navbar-item-github",
+                        position: "right"
+                    },
+                    {
+                        href: "https://go.buape.com/discord",
+                        className: "navbar-item-discord",
+                        position: "right"
+                    }
+                ]
+            },
 
-		    prism: {
-		        theme: lightCodeTheme,
-		        darkTheme: darkCodeTheme
-		    }
-		}),
+            prism: {
+                theme: lightCodeTheme,
+                darkTheme: darkCodeTheme
+            }
+        }),
 
     plugins: [
         [
             "docusaurus-plugin-typedoc-api",
             {
                 projectRoot: path.join(__dirname, "../.."),
-                packages: ["core", "crossbuild", "discord", "functions", "guilded", "types"].map((x) => `packages/${x}`),
+                packages: ["core", "crossbuild", "discord", "guilded"].map(
+                    (x) => `packages/${x}`
+                ),
                 tsconfigName: "tsconfig.base.json"
             }
         ]
