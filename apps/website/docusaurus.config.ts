@@ -1,12 +1,12 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
+import { themes } from "prism-react-renderer"
+const lightTheme = themes.github
+const darkTheme = themes.dracula
+import path from "path"
 
-const lightCodeTheme = require("prism-react-renderer/themes/github")
-const darkCodeTheme = require("prism-react-renderer/themes/dracula")
-const path = require("path")
+import type { Config } from "@docusaurus/types"
+import type * as Preset from "@docusaurus/preset-classic"
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+const config: Config = {
     title: "CrossBuild",
     tagline: "Write your bot once, run on any* platform",
     favicon: "img/favicon.ico",
@@ -37,8 +37,7 @@ const config = {
     presets: [
         [
             "classic",
-            /** @type {import('@docusaurus/preset-classic').Options} */
-            ({
+            {
                 docs: {
                     sidebarPath: require.resolve("./sidebars.js"),
                     // Please change this to your repo.
@@ -49,51 +48,49 @@ const config = {
                 theme: {
                     customCss: require.resolve("./src/css/custom.css")
                 }
-            })
+            } satisfies Preset.Options
         ]
     ],
 
-    themeConfig:
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-        ({
-            // Replace with your project's social card
-            image: "img/docusaurus-social-card.jpg",
-            navbar: {
-                title: "CrossBuild",
-                logo: {
-                    alt: "My Site Logo",
-                    src: "img/logo.svg"
-                },
-                items: [
-                    {
-                        to: "api",
-                        label: "API",
-                        position: "left"
-                    },
-                    {
-                        type: "docSidebar",
-                        sidebarId: "tutorialSidebar",
-                        position: "left",
-                        label: "Docs"
-                    },
-                    {
-                        href: "https://github.com/crossbuildjs/crossbuild",
-                        className: "navbar-item-github",
-                        position: "right"
-                    },
-                    {
-                        href: "https://go.buape.com/discord",
-                        className: "navbar-item-discord",
-                        position: "right"
-                    }
-                ]
+    themeConfig: {
+        // Replace with your project's social card
+        image: "img/docusaurus-social-card.jpg",
+        navbar: {
+            title: "CrossBuild",
+            logo: {
+                alt: "My Site Logo",
+                src: "img/logo.svg"
             },
+            items: [
+                {
+                    to: "api",
+                    label: "API",
+                    position: "left"
+                },
+                {
+                    type: "docSidebar",
+                    sidebarId: "tutorialSidebar",
+                    position: "left",
+                    label: "Docs"
+                },
+                {
+                    href: "https://github.com/crossbuildjs/crossbuild",
+                    className: "navbar-item-github",
+                    position: "right"
+                },
+                {
+                    href: "https://go.buape.com/discord",
+                    className: "navbar-item-discord",
+                    position: "right"
+                }
+            ]
+        },
 
-            prism: {
-                theme: lightCodeTheme,
-                darkTheme: darkCodeTheme
-            }
-        }),
+        prism: {
+            theme: lightTheme,
+            darkTheme: darkTheme
+        }
+    } satisfies Preset.ThemeConfig,
 
     plugins: [
         [

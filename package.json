@@ -1,10 +1,7 @@
 {
 	"name": "@crossbuild/repo",
 	"private": true,
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	],
+	"workspaces": ["apps/*", "packages/*"],
 	"packageManager": "pnpm@8.9.0",
 	"scripts": {
 		"build": "turbo run build",
@@ -14,8 +11,8 @@
 		"lint": "biome lint . --apply",
 		"preinstall": "only-allow pnpm",
 		"pretty": "pnpm run format && pnpm run lint",
-		"web": "turbo run dev --filter website",
-		"web:build": "turbo run build --filter website",
+		"web": "turbo run web:start --filter website",
+		"web:build": "turbo run web:build --filter website",
 		"changeset": "changeset add",
 		"publish": "changeset version && pnpm run build && changeset publish"
 	},

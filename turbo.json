@@ -13,6 +13,8 @@
 		"test": {
 			"dependsOn": ["build"]
 		},
-		"dev": {}
+		"dev": {},
+		"web:build": {},
+		"web:start": {}
 	}
 }
