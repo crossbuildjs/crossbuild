@@ -1,5 +1,14 @@
 # crossbuild
 
+## 0.6.2
+
+### Patch Changes
+
+- Updated dependencies [ef18929]
+  - @crossbuild/discord@0.3.2
+  - @crossbuild/guilded@0.3.2
+  - @crossbuild/core@0.3.2
+
 ## 0.6.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @crossbuild/core
 
+## 0.3.2
+
+### Patch Changes
+
+- ef18929: Add an option to acknowledge but not reply to an interaction
+
 ## 0.3.1
 
 ### Patch Changes
