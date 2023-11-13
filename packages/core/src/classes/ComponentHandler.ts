@@ -109,7 +109,8 @@ export class ComponentHandler {
                 "debug",
                 `Ignoring ${type} with key ${key}, it should be handled with a collector on a message.`
             )
-        const component = this.fetchComponent(key, type)
+        const searchKey = key.split(":")[0]
+        const component = this.fetchComponent(searchKey, type)
         if (!component)
             return this.crossbuild.emit(
                 "warn",

@@ -15,56 +15,12 @@ pnpm add crossbuild
 yarn add crossbuild
 ```
 
-If you are connecting your bot to Discord, you will likely need [Discord.js](https://npmjs.com/package/discord.js) as well.
-
-```
-npm install discord.js
-```
-
-If you are connecting your bot to Guilded, you will likely need [Guilded.js](https://npmjs.com/package/guilded.js) as well.
-
-```
-npm install guilded.js
-```
+This package will automatically install the most common modules that are used, but if you want to pick and choose, you can install the `@crossbuild/core` package and then only the modules you want.
 
 ## Usage
 
-CrossBuild is a library that allows you to build bots for Discord and Guilded, at the same time. It is designed to be as simple as possible, while still being powerful. Here is a simple example of a CrossBuild bot in Typescript:
+CrossBuild is a library that allows you to build bots for Discord and Guilded, at the same time. It is designed to be as simple as possible, while still being powerful.
 
-```ts
-// src/index.ts
-import { CrossBuild } from "crossbuild"
-
-new CrossBuild({
-	name: "Test Bot",
-	componentPaths: ["/src/components"],
-	discordOptions: {
-		intents: ["Guilds", "GuildMessages", "MessageContent"]
-	},
-	guildedOptions: {
-		token: process.env.GUILDED_TOKEN
-	},
-	discordToken: process.env.DISCORD_TOKEN,
-	prefix: "-"
-})
-
-// src/components/ping.ts
-import { Component, CrossBuild, ReceivedInteraction } from "crossbuild"
-
-export default class Cmd extends Component {
-	constructor(client: CrossBuild) {
-		super("ping", "command", client, {
-			description: "Ping!"
-		})
-	}
-
-	public override async run(interaction: ReceivedInteraction) {
-		await interaction.reply({
-			content: `Pong`
-		})
-	}
-}
-```
 
 ## Contributing
 
