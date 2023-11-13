@@ -2,7 +2,7 @@
 	"name": "crossbuild",
 	"description": "A powerful framework to create cross-platform Discord and Guilded bots",
 	"type": "module",
-	"version": "0.6.0",
+	"version": "0.6.1",
 	"contributors": [
 		"Shadow <shadow@buape.com>",
 		"Codeize <mrcodeize@gmail.com>"

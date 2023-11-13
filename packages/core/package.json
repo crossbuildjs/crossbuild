@@ -2,7 +2,7 @@
 	"name": "@crossbuild/core",
 	"description": "The core classes for Crossbuild",
 	"type": "module",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"contributors": [
 		"Shadow <shadow@buape.com>",
 		"Codeize <mrcodeize@gmail.com>"
