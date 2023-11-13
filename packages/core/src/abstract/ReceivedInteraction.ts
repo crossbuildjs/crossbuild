@@ -83,5 +83,9 @@ export abstract class ReceivedInteraction {
     abstract reply(message: GeneratedMessage): Promise<Message>
     abstract editReply(message: GeneratedMessage): Promise<Message>
     abstract deferReply(): Promise<void>
+    /**
+     * Acknowledge an interaction without replying (e.g. for buttons that you want to edit the source message)
+     */
+    abstract acknowledge(message: GeneratedMessage): Promise<void>
     abstract followUp(message: GeneratedMessage): Promise<Message>
 }

@@ -138,4 +138,10 @@ export class DiscordReceivedInteraction extends ReceivedInteraction {
             )
         }
     }
+
+    public async acknowledge() {
+        if (this.original.isButton() || this.original.isAnySelectMenu()) {
+            await this.original.deferUpdate()
+        }
+    }
 }

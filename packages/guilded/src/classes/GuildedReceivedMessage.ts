@@ -44,4 +44,6 @@ export class GuildedReceivedMessage extends ReceivedInteraction {
         }
         return new GuildedMessage(await this.original.reply(message))
     }
+
+    public async acknowledge() {}
 }

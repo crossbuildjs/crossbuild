@@ -45,4 +45,6 @@ export class DiscordReceivedMessage extends ReceivedInteraction {
         }
         return new DiscordMessage(await this.original.reply(message))
     }
+
+    public async acknowledge() {}
 }
