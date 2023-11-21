@@ -38,7 +38,7 @@
 		"node": ">=18.17.0"
 	},
 	"dependencies": {
-		"@discordjs/collection": "^1.5.3",
+		"@discordjs/collection": "^2.0.0",
 		"discord-api-types": "^0.37.62",
 		"node-fetch": "^2.7.0"
 	},

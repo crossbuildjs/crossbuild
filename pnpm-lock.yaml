@@ -101,8 +101,8 @@ importers:
   packages/core:
     dependencies:
       '@discordjs/collection':
-        specifier: ^1.5.3
-        version: 1.5.3
+        specifier: ^2.0.0
+        version: 2.0.0
       discord-api-types:
         specifier: ^0.37.62
         version: 0.37.62
@@ -1763,6 +1763,11 @@ packages:
   /@discordjs/collection@1.5.3:
     resolution: {integrity: sha512-SVb428OMd3WO1paV3rm6tSjM4wC+Kecaa1EUGX7vc6/fddvw/6lg90z4QtCqm21zvVe92vMMDt9+DkIvjXImQQ==}
     engines: {node: '>=16.11.0'}
+    dev: false
+
+  /@discordjs/collection@2.0.0:
+    resolution: {integrity: sha512-YTWIXLrf5FsrLMycpMM9Q6vnZoR/lN2AWX23/Cuo8uOOtS8eHB2dyQaaGnaF8aZPYnttf2bkLMcXn/j6JUOi3w==}
+    engines: {node: '>=18'}
     dev: false
 
   /@discordjs/formatters@0.3.2:
