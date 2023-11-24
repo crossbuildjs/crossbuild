@@ -182,26 +182,3 @@ export class DiscordInteractionModule extends Module {
         }
     }
 }
-
-const mapType = (
-    type: ComponentOption["type"]
-): ApplicationCommandOptionType => {
-    switch (type) {
-        case "string":
-            return ApplicationCommandOptionType.String
-        case "integer":
-            return ApplicationCommandOptionType.Integer
-        case "boolean":
-            return ApplicationCommandOptionType.Boolean
-        case "number":
-            return ApplicationCommandOptionType.Number
-        case "user":
-            return ApplicationCommandOptionType.User
-        case "channel":
-            return ApplicationCommandOptionType.Channel
-        case "role":
-            return ApplicationCommandOptionType.Role
-        default:
-            return ApplicationCommandOptionType.String
-    }
-}
