@@ -2,7 +2,7 @@
 	"name": "@crossbuild/repo",
 	"private": true,
 	"workspaces": ["apps/*", "packages/*"],
-	"packageManager": "pnpm@8.14.0",
+	"packageManager": "pnpm@8.15.7",
 	"scripts": {
 		"build": "turbo run build",
 		"clean": "turbo run clean",
