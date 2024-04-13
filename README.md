@@ -1,3 +1,8 @@
+> [!NOTE]  
+> Due to frustrations with external API services and the lack of usable API on behalf of Guilded, this project has been archived. Stay tuned for a new API library from Buape Studios soon!
+
+
+
 <div align="center">
 <img src="https://cdn.buape.com/CB_Wordmark.png" alt="CrossBuild Logo" />
 
